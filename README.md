@@ -26,55 +26,7 @@ The project files generated will have starter content as outlined in the Epicodu
 The directory/file structure created is:
 
 
-```YourProjectName.Solution
-├── .gitignore
-├── README.md
-│
-├── YourProjectName
-│   ├── Program.cs
-│   ├── Startup.cs
-│   ├── YourProjectName.csproj
-│   │
-│   ├── Controllers
-│   │   ├── HomeController.cs
-│   │   └── YourClassController.cs
-│   │
-│   ├── Models
-│   │   └── YourClass.cs
-│   │
-│   ├── Views
-│   │   ├── YourClass
-│   │   │   ├── DeleteAll.cshtml
-│   │   │   ├── Index.cshtml
-│   │   │   ├── New.cshtml
-│   │   │   └── Show.cshtml
-│   │   │
-│   │   ├── Home
-│   │   │   └── Index.cshtml
-│   │   │
-│   │   └── Shared
-│   │        └── _Layout.cshtml
-│   │
-│   └── wwwroot
-│       ├── css
-│       │   ├── bootstrap.min.css
-│       │   └── styles.css
-│       │   
-│       └── js
-│           ├── bootstrap.min.js
-│           └── scripts.js
-│
-└── YourProjectName.Tests
-    ├── YourProjectName.Tests.csproj
-    │
-    ├── ControllerTests
-    │   ├── HomeControllerTests.cs
-    │   └── YourClassControllerTests.cs
-    │
-    └── ModelTests
-        └── YourClassTests.cs
 
-```
 ---
 ## Installation Instructions
 Clone the code from [GitHub](https://github.com/skillitzimberg/ValleyBread.Solution).
@@ -133,6 +85,8 @@ Scott Bergler :: commandinghands@gmail.com
 ---
 
 ## Additional Resources
+
+-[Tree Structure Diagram](.../master/TreeStructure.md)
 
 ### License
 
