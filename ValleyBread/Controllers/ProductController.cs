@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ValleyBread.Controllers
 {
-    public class YourClassController : Controller
+    public class ProductController : Controller
     {
         [HttpGet("/yourclass")]
         public ActionResult Index()
