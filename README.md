@@ -86,7 +86,7 @@ Scott Bergler :: commandinghands@gmail.com
 
 ## Additional Resources
 
--[Tree Structure Diagram](.../master/TreeStructure.md)
+-[Tree Structure Diagram](../master/TreeStructure.md)
 
 ### License
 
