@@ -47,5 +47,11 @@ namespace TumbleWeedBakeHouse.Models
     public void SetPhoneNumber(string number){
       _phoneNumber = number;
     }
+    public string GetEmail(){
+      return _email;
+    }
+    public void SetEmail(string newEmail){
+      _email = newEmail;
+    }
 }
 }

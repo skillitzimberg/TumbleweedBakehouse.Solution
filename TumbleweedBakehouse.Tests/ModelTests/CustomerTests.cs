@@ -79,5 +79,23 @@ namespace TumbleWeedBakeHouse.Tests
       string result = newCustomer.GetPhoneNumber();
       Assert.AreEqual(newNumber, result);
     }
+    [TestMethod]
+    public void GetEmail_ReturnsEmail_String()
+    {
+      string email= "chrisrudnicky@gmail.com";
+      Customer newCustomer = new Customer("chris", "rudnicky", "7575640970", email, "address", "city", "state", 23188);
+      string result = newCustomer.GetEmail();
+      Assert.AreEqual(email, result);
+    }
+    [TestMethod]
+    public void SetEmail_SetsEmail_String()
+    {
+      string email= "chrisrudnicky@gmail.com";
+      Customer newCustomer = new Customer("chris", "rudnicky", "7575640970", email, "address", "city", "state", 23188);
+      string newEmail ="gatheringguides@gmail.com";
+      newCustomer.SetEmail(newEmail);
+      string result = newCustomer.GetEmail();
+      Assert.AreEqual(newEmail, result);
+    }
   }
 }
