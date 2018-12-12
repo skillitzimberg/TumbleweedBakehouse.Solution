@@ -9,6 +9,6 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.1.11" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ValleyBread\TumbleweedBakehouse.csproj" />
+    <ProjectReference Include="..\TumbleweedBakehouse\TumbleweedBakehouse.csproj" />
   </ItemGroup>
 </Project>

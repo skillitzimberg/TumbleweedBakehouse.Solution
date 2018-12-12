@@ -38,13 +38,13 @@ namespace ValleyBread
 
       app.Run(async (context) =>
       {
-          await context.Response.WriteAsync("ValleyBread: Something went wrong . . .");
+          await context.Response.WriteAsync("Tumbleweed Bakehouse: Something went wrong . . .");
       });
 
     }
   }
   public static class DBConfiguration
 {
-  public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=sampledatabase;";
+  public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=tumbleweedbakehouse;";
 }
 }
