@@ -58,6 +58,9 @@ Open the directory in your text editor. Open the .template.config/template.json 
 ---
 
 ## Application Testing:
+
+-[Customer Test Specs](../master/Customer_Testing_Specs.md)
+
 ##### Spec 1: Do a thing:
 - [ ] **Expect:**  
 Input: some input;  
