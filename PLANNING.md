@@ -48,7 +48,7 @@ Hot Cross Buns
 
 ### Orders database columns/class properties
 - id: PRIMARY KEY, AUTO_INCREMENT
-- order_number
+- orderNumber
 - product
 - product_qty
 - order_received_date
@@ -120,7 +120,7 @@ Write Specs
 Create Database/tables  
 Create Test Database  
 Export Database  
-Add Exported Database to ValleyBread.Solution folder  
+Add Exported Database to TumbleweedBakehouse.Solution folder  
 Create Models folder  
 Create .cs file for each Class in Models folder  
 Create ControllerTest file for each Class and Home  

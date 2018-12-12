@@ -3,9 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TumbleweedBakehouse", "ValleyBread\TumbleweedBakehouse.csproj", "{B2BB3F9C-5C3D-441C-B5CF-C6B66D86441A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TumbleweedBakehouse", "TumbleweedBakehouse\TumbleweedBakehouse.csproj", "{B2BB3F9C-5C3D-441C-B5CF-C6B66D86441A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TumbleweedBakehouse.Tests", "ValleyBread.Tests\TumbleweedBakehouse.Tests.csproj", "{E44800D8-6524-4FC8-B81B-004BF39FA526}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TumbleweedBakehouse.Tests", "TumbleweedBakehouse.Tests\TumbleweedBakehouse.Tests.csproj", "{E44800D8-6524-4FC8-B81B-004BF39FA526}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F15C6D45-0D99-42B6-8A8D-B807F4DE67FF}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Customer_Testing_Specs.md = Customer_Testing_Specs.md
+		PLANNING.md = PLANNING.md
+		README.md = README.md
+		TreeStructure.md = TreeStructure.md
+		tumbleweedbakehouse.sql = tumbleweedbakehouse.sql
+		tumbleweedbakehouse_test.sql = tumbleweedbakehouse_test.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

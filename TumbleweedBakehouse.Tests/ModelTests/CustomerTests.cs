@@ -3,9 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System;
-using ValleyBread.Models;
+using TumbleweedBakehouse.Models;
 
-namespace ValleyBread.Tests
+namespace TumbleweedBakehouse.Tests
 {
   [TestClass]
   public class CustomerTests

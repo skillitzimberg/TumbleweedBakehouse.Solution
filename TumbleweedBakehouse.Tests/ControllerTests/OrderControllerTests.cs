@@ -5,13 +5,13 @@ using TumbleweedBakehouse.Controllers;
 namespace TumbleweedBakehouse.Tests
 {
     [TestClass]
-    public class ProductControllerTest
+    public class OrderControllerTest
     {
       [TestMethod]
       public void Index_ReturnsCorrectView_True()
       {
           //Arrange
-        ProductController controller = new ProductController();
+        OrderController controller = new OrderController();
 
         //Act
         ActionResult indexView = controller.Index();
@@ -22,4 +22,3 @@ namespace TumbleweedBakehouse.Tests
 
   }
 }
-
