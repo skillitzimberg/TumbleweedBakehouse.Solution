@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System;
 using ValleyBread.Models;
 
-namespace ValleyBread.Tests
+namespace TumbleweedBakeHouse.Tests
 {
 
   [TestClass]
@@ -15,9 +15,9 @@ namespace ValleyBread.Tests
     [TestMethod]
     public void ProductConstructor_CreatesInstanceofProduct_Product()
     {
-      Product newProduct = new Product ("sourdough","light and fluffy",ture,3,1);
+      Product newProduct = new Product ("sourdough","raye","light and fluffy",true,3,1);
 
-      Assert.AreEqual(typof(Product),newProduct.GetType());
+      Assert.AreEqual(typeof(Product),newProduct.GetType());
     }
 
 
