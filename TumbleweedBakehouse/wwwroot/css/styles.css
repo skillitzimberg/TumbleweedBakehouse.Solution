@@ -5,12 +5,16 @@ html, body {
 
 body {
   font-family: 'Noto Serif JP', sans-serif;
-  color: #bbe7FF;
+  /* color: #bbe7FF; */
   padding-top: 1em;
 }
 
 .logo {
   font-size: 1.5em;
+}
+
+.navbar-inverse {
+    background: rgb(0, 0, 0, 0.75);
 }
 
 nav {
@@ -29,29 +33,26 @@ li {
 }
 
 span a {
-  color: #ccf8FF;
+  /* color: #ccf8FF; */
   text-decoration: none;
 }
 
 a {
-  color: #d86767;
+  /* color: #d86767; */
   text-decoration: none;
 }
 
-.navbar-inverse {
-    background: rgb(0, 0, 0, 0.75);
-}
-
-#banner {
-  grid-column: 5 / 8;
-  grid-row: 2;
-}
-
-.index {
-  background-image: url("");
-}
-
 h1, h2 {
-  text-align: center;
-  color: #d86767;
+  /* color: #d86767; */
+}
+
+label {
+  display: block;
+}
+
+form {
+  margin: 1em;
+  border: 1px solid #333;
+  border-radius: .5em;
+  padding: .75em;
 }
