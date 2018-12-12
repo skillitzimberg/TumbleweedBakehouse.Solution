@@ -2,7 +2,7 @@ using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System;
 
-namespace ValleyBread.Models
+namespace TumbleweedBakehouse.Models
 {
 
   public class Product
@@ -81,10 +81,10 @@ namespace ValleyBread.Models
 
     }
 
-    public static Product Find()
-    {
-      return 0;
-    }
+    //public static Product Find()
+    //{
+    //  return 0;
+    //}
 
     public void Edit(string newProduct)
     {
