@@ -4,10 +4,9 @@ Create an MVC web application order/customer/product tracking app.
 
 ## User Stories
 Salon employees should to be able to:
+**VIEW**
 * VIEW ALL CUSTOMERS
 * VIEW CUSTOMER CONTACT LIST
-* ADD CUSTOMER
-* FIND CUSTOMER
 * VIEW CUSTOMER DETAILS
 * VIEW LIST OF ALL CUSTOMER ORDERS
 * ADD PRODUCT TO ORDER
@@ -18,6 +17,10 @@ Salon employees should to be able to:
 * GROSS PROFITS
 * SHOW/HIDE AVAILABLE PRODUCTS
 
+**SEARCH**
+* FIND CUSTOMER
+**ADD**
+* ADD CUSTOMER
 ## Products
 Demi Baguettes  
 Spelt Sourdough  
