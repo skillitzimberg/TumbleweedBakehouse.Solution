@@ -5,13 +5,13 @@ using ValleyBread.Controllers;
 namespace ValleyBread.Tests
 {
     [TestClass]
-    public class YourClassControllerTest
+    public class OrderControllerTest
     {
       [TestMethod]
       public void Index_ReturnsCorrectView_True()
       {
           //Arrange
-        YourClassController controller = new YourClassController();
+        OrderController controller = new OrderController();
 
         //Act
         ActionResult indexView = controller.Index();
