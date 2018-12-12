@@ -5,14 +5,38 @@ Create an MVC web application order/customer/product tracking app.
 ## User Stories
 Salon employees should to be able to:
 * VIEW ALL CUSTOMERS
+* VIEW CUSTOMER CONTACT LIST
 * ADD CUSTOMER
 * FIND CUSTOMER
 * VIEW CUSTOMER DETAILS
 * VIEW LIST OF ALL CUSTOMER ORDERS
 * ADD PRODUCT TO ORDER
+* TRACK SALES OF INDIVIDUAL PRODUCTS
+* VIEW SALES TRENDS OVER THE COURSE OF A MONTH/YEAR
+* COSTING FOR INGREDIENTS
+* COSTING FOR SUPPLIES, GAS, ETC.
+* GROSS PROFITS
+* SHOW/HIDE AVAILABLE PRODUCTS
 
-## Requirements
-**Naming**
+## Products
+Demi Baguettes  
+Spelt Sourdough  
+Chile Cheddar Sourdough  
+Challah  
+Cinnamon Raisin Swirl  
+Apple Walnut Sourdough  
+Light Brioche  
+Flax Oatmeal  
+Seedy Sourdough  
+Roasted Garlic Sourdough  
+Turmeric Onion Sourdough  
+Blue Corn Anadama  
+Country Sour  
+Honey Whole Wheat  
+Chocolate & Red Chile Flake Sourdough  
+Semolina Rolls  
+Pumpernickel  
+Hot Cross Buns  
 
 ### Classes
 * ORDERS
@@ -21,9 +45,13 @@ Salon employees should to be able to:
 
 ### Orders database columns/class properties
 - id: PRIMARY KEY, AUTO_INCREMENT
-- name
-- grains
-- type
+- order_number
+- product
+- product_qty
+- order_received_date
+- order_delivered_date
+- customer_id: FOREIGN KEY
+
 
 ### Customer database columns/class properties
 - id: PRIMARY KEY, AUTO_INCREMENT
@@ -31,7 +59,14 @@ Salon employees should to be able to:
 - last_name
 - phone_number
 - email
-- order_id: FOREIGN KEY
+- address
+
+### Products database columns/class properties
+- id: PRIMARY KEY, AUTO_INCREMENT
+- name
+- type
+- price
+- description
 
 ## Models/Methods
 ### Customer
