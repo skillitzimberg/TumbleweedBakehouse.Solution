@@ -16,11 +16,10 @@ namespace TumbleweedBakehouse.Models
         public string PickupLocation { get; set; }
         public int Customer_id { get; set; }
 
-        public Order(int orderNumber, Dictionary<string, object> orderedProduct, DateTime orderReceivedDate, int customer_id, int id = 0)
+        public Order(int orderNumber, DateTime orderReceivedDate, int customer_id, int id = 0)
         {
             this.Id = id;
             this.OrderNumber = orderNumber;
-            this.OrderedProduct = orderedProduct;
             this.ReceivedDate = orderReceivedDate;
             this.Customer_id = customer_id;
         }
@@ -46,15 +45,21 @@ namespace TumbleweedBakehouse.Models
         }
 
 
-        public void Save() // Create
+        public void Save() //CREATE: Creates a new Order
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO orders (orderNumber) values (@orderNumber);";
+            cmd.CommandText = @"INSERT INTO orders (orderNumber, receivedDate, requestedPickupDate, deliveredDate, pickupLocation, customer_id) 
+                                            VALUES (@orderNumber, @receivedDate, @requestedPickupDate, @deliveredDate, @pickupLocation, @customer_id);";
             cmd.Parameters.AddWithValue("@orderNumber", this.OrderNumber);
+            cmd.Parameters.AddWithValue("@receivedDate", this.ReceivedDate);
+            cmd.Parameters.AddWithValue("@requestedPickupDate", this.RequestedPickupDate);
+            cmd.Parameters.AddWithValue("@deliveredDate", this.DeliveredDate);
+            cmd.Parameters.AddWithValue("@pickupLocation", this.PickupLocation);
+            cmd.Parameters.AddWithValue("@customer_id", this.Customer_id);
             cmd.ExecuteNonQuery();
-            id = (int)cmd.LastInsertedId;
+            this.Id = (int)cmd.LastInsertedId;
             conn.Close();
             if (conn != null)
             {
@@ -62,7 +67,7 @@ namespace TumbleweedBakehouse.Models
             }
         }
 
-        public static List<Order> GetAll() //READ
+        public static List<Order> GetAll() //READ: Gets a list of all orders
         {
             List<Order> allOrders = new List<Order> { };
 
@@ -74,8 +79,13 @@ namespace TumbleweedBakehouse.Models
             while (rdr.Read())
             {
                 int orderId = rdr.GetInt32(0);
-                string orderName = rdr.GetString(1);
-                Order newOrder = new Order(orderName, orderId);
+                int OrderNumber = rdr.GetInt32(1);
+                DateTime ReceivedDate = rdr.GetDateTime(2);
+                //DateTime RequestedPickupDate = rdr.GetDateTime(3);
+                //DateTime DeliveredDate = rdr.GetDateTime(4);
+                //string PickupLocation = rdr.GetString(5);
+                int Customer_id = rdr.GetInt32(6);
+                Order newOrder = new Order(OrderNumber, ReceivedDate, Customer_id, orderId);
                 allOrders.Add(newOrder);
             }
             conn.Close();
@@ -86,7 +96,7 @@ namespace TumbleweedBakehouse.Models
             return allOrders;
         }
 
-        public static Order Find(int searchId) // READ
+        public static Order Find(int searchId) //READ: Finds a particular order given order Id
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -94,14 +104,27 @@ namespace TumbleweedBakehouse.Models
             cmd.CommandText = @"SELECT * FROM orders WHERE id = (@searchId);";
             cmd.Parameters.AddWithValue("@searchId", searchId);
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-            int OrderId = 0;
-            string OrderName = "";
+
+            int orderId = 0;
+            int OrderNumber = 0;
+            DateTime ReceivedDate = DateTime.Now;
+            //DateTime RequestedPickupDate = "";
+            //DateTime DeliveredDate = "";
+            //string PickupLocation = "";
+            int Customer_id = 0;
+
             while (rdr.Read())
             {
-                OrderId = rdr.GetInt32(0);
-                OrderName = rdr.GetString(1);
+                orderId = rdr.GetInt32(0);
+                OrderNumber = rdr.GetInt32(1);
+                ReceivedDate = rdr.GetDateTime(2);
+                //RequestedPickupDate = rdr.GetDateTime(3);
+                //DeliveredDate = rdr.GetDateTime(4);
+                //PickupLocation = rdr.GetString(5);
+                Customer_id = rdr.GetInt32(6);
+
             }
-            Order newOrder = new Order(OrderName, OrderId);
+            Order newOrder = new Order(OrderNumber, ReceivedDate, Customer_id, orderId);
             conn.Close();
             if (conn != null)
             {
@@ -110,32 +133,7 @@ namespace TumbleweedBakehouse.Models
             return newOrder;
         }
 
-        public List<Customer> GetCustomers() // READ
-        {
-            List<Customer> allOrderCustomers = new List<Customer> { };
-            MySqlConnection conn = DB.Connection();
-            conn.Open();
-            var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM customers WHERE order_id = @order_id;";
-            cmd.Parameters.AddWithValue("@order_id", this.id);
-            var rdr = cmd.ExecuteReader() as MySqlDataReader;
-            while (rdr.Read())
-            {
-                int customerId = rdr.GetInt32(0);
-                string customerDescription = rdr.GetString(1);
-                int customerOrderId = rdr.GetInt32(2);
-                Customer newCustomer = new Customer(customerDescription, customerOrderId, customerId);
-                allOrderCustomers.Add(newCustomer);
-            }
-            conn.Close();
-            if (conn != null)
-            {
-                conn.Dispose();
-            }
-            return allOrderCustomers;
-        }
-
-        public static void ClearAll() // DELETE
+        public static void ClearAll() //DELETE: Deletes ALL orders ((CAUTION!!!))
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();

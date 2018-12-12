@@ -25,12 +25,11 @@ namespace TumbleweedBakehouse.Tests
         {
             //Arrange
             int testOrderNumber = 1;
-            Dictionary<string, object> testOrderedProduct = new Dictionary<string, object> { };
             DateTime testReceivedDate = DateTime.Now;
             int testCustomer_Id = 1;
 
             //Act
-            Order testOrder = new Order(testOrderNumber, testOrderedProduct, testReceivedDate, testCustomer_Id);
+            Order testOrder = new Order(testOrderNumber, testReceivedDate, testCustomer_Id);
 
             //Assert
             Assert.AreEqual(typeof(Order), testOrder.GetType());
@@ -42,13 +41,12 @@ namespace TumbleweedBakehouse.Tests
         {
             //Arrange
             int testOrderNumber = 1;
-            Dictionary<string, object> testOrderedProduct = new Dictionary<string, object> { };
             DateTime testReceivedDate = DateTime.Now;
             int testCustomer_Id = 1;
 
             //Act
-            Order testOrder1 = new Order(testOrderNumber, testOrderedProduct, testReceivedDate, testCustomer_Id);
-            Order testOrder2 = new Order(testOrderNumber, testOrderedProduct, testReceivedDate, testCustomer_Id);
+            Order testOrder1 = new Order(testOrderNumber, testReceivedDate, testCustomer_Id);
+            Order testOrder2 = new Order(testOrderNumber, testReceivedDate, testCustomer_Id);
 
             //Assert
             Assert.AreEqual(testOrder1, testOrder2);
@@ -60,10 +58,9 @@ namespace TumbleweedBakehouse.Tests
         {
             //Arrange
             int testOrderNumber = 1;
-            Dictionary<string, object> testOrderedProduct = new Dictionary<string, object> { };
             DateTime testReceivedDate = DateTime.Now;
             int testCustomer_Id = 1;
-            Order testOrder = new Order(testOrderNumber, testOrderedProduct, testReceivedDate, testCustomer_Id);
+            Order testOrder = new Order(testOrderNumber, testReceivedDate, testCustomer_Id);
 
             //Act
             testOrder.Save();
@@ -81,17 +78,19 @@ namespace TumbleweedBakehouse.Tests
         {
             //Arrange
             int testOrderNumber = 1;
-            Dictionary<string, object> testOrderedProduct = new Dictionary<string, object> { };
             DateTime testReceivedDate = DateTime.Now;
             int testCustomer_Id = 1;
 
             //Act
-            Order testOrder = new Order(testOrderNumber, testOrderedProduct, testReceivedDate, testCustomer_Id);
+            Order testOrder = new Order(testOrderNumber, testReceivedDate, testCustomer_Id);
             testOrder.Save();
             Order.ClearAll();
+            List<Order> testList = Order.GetAll();
+            List<Order> result = new List<Order> { };
+
             
             //Assert
-            Assert.AreEqual()
+            Assert.AreEqual(testList, result);
 
         }
 
