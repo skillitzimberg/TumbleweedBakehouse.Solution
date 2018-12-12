@@ -8,20 +8,21 @@ using ValleyBread.Models;
 namespace ValleyBread.Tests
 {
   [TestClass]
-  public class CustomerTests : IDisposable
+  public class CustomerTests
+   // : IDisposable
   {
-    public void Dispose()
-    {
-      Customer.ClearAll();
-    }
-    public CustomerTest()
-    {
-      DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=Customer_Tests;";
-    }
+    // public void Dispose()
+    // {
+    //   Customer.ClearAll();
+    // }
+    // public CustomerTest()
+    // {
+    //   DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=Customer_Tests;";
+    // }
     [TestMethod]
-    publi void CustomerConstructor_CreatesIntanceOfCustomer_Customer()
+    public void CustomerConstructor_CreatesIntanceOfCustomer_Customer()
     {
-      Customer newCustomer = new Customer("first", "last", 1, "email", "city", "state", 3, 0)
+      Customer newCustomer = new Customer("first", "last", 1, "email"," address", "city", "state", 3, 0);
     }
   }
 }
