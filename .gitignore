@@ -9,3 +9,5 @@ bin/
 *.user
 *.suo
 *.dtbcache
+*.ide-shm
+*.ide-wal
