@@ -34,7 +34,7 @@ CREATE TABLE `customers` (
   `id` int(11) NOT NULL,
   `firstName` varchar(255) NOT NULL,
   `lastName` int(255) NOT NULL,
-  `phoneNumber` int(11) NOT NULL,
+  `phoneNumber` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
