@@ -3,7 +3,7 @@
 }
 <div class='row'>
 
-  <div class='col-md-4'>
+  <div class='col-md-12'>
     <form class="" action="/customers" method="post">
       <h3>Customers</h3>
       <div class='form-group'>
@@ -45,30 +45,8 @@
         <label for="zipCode">Zip/Postal Code</label>
         <input type="text" name="zipCode" id="zipCode">
       </div>
-    </form>
-  </div>
 
-  <div class='col-md-4'>
-    <form class="" action="/orders" method="post">
-      <h3>Orders</h3>
-
-      @if (Model.Count != 0)
-      {
-        <ul>
-          @foreach (var order in Model)
-          {
-            <li><a href='/orders/@order.GetId()'>@order.GetOrderNumber() :: @order.GetPickUpLocation() :: @order.GetPickUpDate()</a></li>
-          }
-        </ul>
-      }
-
-    </form>
-  </div>
-
-  <div class='col-md-4'>
-    <form class="" action="/products" method="post">
-      <h3>Products</h3>
-
+      <button type="submit" name="button">Add Customer</button>
     </form>
   </div>
 
