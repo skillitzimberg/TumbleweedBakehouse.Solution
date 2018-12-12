@@ -71,48 +71,146 @@ namespace TumbleweedBakehouse.Models
 
     public static List<Product> GetAll()
     {
-      List<Product> productList = new List<Product>{};
-
-      return productList;
+      List<Product> allProducts = new List<Product> {};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM products;";
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while(rdr.Read())
+      {
+        int id = rdr.GetInt32(0);
+        string name = rdr.GetString(1);
+        string description = rdr.GetString(2);
+        bool availability = rdr.GetBoolean(3);
+        float price = rdr.GetFloat(4);
+        string type= rdr.GetString(5);
+        Product newProduct = new Product(name, type, description, availability, price, id);
+        allProducts.Add(newProduct);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return allProducts;
     }
 
     public void Save()
     {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO products (Name, description, availability, price, producttype) VALUES (@name, @description, @availability, @price,
+      @type);";
 
+      cmd.Parameters.AddWithValue("@name", this._name);
+
+      cmd.Parameters.AddWithValue("@description", this._description);
+
+      cmd.Parameters.AddWithValue("@availability", this._availability);
+
+      cmd.Parameters.AddWithValue("@price", this._price);
+
+      cmd.Parameters.AddWithValue("@type", this._type);
+
+      cmd.ExecuteNonQuery();
+      _id = (int) cmd.LastInsertedId;
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
     }
 
-    //public static Product Find()
-    //{
-    //  return 0;
-    //}
 
-    public void Edit(string newProduct)
-    {
+    // public static Product Find()
+    // {
+    //
+    //   MySqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //   var cmd = conn.CreateCommand() as MySqlCommand;
+    //   cmd.CommandText = @"SELECT * FROM clients WHERE id = (@searchId);";
+    //   MySqlParameter searchId = new MySqlParameter();
+    //   searchId.ParameterName = "@searchId";
+    //   searchId.Value = id;
+    //   cmd.Parameters.Add(searchId);
+    //   var rdr = cmd.ExecuteReader() as MySqlDataReader;
+    //   int clientId = 0;
+    //   string clientName = "";
+    //   int clientStylistId = 0;
+    //   while(rdr.Read())
+    //   {
+    //     clientId = rdr.GetInt32(0);
+    //     clientName = rdr.GetString(1);
+    //     clientStylistId = rdr.GetInt32(2);
+    //   }
+    //   Client newClient = new Client(clientName, clientStylistId, clientId);
+    //   conn.Close();
+    //   if (conn != null)
+    //   {
+    //     conn.Dispose();
+    //   }
+    //   return newClient;
+    // }
 
-    }
+
+    // public void Edit(string newCustomer)
+    // {
+    //   MySqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //   var cmd = conn.CreateCommand() as MySqlCommand;
+    //   cmd.CommandText = @"UPDATE Clients SET client = @newCustomer WHERE id = @searchId;";
+    //   MySqlParameter searchId = new MySqlParameter();
+    //   searchId.ParameterName = "@searchId";
+    //   searchId.Value = _id;
+    //   cmd.Parameters.Add(searchId);
+    //   MySqlParameter customer = new MySqlParameter();
+    //   customer.ParameterName = "@newCustomer";
+    //   customer.Value = newCustomer;
+    //   cmd.Parameters.Add(customer);
+    //   cmd.ExecuteNonQuery();
+    //   _customer = newCustomer;
+    //   conn.Close();
+    //   if (conn != null)
+    //   {
+    //     conn.Dispose();
+    //   }
+    // }
 
     public static void ClearAll()
     {
-
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM products;";
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
     }
 
 
+    public override bool Equals(System.Object otherProduct)
+    {
+      if (!(otherProduct is Product))
+      {
+        return false;
+      }
+      else
+      {
+        Product newProduct = (Product) otherProduct;
+        bool idEquality = this.GetId() == newProduct.GetId();
+        bool nameEquality = this.GetProductName() == newProduct.GetProductName();
+        bool typeEquality = this.GetProductType() == newProduct.GetProductType();
+        bool descriptionEquality = this.GetDescription() == newProduct.GetDescription();
+        bool priceEquality = this.GetPrice() == newProduct.GetPrice();
 
-
-    // public override bool Equals(System.Object otherProduct)
-    // {
-    //   if (!(otherProduct is Product))
-    //   {
-    //     return false;
-    //   }
-    //   else
-    //   {
-    //     Product newProduct = (Product) otherClient;
-    //     bool idEquality = this.GetId() == newProduct.GetId();
-    //     bool customerEquality = this.GetProductName() == newProduct.GetProductName();
-    //     bool stylistEquality = this.GetStylistId() == newClient.GetStylistId();
-    //     return (idEquality && customerEquality && stylistEquality);
-    //   }
+        return (idEquality && nameEquality && typeEquality && descriptionEquality && priceEquality);
+      }
+    }
 
 
   }
