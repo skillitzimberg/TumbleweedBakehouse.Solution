@@ -65,5 +65,11 @@ namespace TumbleWeedBakeHouse.Models
     public void SetCity(string newCity){
       _city = newCity;
     }
+    public string GetState(){
+      return _state;
+    }
+    public void SetState(string newState){
+      _state = newState;
+    }
 }
 }
