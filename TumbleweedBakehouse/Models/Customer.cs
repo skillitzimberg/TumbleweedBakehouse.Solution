@@ -77,5 +77,9 @@ namespace TumbleWeedBakeHouse.Models
     public void SetZip(int newZip){
       _zipCode = newZip;
     }
+    public string FirstLast(){
+      string firstLast = _firstName + " " + _lastName;
+      return firstLast;
+    }
 }
 }

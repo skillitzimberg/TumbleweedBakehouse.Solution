@@ -6,6 +6,7 @@ This file contains testing information for the Customer Class Model. Click the l
 
 - [Constructor Instantiation]("#CustomerConstructor_CreatesInstanceOfCustomer_Customer)
 - [Get Set Tests](#property-get-set-tests)
+- [Creating a full name](#FirstLast_ConcatsFirstAndLastName_String)
 ---
 ## CustomerConstructor_CreatesIntanceOfCustomer_Customer
 
@@ -99,3 +100,4 @@ Any method that starts with Set will update a property of the class.
 To **fail** this test set the property that is being updated to another property such as _lastName.
 
 ---
+## FirstLast_ConcatsFirstAndLastName_String

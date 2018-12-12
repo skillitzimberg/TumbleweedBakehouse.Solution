@@ -169,5 +169,13 @@ namespace TumbleWeedBakeHouse.Tests
       int result = newCustomer.GetZip();
       Assert.AreEqual(newZip, result);
     }
+    [TestMethod]
+    public void FirstLast_ConcatsFirstAndLastName_String()
+    {
+      Customer newCustomer = new Customer("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      string firstLast = "chris rudnicky";
+      string result = newCustomer.FirstLast();
+      Assert.AreEqual(firstLast, result);
+    }
   }
 }
