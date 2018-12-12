@@ -21,7 +21,7 @@ _Chris Rudnicky_
 # Description
 This template will create the directories and basic files needed to start a web project in C Sharp. I adapted it from Sayed I. Hashimi's [article](https://blogs.msdn.microsoft.com/dotnet/2017/04/02/how-to-create-your-own-templates-for-dotnet-new/). The directory structure and file contents are from Epicodus C Sharp curriculum and may not be suited for all projects.
 
-The project files generated will have starter content as outlined in the Epicodus C Sharp course. The template will give relevant namespaces and paths for your project (i.e. ValleyBread will be replaced everywhere with the name you give to your project - YourProjectName).
+The project files generated will have starter content as outlined in the Epicodus C Sharp course. The template will give relevant namespaces and paths for your project (i.e. TumbleweedBakehouse will be replaced everywhere with the name you give to your project - YourProjectName).
 
 The directory/file structure created is:
 
@@ -29,24 +29,24 @@ The directory/file structure created is:
 
 ---
 ## Installation Instructions
-Clone the code from [GitHub](https://github.com/skillitzimberg/ValleyBread.Solution).
+Clone the code from [GitHub](https://github.com/skillitzimberg/TumbleweedBakehouse.Solution).
 
 While following this set up guide, replace both the brackets - [] - and the content between them with the information relevant to your situation. This is just an example guide.
 
 Install the template using the command line interface (cli)/terminal:
-* dotnet new --install [ /Users/Your/Path/Here ]/ValleyBread.Solution
+* dotnet new --install [ /Users/Your/Path/Here ]/TumbleweedBakehouse.Solution
 
-For example: When cloned to the Epicodus computer Desktop, the path would be /Users/Guest/Desktop/ValleyBread.Solution.
+For example: When cloned to the Epicodus computer Desktop, the path would be /Users/Guest/Desktop/TumbleweedBakehouse.Solution.
 The above command would then be:
-* dotnet new --install /Users/Guest/Desktop/ValleyBread.Solution
+* dotnet new --install /Users/Guest/Desktop/TumbleweedBakehouse.Solution
 
 Navigate to the directory that you want your project to be in (i.e. Desktop, Documents, or wherever you keep your projects).
 
 Run the this command in the cli/terminal:
-* dotnet new valleybread -n [ YourProjectName ] -o [ YourProjectName ].Solution
+* dotnet new tumbleweedbakehosue -n [ YourProjectName ] -o [ YourProjectName ].Solution
 
 For example: If your project is called Banana the command would be:
-* dotnet new valleybread -n Banana -o Banana.Solution
+* dotnet new tumbleweedbakehosue -n Banana -o Banana.Solution
 
 Remove .git directory: run this command in YourProjectName.Solution directory.
 * rm -rf .git

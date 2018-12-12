@@ -1,17 +1,17 @@
 // using Microsoft.VisualStudio.TestTools.UnitTesting;
 // using Microsoft.AspNetCore.Mvc;
-// using TumbleweedBakehouse.Controllers;
+// using ValleyBread.Controllers;
 //
-// namespace TumbleweedBakehouse.Tests
+// namespace ValleyBread.Tests
 // {
 //     [TestClass]
-//     public class HomeControllerTest
+//     public class OrderControllerTest
 //     {
 //       [TestMethod]
 //       public void Index_ReturnsCorrectView_True()
 //       {
 //           //Arrange
-//         HomeController controller = new HomeController();
+//         OrderController controller = new OrderController();
 //
 //         //Act
 //         ActionResult indexView = controller.Index();
