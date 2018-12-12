@@ -8,3 +8,4 @@ bin/
 *.json
 *.user
 *.suo
+*.dtbcache
