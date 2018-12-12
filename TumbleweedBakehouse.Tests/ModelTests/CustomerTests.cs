@@ -97,5 +97,23 @@ namespace TumbleWeedBakeHouse.Tests
       string result = newCustomer.GetEmail();
       Assert.AreEqual(newEmail, result);
     }
+    [TestMethod]
+    public void GetAddress_ReturnsAddress_String()
+    {
+      string address= "103 Quaker Meeting House Rd";
+      Customer newCustomer = new Customer ("chris", "Rudnicky", "7575640970", "email", address, "city", "state", 1, 2);
+      string result = newCustomer.GetAddress();
+      Assert.AreEqual(address, result);
+     }
+     [TestMethod]
+     public void SetAddress_UpdatesAddress_String()
+     {
+       string address= "103 Quaker Meeting House Rd";
+       Customer newCustomer = new Customer ("chris", "Rudnicky", "7575640970", "email", address, "city", "state", 1, 2);
+       string newAddress ="37 NW Trinity Pl";
+       newCustomer.SetAddress(newAddress);
+       string result = newCustomer.GetAddress();
+       Assert.AreEqual(newAddress, result);
+     }
   }
 }
