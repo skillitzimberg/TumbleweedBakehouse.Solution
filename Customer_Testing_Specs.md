@@ -20,6 +20,7 @@ This test will test to see if our constructor works. Expect this test to automat
     }
 
 #### Customer.cs
+Class properties:
 
     public class Customer
     {
@@ -33,18 +34,21 @@ This test will test to see if our constructor works. Expect this test to automat
       private int _zipCode;
       private int _id;
 
-      public Customer (string firstName, string lastName, int phoneNumber, string email, string address, string city, string state, int zip, int id = 0)
-      {
-          _firstName = firstName;
-          _lastName = lastName;
-          _phoneNumber = phoneNumber;
-          _email = email;
-          _homeAddress = address;
-          _city = city;
-          _state = state;
-          _zipCode = zip;
-          _id = id;
-      }
+Constructor:
+
+    public Customer (string firstName, string lastName, int phoneNumber, string email, string address, string city, string state, int zip, int id = 0)
+    {
+        _firstName = firstName;
+        _lastName = lastName;
+        _phoneNumber = phoneNumber;
+        _email = email;
+        _homeAddress = address;
+        _city = city;
+        _state = state;
+        _zipCode = zip;
+        _id = id;
+    }
+
 
 ---
 
@@ -101,3 +105,36 @@ To **fail** this test set the property that is being updated to another property
 
 ---
 ## FirstLast_ConcatsFirstAndLastName_String
+
+This method is used to concat a first and last name together. For example, if _firstName = Chris and _lastName = Rudnicky, then the FirstLast Method will output chris rudnicky.
+
+#### CustomerTests.cs
+
+    [TestMethod]
+    public void FirstLast_ConcatsFirstAndLastName_String()
+    {
+      Customer newCustomer = new Customer("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      string firstLast = "chris rudnicky";
+      string result = newCustomer.FirstLast();
+      Assert.AreEqual(firstLast, result);
+    }
+
+#### Customer.cs
+
+To **fail** this test, return a random string from the method:
+
+    public string FirstLast()
+    {
+      string firstLast = _firstName + " " + _state;
+      return firstLast;
+    }
+
+To **pass** this test, return the correct property:
+
+    public string FirstLast()
+    {
+      string firstLast = _firstName + " " + _lastName;
+      return firstLast;
+    }
+
+---
