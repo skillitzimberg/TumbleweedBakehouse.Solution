@@ -53,13 +53,17 @@ namespace TumbleWeedBakeHouse.Models
     public void SetEmail(string newEmail){
       _email = newEmail;
     }
-    public string GetAddress()
-    {
+    public string GetAddress()  {
       return _homeAddress;
     }
-    public void SetAddress(string newAddress)
-    {
+    public void SetAddress(string newAddress)    {
       _homeAddress = newAddress;
+    }
+    public string GetCity(){
+      return _city;
+    }
+    public void SetCity(string newCity){
+      _city = newCity;
     }
 }
 }

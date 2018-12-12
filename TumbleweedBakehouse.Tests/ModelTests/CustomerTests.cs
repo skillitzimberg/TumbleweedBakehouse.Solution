@@ -115,5 +115,23 @@ namespace TumbleWeedBakeHouse.Tests
        string result = newCustomer.GetAddress();
        Assert.AreEqual(newAddress, result);
      }
+    [TestMethod]
+    public void GetCity_ReturnsCity_String()
+    {
+      string city = "Boston";
+      Customer newCustomer = new Customer("chris", "rudnicky", "7575640970", "email", "address", city, "state", 23188);
+      string result = newCustomer.GetCity();
+      Assert.AreEqual(city, result);
+    }
+    [TestMethod]
+    public void SetCity_UpdatesCity_String()
+    {
+      string city= "Boston";
+      Customer newCustomer = new Customer("chris", "rudnicky", "7575640970", "email", "address", city, "state", 23188);
+      string newCity ="Portland";
+      newCustomer.SetCity(newCity);
+      string result = newCustomer.GetCity();
+      Assert.AreEqual(newCity, result);
+    }
   }
 }
