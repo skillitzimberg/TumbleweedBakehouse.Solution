@@ -14,8 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		PLANNING.md = PLANNING.md
 		README.md = README.md
 		TreeStructure.md = TreeStructure.md
-		tumbleweedbakehouse.sql = tumbleweedbakehouse.sql
-		tumbleweedbakehouse_test.sql = tumbleweedbakehouse_test.sql
+		tumbleweedbakehouse.sql.md = tumbleweedbakehouse.sql.md
+		tumbleweedbakehouse.zip = tumbleweedbakehouse.zip
+		tumbleweedbakehouse_test.sql.md = tumbleweedbakehouse_test.sql.md
+		tumbleweedbakehouse_test.zip = tumbleweedbakehouse_test.zip
 	EndProjectSection
 EndProject
 Global
