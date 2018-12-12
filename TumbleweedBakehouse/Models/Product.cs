@@ -76,25 +76,97 @@ namespace ValleyBread.Models
       return productList;
     }
 
-    public void Save()
-    {
+    // public void Save()
+    // {
+    //   MySqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //   var cmd = conn.CreateCommand() as MySqlCommand;
+    //   cmd.CommandText = @"INSERT INTO clients (client, stylistId) VALUES (@client, @stylistId);";
+    //   MySqlParameter customer = new MySqlParameter();
+    //   customer.ParameterName = "@client";
+    //   customer.Value = this._customer;
+    //   cmd.Parameters.Add(customer);
+    //   MySqlParameter stylistId = new MySqlParameter();
+    //   stylistId.ParameterName = "@stylistId";
+    //   stylistId.Value = this._stylistId;
+    //   cmd.Parameters.Add(stylistId);
+    //   cmd.ExecuteNonQuery();
+    //   _id = (int) cmd.LastInsertedId;
+    //   conn.Close();
+    //   if (conn != null)
+    //   {
+    //     conn.Dispose();
+    //   }
+    // }
 
-    }
 
-    public static Product Find()
-    {
-      return 0;
-    }
+    // public static Product Find()
+    // {
+    //
+    //   MySqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //   var cmd = conn.CreateCommand() as MySqlCommand;
+    //   cmd.CommandText = @"SELECT * FROM clients WHERE id = (@searchId);";
+    //   MySqlParameter searchId = new MySqlParameter();
+    //   searchId.ParameterName = "@searchId";
+    //   searchId.Value = id;
+    //   cmd.Parameters.Add(searchId);
+    //   var rdr = cmd.ExecuteReader() as MySqlDataReader;
+    //   int clientId = 0;
+    //   string clientName = "";
+    //   int clientStylistId = 0;
+    //   while(rdr.Read())
+    //   {
+    //     clientId = rdr.GetInt32(0);
+    //     clientName = rdr.GetString(1);
+    //     clientStylistId = rdr.GetInt32(2);
+    //   }
+    //   Client newClient = new Client(clientName, clientStylistId, clientId);
+    //   conn.Close();
+    //   if (conn != null)
+    //   {
+    //     conn.Dispose();
+    //   }
+    //   return newClient;
+    // }
 
-    public void Edit(string newProduct)
-    {
 
-    }
+    // public void Edit(string newCustomer)
+    // {
+    //   MySqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //   var cmd = conn.CreateCommand() as MySqlCommand;
+    //   cmd.CommandText = @"UPDATE Clients SET client = @newCustomer WHERE id = @searchId;";
+    //   MySqlParameter searchId = new MySqlParameter();
+    //   searchId.ParameterName = "@searchId";
+    //   searchId.Value = _id;
+    //   cmd.Parameters.Add(searchId);
+    //   MySqlParameter customer = new MySqlParameter();
+    //   customer.ParameterName = "@newCustomer";
+    //   customer.Value = newCustomer;
+    //   cmd.Parameters.Add(customer);
+    //   cmd.ExecuteNonQuery();
+    //   _customer = newCustomer;
+    //   conn.Close();
+    //   if (conn != null)
+    //   {
+    //     conn.Dispose();
+    //   }
+    // }
 
-    public static void ClearAll()
-    {
-
-    }
+    // public static void ClearAll()
+    // {
+    //   MySqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //   var cmd = conn.CreateCommand() as MySqlCommand;
+    //   cmd.CommandText = @"DELETE FROM clients;";
+    //   cmd.ExecuteNonQuery();
+    //   conn.Close();
+    //   if (conn != null)
+    //   {
+    //     conn.Dispose();
+    //   }
+    // }
 
 
 

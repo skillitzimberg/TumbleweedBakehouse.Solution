@@ -20,7 +20,15 @@ namespace TumbleweedBakeHouse.Tests
       Assert.AreEqual(typeof(Product),newProduct.GetType());
     }
 
+    [TestMethod]
+    public void Getall_GetEmptyList_List()
+    {
+    
+      List<Product> productList = new List<Product>{};
+      List<Product> result = Product.GetAll();
 
+      CollectionAssert.AreEqual(productList,result);
+    }
 
 
 
