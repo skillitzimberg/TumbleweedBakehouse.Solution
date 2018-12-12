@@ -5,26 +5,96 @@ using System.Collections.Generic;
 using System;
 using TumbleweedBakehouse.Models;
 
-namespace TumbleweedBakehouse.Tests
+namespace TumbleweedBakehouse.Tests 
 {
   [TestClass]
-  public class OrderTests
-  {
+  public class OrderTests : IDisposable
+    {
+        public void Dispose()
+        {
+            Order.ClearAll();
+        }
+
+        public OrderTests()
+        {
+            DBConfiguration.ConnectionString = "server = localhost; user id = root; password = root; port = 8889; database = tumbleweedbakehouse_test;";
+        }
+
         [TestMethod]
-        public void OrderClass_ObjectInstantiatesProperly_TypeofOrderTrue()
+        public void OrderObject_ObjectInstantiatesProperly_TypeofOrderTrue()
         {
             //Arrange
             int testOrderNumber = 1;
             Dictionary<string, object> testOrderedProduct = new Dictionary<string, object> { };
-            DateTime testOrderReceivedDate = DateTime.Now;
+            DateTime testReceivedDate = DateTime.Now;
             int testCustomer_Id = 1;
 
             //Act
-            Order testOrder = new Order(testOrderNumber, testOrderedProduct, testOrderReceivedDate, testCustomer_Id);
+            Order testOrder = new Order(testOrderNumber, testOrderedProduct, testReceivedDate, testCustomer_Id);
 
             //Assert
             Assert.AreEqual(typeof(Order), testOrder.GetType());
 
         }
+
+        [TestMethod]
+        public void Equals_ReturnsTrueIfIdsAreMatching_True()
+        {
+            //Arrange
+            int testOrderNumber = 1;
+            Dictionary<string, object> testOrderedProduct = new Dictionary<string, object> { };
+            DateTime testReceivedDate = DateTime.Now;
+            int testCustomer_Id = 1;
+
+            //Act
+            Order testOrder1 = new Order(testOrderNumber, testOrderedProduct, testReceivedDate, testCustomer_Id);
+            Order testOrder2 = new Order(testOrderNumber, testOrderedProduct, testReceivedDate, testCustomer_Id);
+
+            //Assert
+            Assert.AreEqual(testOrder1, testOrder2);
+
+        }
+
+        [TestMethod]
+        public void Save_StoresOrderInDatabase_OrderList()
+        {
+            //Arrange
+            int testOrderNumber = 1;
+            Dictionary<string, object> testOrderedProduct = new Dictionary<string, object> { };
+            DateTime testReceivedDate = DateTime.Now;
+            int testCustomer_Id = 1;
+            Order testOrder = new Order(testOrderNumber, testOrderedProduct, testReceivedDate, testCustomer_Id);
+
+            //Act
+            testOrder.Save();
+            List<Order> testList = new List<Order> { testOrder };
+            List<Order> result = Order.GetAll();
+
+            //Assert
+            CollectionAssert.AreEqual(testList, result);
+
+
+        }
+
+        [TestMethod]
+        public void ClearAll_ClearsOrderTableOfAllEntries_EmptyList()
+        {
+            //Arrange
+            int testOrderNumber = 1;
+            Dictionary<string, object> testOrderedProduct = new Dictionary<string, object> { };
+            DateTime testReceivedDate = DateTime.Now;
+            int testCustomer_Id = 1;
+
+            //Act
+            Order testOrder = new Order(testOrderNumber, testOrderedProduct, testReceivedDate, testCustomer_Id);
+            testOrder.Save();
+            Order.ClearAll();
+            
+            //Assert
+            Assert.AreEqual()
+
+        }
+
+
   }
 }
