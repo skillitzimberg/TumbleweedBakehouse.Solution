@@ -41,6 +41,23 @@ namespace TumbleweedBakehouse.Tests
     }
 
     [TestMethod]
+    public void GetAll_ReturnsItems_ProductList()
+    {
+      //Arrange
+
+      Product firstProduct = new Product ("sourdough","raye","light and fluffy",true,3,1);
+      firstProduct.Save();
+  
+      List<Product> newList = new List<Product> { firstProduct};
+
+      //Act
+      List<Product> result = Product.GetAll();
+
+      //Assert
+      CollectionAssert.AreEqual(newList, result);
+    }
+
+    [TestMethod]
     public void Save_SavesToDatabase_ProductList()
     {
       //Arrange
@@ -55,24 +72,6 @@ namespace TumbleweedBakehouse.Tests
       CollectionAssert.AreEqual(testList, result);
     }
 
-    // [TestMethod]
-    // public void GetAll_ReturnsItems_ClientList()
-    // {
-    //   //Arrange
-    //   string customer01 = "Clark Kent";
-    //   string customer02 = "Hannibal Lecter";
-    //   Client newClient1 = new Client(customer01, 1);
-    //   newClient1.Save();
-    //   Client newClient2 = new Client(customer02, 1);
-    //   newClient2.Save();
-    //   List<Client> newList = new List<Client> { newClient1, newClient2 };
-    //
-    //   //Act
-    //   List<Client> result = Client.GetAll();
-    //
-    //   //Assert
-    //   CollectionAssert.AreEqual(newList, result);
-    // }
 
     [TestMethod]
     public void Equals_ReturnsTrueIfCustomersAreTheSame_Client()
