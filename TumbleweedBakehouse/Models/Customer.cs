@@ -9,7 +9,7 @@ namespace TumbleWeedBakeHouse.Models
   {
     private string _firstName;
     private string _lastName;
-    private int _phoneNumber;
+    private string _phoneNumber;
     private string _email;
     private string _homeAddress;
     private string _city;
@@ -17,7 +17,7 @@ namespace TumbleWeedBakeHouse.Models
     private int _zipCode;
     private int _id;
 
-    public Customer (string firstName, string lastName, int phoneNumber, string email, string address, string city, string state, int zip, int id = 0)
+    public Customer (string firstName, string lastName, string phoneNumber, string email, string address, string city, string state, int zip, int id = 0)
     {
         _firstName = firstName;
         _lastName = lastName;
@@ -40,6 +40,12 @@ namespace TumbleWeedBakeHouse.Models
     }
     public void SetLastName(string newName){
       _lastName = newName;
+    }
+    public string GetPhoneNumber(){
+      return _phoneNumber;
+    }
+    public void SetPhoneNumber(string number){
+      _phoneNumber = number;
     }
 }
 }

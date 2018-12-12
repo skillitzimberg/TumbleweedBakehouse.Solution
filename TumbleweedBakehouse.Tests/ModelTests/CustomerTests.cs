@@ -22,14 +22,14 @@ namespace TumbleWeedBakeHouse.Tests
     [TestMethod]
     public void CustomerConstructor_CreatesIntanceOfCustomer_Customer()
     {
-      Customer newCustomer = new Customer("first", "last", 1, "email"," address", "city", "state", 3, 0);
+      Customer newCustomer = new Customer("first", "last", "1", "email"," address", "city", "state", 3, 0);
       Assert.AreEqual(typeof(Customer), newCustomer.GetType());
     }
     [TestMethod]
     public void GetFirstName_ReturnsFirstName_String()
     {
       string name = "chris";
-      Customer newCustomer = new Customer(name, "last", 1, "email"," address", "city", "state", 3, 0);
+      Customer newCustomer = new Customer(name, "last", "1", "email"," address", "city", "state", 3, 0);
       string result = newCustomer.GetFirstName();
       Assert.AreEqual(name, result);
     }
@@ -37,7 +37,7 @@ namespace TumbleWeedBakeHouse.Tests
     public void SetFirstName_SetsName_String()
     {
       string name = "chris";
-      Customer newCustomer = new Customer(name, "last", 1, "email"," address", "city", "state", 3, 0);
+      Customer newCustomer = new Customer(name, "last", "1", "email"," address", "city", "state", 3, 0);
       string updatedName = "jake";
       newCustomer.SetFirstName(updatedName);
       string result = newCustomer.GetFirstName();
@@ -47,7 +47,7 @@ namespace TumbleWeedBakeHouse.Tests
     public void GetLastName_ReturnsLastName_String()
     {
       string name = "rudnicky";
-      Customer newCustomer = new Customer("chris", name, 1, "email"," address", "city", "state", 3, 0);
+      Customer newCustomer = new Customer("chris", name, "1", "email"," address", "city", "state", 3, 0);
       string result = newCustomer.GetLastName();
       Assert.AreEqual(name, result);
     }
@@ -55,11 +55,29 @@ namespace TumbleWeedBakeHouse.Tests
     public void SetLastName_SetsName_String()
     {
       string name = "Rudnicky";
-      Customer newCustomer = new Customer("chris", name, 1, "email"," address", "city", "state", 3, 0);
+      Customer newCustomer = new Customer("chris", name, "1", "email"," address", "city", "state", 3, 0);
       string updatedName = "Morales";
       newCustomer.SetLastName(updatedName);
       string result = newCustomer.GetLastName();
       Assert.AreEqual(updatedName, result);
+    }
+    [TestMethod]
+    public void GetPhoneNumber_ReturnsPhoneNumber_String()
+    {
+      string num = "7575640970";
+      Customer newCustomer = new Customer("chris", "last", num, "email"," address", "city", "state", 3, 0);
+      string result = newCustomer.GetPhoneNumber();
+      Assert.AreEqual(num, result);
+    }
+    [TestMethod]
+    public void SetPhoneNumber_SetsPhoneNumber_String()
+    {
+      string num = "7575640970";
+      Customer newCustomer = new Customer("chris", "last", num, "email"," address", "city", "state", 3, 0);
+      string newNumber = "7039945979";
+      newCustomer.SetPhoneNumber(newNumber);
+      string result = newCustomer.GetPhoneNumber();
+      Assert.AreEqual(newNumber, result);
     }
   }
 }
