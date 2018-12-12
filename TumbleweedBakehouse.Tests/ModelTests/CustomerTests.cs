@@ -151,5 +151,23 @@ namespace TumbleWeedBakeHouse.Tests
       string result = newCustomer.GetState();
       Assert.AreEqual(newState, result);
     }
+    [TestMethod]
+    public void GetZip_ReturnsZipCode_Int()
+    {
+      int zip = 23188;
+      Customer newCustomer = new Customer("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , zip);
+      int result = newCustomer.GetZip();
+      Assert.AreEqual(zip, result);
+    }
+    [TestMethod]
+    public void SetZip_UpdatesZipCode_Int()
+    {
+      int zip = 23188;
+      Customer newCustomer = new Customer("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , zip);
+      int newZip = 97209;
+      newCustomer.SetZip(newZip);
+      int result = newCustomer.GetZip();
+      Assert.AreEqual(newZip, result);
+    }
   }
 }

@@ -71,5 +71,11 @@ namespace TumbleWeedBakeHouse.Models
     public void SetState(string newState){
       _state = newState;
     }
+    public int GetZip(){
+      return _zipCode;
+    }
+    public void SetZip(int newZip){
+      _zipCode = newZip;
+    }
 }
 }
