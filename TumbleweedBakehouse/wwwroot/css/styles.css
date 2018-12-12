@@ -21,13 +21,8 @@ nav {
   padding: 1em;
 }
 
-ul {
-  float: right;
-  margin-right: 2em;
-}
-
 li {
-  margin: 1em;
+  margin-right: 1em;
   display: inline ;
   list-style: none;
 }
@@ -40,10 +35,6 @@ span a {
 a {
   /* color: #d86767; */
   text-decoration: none;
-}
-
-h1, h2 {
-  /* color: #d86767; */
 }
 
 label {
