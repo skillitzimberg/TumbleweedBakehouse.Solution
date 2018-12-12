@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ValleyBread
+namespace TumbleweedBakehouse
 {
   public class Startup
   {
@@ -38,13 +38,13 @@ namespace ValleyBread
 
       app.Run(async (context) =>
       {
-          await context.Response.WriteAsync("ValleyBread: Something went wrong . . .");
+          await context.Response.WriteAsync("TumbleweedBakehouse: Something went wrong . . .");
       });
 
     }
   }
-  public static class DBConfiguration
-{
-  public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=sampledatabase;";
-}
+      public static class DBConfiguration
+    {
+      public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=tumbleweedbakehouse;";
+    }
 }

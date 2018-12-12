@@ -5,12 +5,22 @@ using System.Collections.Generic;
 using System;
 using ValleyBread.Models;
 
-namespace TumbleweedBakeHouse.Tests
+namespace TumbleweedBakeHouse.Tests : IDisposable
 {
-
   [TestClass]
   public class ProductTest
   {
+    
+   public void Dispose()
+    {
+      Client.ClearAll();
+    }
+
+    public CategoryTest()
+    {
+      DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=tumbleweedbakehouse_test;";
+    }
+
 
     [TestMethod]
     public void ProductConstructor_CreatesInstanceofProduct_Product()
@@ -23,7 +33,7 @@ namespace TumbleweedBakeHouse.Tests
     [TestMethod]
     public void Getall_GetEmptyList_List()
     {
-    
+
       List<Product> productList = new List<Product>{};
       List<Product> result = Product.GetAll();
 
