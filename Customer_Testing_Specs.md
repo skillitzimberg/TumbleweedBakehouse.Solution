@@ -56,7 +56,7 @@ Any method that starts with`Get()` will simple return a property of the class.
 
 #### CustomerTests.cs
     [TestMethod]
-    public void GetFirstName()
+    public void GetFirstName_ReturnsFirstName_String()
     {
       string name = "chris";
       Customer newCustomer = new Customer(name, "last", 1, "email"," address", "city", "state", 3, 0);

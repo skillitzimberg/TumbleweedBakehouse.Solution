@@ -3,13 +3,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System;
-using ValleyBread.Models;
+using TumbleWeedBakeHouse.Models;
 
-namespace ValleyBread.Tests
+namespace TumbleWeedBakeHouse.Tests
 {
   [TestClass]
   public class CustomerTests
-   // : IDisposable
+  // : IDisposable
   {
     // public void Dispose()
     // {
@@ -26,12 +26,12 @@ namespace ValleyBread.Tests
       Assert.AreEqual(typeof(Customer), newCustomer.GetType());
     }
     [TestMethod]
-    public void GetFirstName()
+    public void GetFirstName_ReturnsFirstName_String()
     {
       string name = "chris";
       Customer newCustomer = new Customer(name, "last", 1, "email"," address", "city", "state", 3, 0);
-       string result = newCustomer.GetFirstName();
-       Assert.AreEqual(name, result);
+      string result = newCustomer.GetFirstName();
+      Assert.AreEqual(name, result);
     }
     [TestMethod]
     public void SetFirstName_SetsName_String()
@@ -41,6 +41,24 @@ namespace ValleyBread.Tests
       string updatedName = "jake";
       newCustomer.SetFirstName(updatedName);
       string result = newCustomer.GetFirstName();
+      Assert.AreEqual(updatedName, result);
+    }
+    [TestMethod]
+    public void GetLastName_ReturnsLastName_String()
+    {
+      string name = "rudnicky";
+      Customer newCustomer = new Customer("chris", name, 1, "email"," address", "city", "state", 3, 0);
+      string result = newCustomer.GetLastName();
+      Assert.AreEqual(name, result);
+    }
+    [TestMethod]
+    public void SetLastName_SetsName_String()
+    {
+      string name = "Rudnicky";
+      Customer newCustomer = new Customer("chris", name, 1, "email"," address", "city", "state", 3, 0);
+      string updatedName = "Morales";
+      newCustomer.SetLastName(updatedName);
+      string result = newCustomer.GetLastName();
       Assert.AreEqual(updatedName, result);
     }
   }

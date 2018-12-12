@@ -2,7 +2,7 @@ using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System;
 
-namespace ValleyBread.Models
+namespace TumbleWeedBakeHouse.Models
 {
 
   public class Customer
@@ -32,9 +32,14 @@ namespace ValleyBread.Models
     public string GetFirstName() {
       return _firstName;
     }
-    public void SetFirstName(string newName)
-     {
+    public void SetFirstName(string newName){
       _firstName = newName;
+    }
+    public string GetLastName(){
+      return _lastName ;
+    }
+    public void SetLastName(string newName){
+      _lastName = newName;
     }
 }
 }
