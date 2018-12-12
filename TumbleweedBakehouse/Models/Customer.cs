@@ -29,5 +29,12 @@ namespace ValleyBread.Models
         _zipCode = zip;
         _id = id;
     }
+    public string GetFirstName() {
+      return _firstName;
+    }
+    public void SetFirstName(string newName)
+     {
+      _firstName = newName;
+    }
 }
 }

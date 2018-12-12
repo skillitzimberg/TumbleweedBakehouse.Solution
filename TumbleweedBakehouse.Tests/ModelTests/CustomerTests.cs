@@ -23,6 +23,25 @@ namespace ValleyBread.Tests
     public void CustomerConstructor_CreatesIntanceOfCustomer_Customer()
     {
       Customer newCustomer = new Customer("first", "last", 1, "email"," address", "city", "state", 3, 0);
+      Assert.AreEqual(typeof(Customer), newCustomer.GetType());
+    }
+    [TestMethod]
+    public void GetFirstName()
+    {
+      string name = "chris";
+      Customer newCustomer = new Customer(name, "last", 1, "email"," address", "city", "state", 3, 0);
+       string result = newCustomer.GetFirstName();
+       Assert.AreEqual(name, result);
+    }
+    [TestMethod]
+    public void SetFirstName_SetsName_String()
+    {
+      string name = "chris";
+      Customer newCustomer = new Customer(name, "last", 1, "email"," address", "city", "state", 3, 0);
+      string updatedName = "jake";
+      newCustomer.SetFirstName(updatedName);
+      string result = newCustomer.GetFirstName();
+      Assert.AreEqual(updatedName, result);
     }
   }
 }
