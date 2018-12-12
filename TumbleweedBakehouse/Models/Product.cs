@@ -64,6 +64,55 @@ namespace ValleyBread.Models
       _price = price;
     }
 
+    public int GetId()
+    {
+      return _id;
+    }
+
+    public static List<Product> GetAll()
+    {
+      List<Product> productList = new List<Product>{};
+
+      return productList;
+    }
+
+    public void Save()
+    {
+
+    }
+
+    public static Product Find()
+    {
+      return 0;
+    }
+
+    public void Edit(string newProduct)
+    {
+
+    }
+
+    public static void ClearAll()
+    {
+
+    }
+
+
+
+
+    // public override bool Equals(System.Object otherProduct)
+    // {
+    //   if (!(otherProduct is Product))
+    //   {
+    //     return false;
+    //   }
+    //   else
+    //   {
+    //     Product newProduct = (Product) otherClient;
+    //     bool idEquality = this.GetId() == newProduct.GetId();
+    //     bool customerEquality = this.GetProductName() == newProduct.GetProductName();
+    //     bool stylistEquality = this.GetStylistId() == newClient.GetStylistId();
+    //     return (idEquality && customerEquality && stylistEquality);
+    //   }
 
 
   }
