@@ -5,7 +5,7 @@ using System;
 namespace ValleyBread.Models
 {
 
-  public class YourClass
+  public class Product
   {
 
   }
