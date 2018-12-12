@@ -1,8 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.AspNetCore.Mvc;
-using ValleyBread.Controllers;
+using TumbleweedBakehouse.Controllers;
 
-namespace ValleyBread.Tests
+namespace TumbleweedBakehouse.Tests
 {
     [TestClass]
     public class ProductControllerTest

@@ -2,7 +2,7 @@ using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System;
 
-namespace ValleyBread.Models
+namespace TumbleweedBakehouse.Models
 {
 
   public class Product

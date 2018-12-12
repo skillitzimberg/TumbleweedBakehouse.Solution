@@ -3,8 +3,8 @@ bin/
 *.sqlite
 *.lock
 *.ide
-/.vs/ValleyBread.Solution/v15/Server/sqlite3/storage.ide-wal
-/.vs/ValleyBread.Solution/v15/Server/sqlite3/storage.ide-shm
+/.vs/TumbleweedBakehouse.Solution/v15/Server/sqlite3/storage.ide-wal
+/.vs/TumbleweedBakehouse.Solution/v15/Server/sqlite3/storage.ide-shm
 *.json
 *.user
 *.suo
