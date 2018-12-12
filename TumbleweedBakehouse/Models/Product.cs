@@ -79,21 +79,21 @@ namespace TumbleweedBakehouse.Models
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       while(rdr.Read())
       {
-        int Id = rdr.GetInt32(0);
-        string productName = rdr.GetString(1);
+        int id = rdr.GetInt32(0);
+        string name = rdr.GetString(1);
         string description = rdr.GetString(2);
-        bool availability = rdr.Getbool(3);
-        int price = rdr.GetInt32(4);
-        string productType= rdr.GetString(5);
-        Product newClient = new Product(productName, productType, description, availability, price, id);
-        allClients.Add(newClient);
+        bool availability = rdr.GetBoolean(3);
+        float price = rdr.GetFloat(4);
+        string type= rdr.GetString(5);
+        Product newProduct = new Product(name, type, description, availability, price, id);
+        allProducts.Add(newProduct);
       }
       conn.Close();
       if (conn != null)
       {
         conn.Dispose();
       }
-      return allClients;
+      return allProducts;
     }
 
     public void Save()
@@ -101,32 +101,19 @@ namespace TumbleweedBakehouse.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO products (name, description, availability, price, type) VALUES (@name, @description, @availability, @price,
+      cmd.CommandText = @"INSERT INTO products (Name, description, availability, price, producttype) VALUES (@name, @description, @availability, @price,
       @type);";
-      MySqlParameter breadname = new MySqlParameter();
-      breadname.ParameterName = "@name";
-      breadname.Value = this._name;
-      cmd.Parameters.Add(name;
 
-      MySqlParameter newdescription = new MySqlParameter();
-      newdescription.ParameterName = "@description";
-      newdescription.Value = this._description;
-      cmd.Parameters.Add(description);
+      cmd.Parameters.AddWithValue("@name", this._name);
 
-      MySqlParameter newAvailability = new MySqlParameter();
-      newAvailability.ParameterName = "@availability";
-      newAvailability.Value = this._availability;
-      cmd.Parameters.Add(availability);
+      cmd.Parameters.AddWithValue("@description", this._description);
 
-      MySqlParameter newPrice = new MySqlParameter();
-      newPrice.ParameterName = "@price";
-      newPrice.Value = this._price;
-      cmd.Parameters.Add(price);
+      cmd.Parameters.AddWithValue("@availability", this._availability);
 
-      MySqlParameter newType = new MySqlParameter();
-      newType.ParameterName = "@type";
-      newType.Value = this._type;
-      cmd.Parameters.Add(type);
+      cmd.Parameters.AddWithValue("@price", this._price);
+
+      cmd.Parameters.AddWithValue("@type", this._type);
+
       cmd.ExecuteNonQuery();
       _id = (int) cmd.LastInsertedId;
       conn.Close();
@@ -206,8 +193,6 @@ namespace TumbleweedBakehouse.Models
     }
 
 
-
-
     public override bool Equals(System.Object otherProduct)
     {
       if (!(otherProduct is Product))
@@ -218,10 +203,14 @@ namespace TumbleweedBakehouse.Models
       {
         Product newProduct = (Product) otherProduct;
         bool idEquality = this.GetId() == newProduct.GetId();
-        bool productEquality = this.GetProductName() == newProduct.GetProductName();
-        // bool stylistEquality = this.GetStylistId() == newClient.GetStylistId();
-        return (idEquality && productEquality );
+        bool nameEquality = this.GetProductName() == newProduct.GetProductName();
+        bool typeEquality = this.GetProductType() == newProduct.GetProductType();
+        bool descriptionEquality = this.GetDescription() == newProduct.GetDescription();
+        bool priceEquality = this.GetPrice() == newProduct.GetPrice();
+
+        return (idEquality && nameEquality && typeEquality && descriptionEquality && priceEquality);
       }
+    }
 
 
   }
