@@ -22,6 +22,7 @@ namespace TumbleweedBakehouse.Models
             this.OrderNumber = orderNumber;
             this.ReceivedDate = orderReceivedDate;
             this.Customer_id = customer_id;
+            this.PickupLocation = "";
         }
 
         public override bool Equals(System.Object otherOrder)
@@ -38,7 +39,7 @@ namespace TumbleweedBakehouse.Models
                 bool receivedDateEquality = this.ReceivedDate.Equals(newOrder.ReceivedDate);
                 bool requestedDateEquality = this.RequestedPickupDate.Equals(newOrder.RequestedPickupDate);
                 bool deliveredDateEquality = this.DeliveredDate.Equals(newOrder.DeliveredDate);
-                bool pickupLocationEquality = this.PickupLocation.Equals(newOrder.PickupLocation);
+                bool pickupLocationEquality = this.PickupLocation == newOrder.PickupLocation;
                 bool customer_idEquality = this.Customer_id.Equals(newOrder.Customer_id);
                 return (idEquality && orderNumberEquality && receivedDateEquality && requestedDateEquality && deliveredDateEquality && pickupLocationEquality && customer_idEquality);
             }

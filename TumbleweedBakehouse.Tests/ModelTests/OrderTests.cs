@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System;
 using TumbleweedBakehouse.Models;
+using System.Diagnostics;
 
 namespace TumbleweedBakehouse.Tests 
 {
@@ -81,19 +82,16 @@ namespace TumbleweedBakehouse.Tests
             DateTime testReceivedDate = DateTime.Now;
             int testCustomer_Id = 1;
 
-            //Act
             Order testOrder = new Order(testOrderNumber, testReceivedDate, testCustomer_Id);
             testOrder.Save();
+
+            //Act
             Order.ClearAll();
             List<Order> testList = Order.GetAll();
-            List<Order> result = new List<Order> { };
 
             
             //Assert
-            Assert.AreEqual(testList, result);
-
+            Assert.AreEqual(testList.Count, 0);
         }
-
-
   }
 }
