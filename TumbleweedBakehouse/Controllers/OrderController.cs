@@ -7,7 +7,7 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/order")]
         public ActionResult Index()
         {
-          return new EmptyResult();
+          return View();
         }
 
     }
