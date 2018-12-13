@@ -4,10 +4,10 @@ namespace TumbleweedBakehouse.Controllers
 {
     public class OrderController : Controller
     {
-        [HttpGet("/yourclass")]
+        [HttpGet("/order")]
         public ActionResult Index()
         {
-          return View();
+          return new EmptyResult();
         }
 
     }
