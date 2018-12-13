@@ -182,6 +182,7 @@ namespace TumbleweedBakehouse.Tests
             int testCustomer_Id = 1;
             Order testOrder = new Order(testOrderNumber, testOrderReceivedDate, testRequestedPickupDate, testDeliveredDate, testPickupLocation, testCustomer_Id);
             testOrder.Save();
+            int resultID = testOrder.Id;
 
             //Act
             int testOrderNumber2 = 2;
@@ -191,7 +192,7 @@ namespace TumbleweedBakehouse.Tests
             string testPickupLocation2 = "Farmers Market 2";
             testOrder.Edit(testOrderNumber2, testOrderReceivedDate2, testRequestedPickupDate2, testDeliveredDate2, testPickupLocation2);
 
-            Order result = new Order(testOrderNumber2, testOrderReceivedDate2, testRequestedPickupDate2, testDeliveredDate2, testPickupLocation2, testCustomer_Id);
+            Order result = new Order(testOrderNumber2, testOrderReceivedDate2, testRequestedPickupDate2, testDeliveredDate2, testPickupLocation2, testCustomer_Id, resultID);
 
             //Assert
             Assert.AreEqual(result, testOrder);

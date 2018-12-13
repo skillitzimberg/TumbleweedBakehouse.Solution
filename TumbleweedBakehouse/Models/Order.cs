@@ -34,7 +34,7 @@ namespace TumbleweedBakehouse.Models
             this.DeliveredDate = deliveredDate;
             this.PickupLocation = pickupLocation;
             this.Customer_id = customer_id;
-            this.PickupLocation = "";
+            this.PickupLocation = pickupLocation;
         }
 
         public override bool Equals(System.Object otherOrder)
@@ -195,16 +195,9 @@ namespace TumbleweedBakehouse.Models
             //MySqlConnection conn = DB.Connection();
             //conn.Open();
             //var cmd = conn.CreateCommand() as MySqlCommand;
-            //cmd.CommandText = @"UPDATE orders 
-            //                        SET 
-            //                        orderNumber = @newOrderNumber,  
-            //                        receivedDate = @newReceivedDate,  
-            //                        requestedPickupDate = @newRequestedPickupDate,  
-            //                        deliveredDate = @newDeliveredDate,  
-            //                        pickupLocation = @newPickupLocation,  
-            //                        WHERE 
-            //                        id = @searchId";
-                                    
+
+            //cmd.CommandText = @"UPDATE orders SET orderNumber = @newOrderNumber, receivedDate = @newReceivedDate, requestedPickupDate = @newRequestedPickupDate, deliveredDate = @newDeliveredDate, pickupLocation = @newPickupLocation WHERE id = @searchId;";
+
             //cmd.Parameters.AddWithValue("@searchId", this.Id);
             //cmd.Parameters.AddWithValue("@newOrderNumber", newOrderNumber);
             //cmd.Parameters.AddWithValue("@newReceivedDate", newReceivedDate);
@@ -218,6 +211,7 @@ namespace TumbleweedBakehouse.Models
             //this.RequestedPickupDate = newRequestedPickupDate;
             //this.DeliveredDate = newDeliveredDate;
             //this.PickupLocation = newPickupLocation;
+            //this.Id = this.Id;
 
             //conn.Close();
             //if (conn != null)
