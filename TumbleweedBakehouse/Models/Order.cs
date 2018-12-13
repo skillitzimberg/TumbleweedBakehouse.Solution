@@ -149,41 +149,40 @@ namespace TumbleweedBakehouse.Models
 
         public static Order Find(int searchId) //READ: Finds a particular order given order Id
         {
-            //MySqlConnection conn = DB.Connection();
-            //conn.Open();
-            //MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            //cmd.CommandText = @"SELECT * FROM orders WHERE id = (@searchId);";
-            //cmd.Parameters.AddWithValue("@searchId", searchId);
-            //MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM orders WHERE id = (@searchId);";
+            cmd.Parameters.AddWithValue("@searchId", searchId);
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
 
-            //int orderId = 0;
-            //int OrderNumber = 0;
-            //DateTime ReceivedDate = DateTime.Now;
-            //DateTime RequestedPickupDate;
-            //DateTime DeliveredDate;
-            //string PickupLocation = "";
-            //int Customer_id = 0;
+            int orderId = 0;
+            int OrderNumber = 0;
+            DateTime ReceivedDate = new DateTime();
+            DateTime RequestedPickupDate = new DateTime();
+            DateTime DeliveredDate = new DateTime();
+            string PickupLocation = "";
+            int Customer_id = 0;
 
-            //while (rdr.Read())
-            //{
-            //    orderId = rdr.GetInt32(0);
-            //    OrderNumber = rdr.GetInt32(1);
-            //    ReceivedDate = rdr.GetDateTime(2);
-            //    RequestedPickupDate = rdr.GetDateTime(3);
-            //    DeliveredDate = rdr.GetDateTime(4);
-            //    PickupLocation = rdr.GetString(5);
-            //    Customer_id = rdr.GetInt32(6);
+            while (rdr.Read())
+            {
+                orderId = rdr.GetInt32(0);
+                OrderNumber = rdr.GetInt32(1);
+                ReceivedDate = rdr.GetDateTime(2);
+                RequestedPickupDate = rdr.GetDateTime(3);
+                DeliveredDate = rdr.GetDateTime(4);
+                PickupLocation = rdr.GetString(5);
+                Customer_id = rdr.GetInt32(6);
 
-            //}
-            //Order newOrder = new Order(OrderNumber, ReceivedDate, Customer_id, orderId);
-            //conn.Close();
-            //if (conn != null)
-            //{
-            //    conn.Dispose();
-            //}
-            Order dummyOrder = new Order(1, DateTime.Now, 1);
+            }
+            Order newOrder = new Order(OrderNumber, ReceivedDate, RequestedPickupDate, DeliveredDate, PickupLocation, Customer_id, orderId);
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
 
-            return dummyOrder;
+            return newOrder;
         }
 
         public static void ClearAll() //DELETE: Deletes ALL orders ((CAUTION!!!))
