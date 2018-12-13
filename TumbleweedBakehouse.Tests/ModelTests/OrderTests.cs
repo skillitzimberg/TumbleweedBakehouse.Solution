@@ -48,7 +48,7 @@ namespace TumbleweedBakehouse.Tests
             //Act
             Order testOrder1 = new Order(testOrderNumber, testReceivedDate, testCustomer_Id);
             Order testOrder2 = new Order(testOrderNumber, testReceivedDate, testCustomer_Id);
-
+            
             //Assert
             Assert.AreEqual(testOrder1, testOrder2);
 
@@ -70,8 +70,6 @@ namespace TumbleweedBakehouse.Tests
 
             //Assert
             CollectionAssert.AreEqual(result, testList);
-
-
         }
 
         [TestMethod]

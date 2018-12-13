@@ -45,12 +45,51 @@ namespace TumbleweedBakehouse.Models
                 Order newOrder = (Order)otherOrder;
                 bool idEquality = this.Id.Equals(newOrder.Id);
                 bool orderNumberEquality = this.OrderNumber.Equals(newOrder.OrderNumber);
-                //bool receivedDateEquality = this.ReceivedDate.Equals(newOrder.ReceivedDate);
-               // bool requestedDateEquality = this.RequestedPickupDate.Equals(newOrder.RequestedPickupDate);
-                //bool deliveredDateEquality = this.DeliveredDate.Equals(newOrder.DeliveredDate);
+
+                bool receivedDateEqualityYear = this.ReceivedDate.Year.Equals(newOrder.ReceivedDate.Year);
+                bool receivedDateEqualityMonth = this.ReceivedDate.Month.Equals(newOrder.ReceivedDate.Month);
+                bool receivedDateEqualityDay = this.ReceivedDate.Day.Equals(newOrder.ReceivedDate.Day);
+                bool receivedDateEqualityHour = this.ReceivedDate.Hour.Equals(newOrder.ReceivedDate.Hour);
+                bool receivedDateEqualityMinute = this.ReceivedDate.Minute.Equals(newOrder.ReceivedDate.Minute);
+
+                bool requestedDateEqualityYear = this.RequestedPickupDate.Year.Equals(newOrder.RequestedPickupDate.Year);
+                bool requestedDateEqualityMonth = this.RequestedPickupDate.Month.Equals(newOrder.RequestedPickupDate.Month);
+                bool requestedDateEqualityDay = this.RequestedPickupDate.Day.Equals(newOrder.RequestedPickupDate.Day);
+                bool requestedDateEqualityHour = this.RequestedPickupDate.Hour.Equals(newOrder.RequestedPickupDate.Hour);
+                bool requestedDateEqualityMinute = this.RequestedPickupDate.Minute.Equals(newOrder.RequestedPickupDate.Minute);
+                
+                bool deliveredDateEqualityYear = this.DeliveredDate.Year.Equals(newOrder.DeliveredDate.Year);
+                bool deliveredDateEqualityMonth = this.DeliveredDate.Month.Equals(newOrder.DeliveredDate.Month);
+                bool deliveredDateEqualityDay = this.DeliveredDate.Day.Equals(newOrder.DeliveredDate.Day);
+                bool deliveredDateEqualityHour = this.DeliveredDate.Hour.Equals(newOrder.DeliveredDate.Hour);
+                bool deliveredDateEqualityMinute = this.DeliveredDate.Minute.Equals(newOrder.DeliveredDate.Minute);
+                               
                 bool pickupLocationEquality = this.PickupLocation == newOrder.PickupLocation;
                 bool customer_idEquality = this.Customer_id.Equals(newOrder.Customer_id);
-                return (idEquality && orderNumberEquality && /*receivedDateEquality && requestedDateEquality && deliveredDateEquality && */ pickupLocationEquality && customer_idEquality);
+
+                return (idEquality && 
+                    orderNumberEquality &&
+
+                    receivedDateEqualityYear &&
+                    receivedDateEqualityMonth &&
+                    receivedDateEqualityDay &&
+                    receivedDateEqualityHour &&
+                    receivedDateEqualityMinute &&
+
+                    requestedDateEqualityYear &&
+                    requestedDateEqualityMonth &&
+                    requestedDateEqualityDay &&
+                    requestedDateEqualityHour &&
+                    requestedDateEqualityMinute && 
+
+                    deliveredDateEqualityYear &&
+                    deliveredDateEqualityMonth &&
+                    deliveredDateEqualityDay &&
+                    deliveredDateEqualityHour &&
+                    deliveredDateEqualityMinute && 
+
+                    pickupLocationEquality && 
+                    customer_idEquality);
             }
         }
 
@@ -120,9 +159,9 @@ namespace TumbleweedBakehouse.Models
             int orderId = 0;
             int OrderNumber = 0;
             DateTime ReceivedDate = DateTime.Now;
-            //DateTime RequestedPickupDate = "";
-            //DateTime DeliveredDate = "";
-            //string PickupLocation = "";
+            DateTime RequestedPickupDate;
+            DateTime DeliveredDate;
+            string PickupLocation = "";
             int Customer_id = 0;
 
             while (rdr.Read())
@@ -130,9 +169,9 @@ namespace TumbleweedBakehouse.Models
                 orderId = rdr.GetInt32(0);
                 OrderNumber = rdr.GetInt32(1);
                 ReceivedDate = rdr.GetDateTime(2);
-                //RequestedPickupDate = rdr.GetDateTime(3);
-                //DeliveredDate = rdr.GetDateTime(4);
-                //PickupLocation = rdr.GetString(5);
+                RequestedPickupDate = rdr.GetDateTime(3);
+                DeliveredDate = rdr.GetDateTime(4);
+                PickupLocation = rdr.GetString(5);
                 Customer_id = rdr.GetInt32(6);
 
             }

@@ -77,9 +77,98 @@ namespace TumbleweedBakehouse.Models
     public void SetZip(int newZip){
       _zipCode = newZip;
     }
+    public int GetId(){
+      return _id;
+    }
     public string FirstLast(){
       string firstLast = _firstName + " " + _lastName;
       return firstLast;
+    }
+    public static List<Customer> GetAll(){
+      List<Customer> allCustomers = new List<Customer> {};
+     MySqlConnection conn = DB.Connection();
+     conn.Open();
+     MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+     cmd.CommandText = @"SELECT * FROM customers;";
+     MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+     while(rdr.Read())
+     {
+       int customerId = rdr.GetInt32(0);
+       string customerFirstName = rdr.GetString(1);
+       string customerLastName = rdr.GetString(2);
+       string customerPhoneNumber = rdr.GetString(3);
+       string customerEmail = rdr.GetString(4);
+       string customerAddress = rdr.GetString(5);
+       string customerCity = rdr.GetString(6);
+       string customerState = rdr.GetString(7);
+       int customerZip = rdr.GetInt32(8);
+       Customer newCustomer = new Customer(customerFirstName, customerLastName, customerPhoneNumber, customerEmail, customerAddress, customerCity, customerState, customerZip, customerId);
+       allCustomers.Add(newCustomer);
+     }
+     conn.Close();
+     if(conn != null)
+     {
+       conn.Dispose();
+     }
+     return allCustomers;
+    }
+
+    public override bool Equals(System.Object otherCustomer){
+      if(!(otherCustomer is Customer))
+      {
+        return false;
+      }
+      else
+      {
+        Customer newCustomer = (Customer) otherCustomer;
+        bool idEquality = (this.GetId() == newCustomer.GetId());
+        bool firstNameEquality = (this.GetFirstName() == newCustomer.GetFirstName());
+        bool lastNameEquality = (this.GetLastName() == newCustomer.GetLastName());
+        bool phoneNumEquality = (this.GetPhoneNumber() == newCustomer.GetPhoneNumber());
+        bool emailEquality = (this.GetEmail() == newCustomer.GetEmail());
+        bool addressEquality = (this.GetAddress() == newCustomer.GetAddress());
+        bool cityEquality = (this.GetCity() == newCustomer.GetCity());
+        bool stateEquality = (this.GetState() == newCustomer.GetState());
+        bool zipEquality = (this.GetZip()== newCustomer.GetZip());
+        return (idEquality && firstNameEquality && lastNameEquality && phoneNumEquality && emailEquality && addressEquality && cityEquality && stateEquality && zipEquality);
+      }
+    }
+    public void Save()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText =@"INSERT INTO customers (firstName, lastName, phoneNumber, email, address, city, state, zipcode) VALUES (@CustomerFirstName, @CustomerLastName, @CustomerPhoneNumber, @CustomerEmail, @CustomerAddress, @CustomerCity, @CustomerState, @CustomerZipCode);";
+      cmd.Parameters.AddWithValue("@CustomerFirstName",this._firstName);
+      cmd.Parameters.AddWithValue("@CustomerLastName",this._lastName);
+      cmd.Parameters.AddWithValue("@CustomerPhoneNumber",this._phoneNumber);
+      cmd.Parameters.AddWithValue("@CustomerEmail",this._email);
+      cmd.Parameters.AddWithValue("@CustomerAddress",this._homeAddress);
+      cmd.Parameters.AddWithValue("@CustomerCity",this._city);
+      cmd.Parameters.AddWithValue("@CustomerState",this._state);
+      cmd.Parameters.AddWithValue("@CustomerZipCode",this._zipCode);
+      cmd.ExecuteNonQuery();
+      _id=(int)cmd.LastInsertedId;
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+
+
+
+    public static void ClearAll(){
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM customers;";
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
     }
 }
 }
