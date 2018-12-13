@@ -183,6 +183,13 @@ namespace TumbleweedBakehouse.Tests
       CollectionAssert.AreEqual(newCustomerList, result );
     }
     [TestMethod]
+    public void Equals_ReturnsTrueIfPropertiesAreTheSame_Customer()
+    {
+      Customer newCustomer1 = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      Customer newCustomer2 = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      Assert.AreEqual(newCustomer1, newCustomer2);
+    }
+    [TestMethod]
     public void Save_SavesToDataBase_CustomerList()
     {
       Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);

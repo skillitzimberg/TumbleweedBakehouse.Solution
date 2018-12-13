@@ -200,7 +200,28 @@ To **pass** this test, the code will connect to our database and will not return
 ## Public Override Bool Equals
 This method is very important because it will allow C# to view two identical objects as similar instead of two different objects.
 
+    public override bool Equals(System.Object otherCustomer){
+      if(!(otherCustomer is Customer))
+      {
+        return false;
+      }
+      else
+      {
+        Customer newCustomer = (Customer) otherCustomer;
+        bool idEquality = (this.GetId() == newCustomer.GetId());
+        bool firstNameEquality = (this.GetFirstName() == newCustomer.GetFirstName());
+        bool lastNameEquality = (this.GetLastName() == newCustomer.GetLastName());
+        bool phoneNumEquality = (this.GetPhoneNumber() == newCustomer.GetPhoneNumber());
+        bool emailEquality = (this.GetEmail() == newCustomer.GetEmail());
+        bool addressEquality = (this.GetAddress() == newCustomer.GetAddress());
+        bool cityEquality = (this.GetCity() == newCustomer.GetCity());
+        bool stateEquality = (this.GetState() == newCustomer.GetState());
+        bool zipEquality = (this.GetZip()== newCustomer.GetZip());
+        return (idEquality && firstNameEquality && lastNameEquality && phoneNumEquality && emailEquality && addressEquality && cityEquality && stateEquality && zipEquality);
+      }
+    }
 
+To test this method:
 
 
 ---
@@ -228,3 +249,49 @@ To **fail** this test don't include code for the save method. this is because vo
     {
 
     }
+
+To ** pass** this test write the following code:
+
+    public void Save()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText =@"INSERT INTO customers (firstName, lastName, phoneNumber, email, address, city, state, zipcode) VALUES (@CustomerFirstName, @CustomerLastName, @CustomerPhoneNumber, @CustomerEmail, @CustomerAddress, @CustomerCity, @CustomerState, @CustomerZipCode);";
+      cmd.Parameters.AddWithValue("@CustomerFirstName",this._firstName);
+      cmd.Parameters.AddWithValue("@CustomerLastName",this._lastName);
+      cmd.Parameters.AddWithValue("@CustomerPhoneNumber",this._phoneNumber);
+      cmd.Parameters.AddWithValue("@CustomerEmail",this._email);
+      cmd.Parameters.AddWithValue("@CustomerAddress",this._homeAddress);
+      cmd.Parameters.AddWithValue("@CustomerCity",this._city);
+      cmd.Parameters.AddWithValue("@CustomerState",this._state);
+      cmd.Parameters.AddWithValue("@CustomerZipCode",this._zipCode);
+      cmd.ExecuteNonQuery();
+      _id=(int)cmd.LastInsertedId;
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+
+### Save_AssignsIdToObject_Id()
+
+#### CustomerTests.cs
+
+    [TestMethod]
+    public void Save_AssignsIdToObject_Id()
+    {
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      newCustomer.Save();
+      Customer savedCustomer = Customer.GetAll()[0];
+      int result = savedCustomer.GetId();
+      int testId = newCustomer.GetId();
+      Assert.AreEqual(result, testId);
+    }
+
+ To **fail** this test, we can remove the line of code reading  `_id=(int)cmd.LastInsertedId;`  
+
+ To **pass** this test, replace the above statement.
+
+ ---
