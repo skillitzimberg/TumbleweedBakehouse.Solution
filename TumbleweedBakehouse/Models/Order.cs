@@ -96,8 +96,8 @@ namespace TumbleweedBakehouse.Models
             }
         }
 
-
-        public void Save() //CREATE: Creates a new Order
+        //CREATE: Creates a new Order
+        public void Save() 
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -119,7 +119,8 @@ namespace TumbleweedBakehouse.Models
             }
         }
 
-        public static List<Order> GetAll() //READ: Gets a list of all orders
+        //READ: Gets a list of all orders
+        public static List<Order> GetAll() 
         {
             List<Order> allOrders = new List<Order> { };
             MySqlConnection conn = DB.Connection();
@@ -147,7 +148,8 @@ namespace TumbleweedBakehouse.Models
             return allOrders;
         }
 
-        public static Order Find(int searchId) //READ: Finds a particular order given order Id
+        //READ: Finds a particular order given order Id
+        public static Order Find(int searchId) 
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -175,7 +177,9 @@ namespace TumbleweedBakehouse.Models
                 Customer_id = rdr.GetInt32(6);
 
             }
+
             Order newOrder = new Order(OrderNumber, ReceivedDate, RequestedPickupDate, DeliveredDate, PickupLocation, Customer_id, orderId);
+
             conn.Close();
             if (conn != null)
             {
@@ -185,7 +189,46 @@ namespace TumbleweedBakehouse.Models
             return newOrder;
         }
 
-        public static void ClearAll() //DELETE: Deletes ALL orders ((CAUTION!!!))
+        //UPDATE: This will edit an existing order
+        public void Edit(int newOrderNumber, DateTime newReceivedDate, DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation) 
+        {
+            //MySqlConnection conn = DB.Connection();
+            //conn.Open();
+            //var cmd = conn.CreateCommand() as MySqlCommand;
+            //cmd.CommandText = @"UPDATE orders 
+            //                        SET 
+            //                        orderNumber = @newOrderNumber,  
+            //                        receivedDate = @newReceivedDate,  
+            //                        requestedPickupDate = @newRequestedPickupDate,  
+            //                        deliveredDate = @newDeliveredDate,  
+            //                        pickupLocation = @newPickupLocation,  
+            //                        WHERE 
+            //                        id = @searchId";
+                                    
+            //cmd.Parameters.AddWithValue("@searchId", this.Id);
+            //cmd.Parameters.AddWithValue("@newOrderNumber", newOrderNumber);
+            //cmd.Parameters.AddWithValue("@newReceivedDate", newReceivedDate);
+            //cmd.Parameters.AddWithValue("@newRequestedPickupDate", newRequestedPickupDate);
+            //cmd.Parameters.AddWithValue("@newDeliveredDate", newDeliveredDate);
+            //cmd.Parameters.AddWithValue("@newPickupLocation", newPickupLocation);
+            //cmd.ExecuteNonQuery();
+
+            //this.OrderNumber = newOrderNumber;
+            //this.ReceivedDate = newReceivedDate;
+            //this.RequestedPickupDate = newRequestedPickupDate;
+            //this.DeliveredDate = newDeliveredDate;
+            //this.PickupLocation = newPickupLocation;
+
+            //conn.Close();
+            //if (conn != null)
+            //{
+            //    conn.Dispose();
+            //}
+        }
+
+
+        //DELETE: Deletes ALL orders ((CAUTION!!!))
+        public static void ClearAll() 
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -198,5 +241,7 @@ namespace TumbleweedBakehouse.Models
                 conn.Dispose();
             }
         }
+
+
     }
 }

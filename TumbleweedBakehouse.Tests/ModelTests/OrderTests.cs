@@ -154,11 +154,48 @@ namespace TumbleweedBakehouse.Tests
             Order testOrder = new Order(testOrderNumber, testOrderReceivedDate, testRequestedPickupDate, testDeliveredDate, testPickupLocation, testCustomer_Id);
             testOrder.Save();
 
+            int testOrderNumber2 = 1;
+            DateTime testOrderReceivedDate2 = DateTime.Now;
+            DateTime testRequestedPickupDate2 = DateTime.Parse("12/15/2018");
+            DateTime testDeliveredDate2 = DateTime.Parse("12/16/2018");
+            string testPickupLocation2 = "Farmers Market 2";
+            int testCustomer_Id2 = 1;
+            Order testOrder2 = new Order(testOrderNumber2, testOrderReceivedDate2, testRequestedPickupDate2, testDeliveredDate2, testPickupLocation2, testCustomer_Id2);
+            testOrder2.Save();
+
             //Act
-            Order result = Order.Find(testOrder.Id);
+            Order result = Order.Find(testOrder2.Id);
 
             //Assert
-            Assert.AreEqual(testOrder, result);
+            Assert.AreEqual(testOrder2, result);
+        }
+
+        [TestMethod]
+        public void Edit_UpdatesAnExistingOrder_Order()
+        {
+            //Arrange
+            int testOrderNumber = 1;
+            DateTime testOrderReceivedDate = DateTime.Now;
+            DateTime testRequestedPickupDate = DateTime.Parse("12/15/2018");
+            DateTime testDeliveredDate = DateTime.Parse("12/16/2018");
+            string testPickupLocation = "Farmers Market 1";
+            int testCustomer_Id = 1;
+            Order testOrder = new Order(testOrderNumber, testOrderReceivedDate, testRequestedPickupDate, testDeliveredDate, testPickupLocation, testCustomer_Id);
+            testOrder.Save();
+
+            //Act
+            int testOrderNumber2 = 2;
+            DateTime testOrderReceivedDate2 = testOrderReceivedDate.AddHours(2);
+            DateTime testRequestedPickupDate2 = testRequestedPickupDate.AddDays(2);
+            DateTime testDeliveredDate2 = testDeliveredDate.AddDays(2);
+            string testPickupLocation2 = "Farmers Market 2";
+            testOrder.Edit(testOrderNumber2, testOrderReceivedDate2, testRequestedPickupDate2, testDeliveredDate2, testPickupLocation2);
+
+            Order result = new Order(testOrderNumber2, testOrderReceivedDate2, testRequestedPickupDate2, testDeliveredDate2, testPickupLocation2, testCustomer_Id);
+
+            //Assert
+            Assert.AreEqual(result, testOrder);
+
         }
 
         [TestMethod]
