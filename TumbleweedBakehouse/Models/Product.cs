@@ -124,46 +124,46 @@ namespace TumbleweedBakehouse.Models
         }
 
 
-        public static Product Find()
-        {
+        //public static Product Find()
+        //{
 
-            MySqlConnection conn = DB.Connection();
-            conn.Open();
-            var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM products WHERE id = (@searchId);";
+        //    MySqlConnection conn = DB.Connection();
+        //    conn.Open();
+        //    var cmd = conn.CreateCommand() as MySqlCommand;
+        //    cmd.CommandText = @"SELECT * FROM products WHERE id = (@searchId);";
 
-            //
-            // MySqlParameter searchId = new MySqlParameter();
-            // searchId.ParameterName = "@searchId";
-            // searchId.Value = id;
-            // cmd.Parameters.Add(searchId);
+        //    //
+        //    // MySqlParameter searchId = new MySqlParameter();
+        //    // searchId.ParameterName = "@searchId";
+        //    // searchId.Value = id;
+        //    // cmd.Parameters.Add(searchId);
 
-            cmd.Parameters.AddWithValue("@searchId", this._id);
+        //    cmd.Parameters.AddWithValue("@searchId", this._id);
 
 
-            var rdr = cmd.ExecuteReader() as MySqlDataReader;
-            int Id = 0;
-            string productName = "";
-            string type = "";
-            string description = "";
-            // bool availability = true;
-            float price = 0;
-            while (rdr.Read())
-            {
-                Id = rdr.GetInt32(0);
-                productName = rdr.GetString(1);
-                type = rdr.GetString()
-              description = rdr.GetString()
-              price = rdr.GetBoolean(2);
-            }
-            Product newProduct = new Product(productName, type, description, price, id);
-            conn.Close();
-            if (conn != null)
-            {
-                conn.Dispose();
-            }
-            return newProduct;
-        }
+        //    var rdr = cmd.ExecuteReader() as MySqlDataReader;
+        //    int Id = 0;
+        //    string productName = "";
+        //    string type = "";
+        //    string description = "";
+        //    // bool availability = true;
+        //    float price = 0;
+        //    while (rdr.Read())
+        //    {
+        //        Id = rdr.GetInt32(0);
+        //        productName = rdr.GetString(1);
+        //        type = rdr.GetString()
+        //      description = rdr.GetString()
+        //      price = rdr.GetBoolean(2);
+        //    }
+        //    Product newProduct = new Product(productName, type, description, price, id);
+        //    conn.Close();
+        //    if (conn != null)
+        //    {
+        //        conn.Dispose();
+        //    }
+        //    return newProduct;
+        //}
 
 
 
