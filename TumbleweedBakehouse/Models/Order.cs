@@ -192,32 +192,32 @@ namespace TumbleweedBakehouse.Models
         //UPDATE: This will edit an existing order
         public void Edit(int newOrderNumber, DateTime newReceivedDate, DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation) 
         {
-            //MySqlConnection conn = DB.Connection();
-            //conn.Open();
-            //var cmd = conn.CreateCommand() as MySqlCommand;
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
 
-            //cmd.CommandText = @"UPDATE orders SET orderNumber = @newOrderNumber, receivedDate = @newReceivedDate, requestedPickupDate = @newRequestedPickupDate, deliveredDate = @newDeliveredDate, pickupLocation = @newPickupLocation WHERE id = @searchId;";
+            cmd.CommandText = @"UPDATE orders SET orderNumber = @newOrderNumber, receivedDate = @newReceivedDate, requestedPickupDate = @newRequestedPickupDate, deliveredDate = @newDeliveredDate, pickupLocation = @newPickupLocation WHERE id = @searchId;";
 
-            //cmd.Parameters.AddWithValue("@searchId", this.Id);
-            //cmd.Parameters.AddWithValue("@newOrderNumber", newOrderNumber);
-            //cmd.Parameters.AddWithValue("@newReceivedDate", newReceivedDate);
-            //cmd.Parameters.AddWithValue("@newRequestedPickupDate", newRequestedPickupDate);
-            //cmd.Parameters.AddWithValue("@newDeliveredDate", newDeliveredDate);
-            //cmd.Parameters.AddWithValue("@newPickupLocation", newPickupLocation);
-            //cmd.ExecuteNonQuery();
+            cmd.Parameters.AddWithValue("@searchId", this.Id);
+            cmd.Parameters.AddWithValue("@newOrderNumber", newOrderNumber);
+            cmd.Parameters.AddWithValue("@newReceivedDate", newReceivedDate);
+            cmd.Parameters.AddWithValue("@newRequestedPickupDate", newRequestedPickupDate);
+            cmd.Parameters.AddWithValue("@newDeliveredDate", newDeliveredDate);
+            cmd.Parameters.AddWithValue("@newPickupLocation", newPickupLocation);
+            cmd.ExecuteNonQuery();
 
-            //this.OrderNumber = newOrderNumber;
-            //this.ReceivedDate = newReceivedDate;
-            //this.RequestedPickupDate = newRequestedPickupDate;
-            //this.DeliveredDate = newDeliveredDate;
-            //this.PickupLocation = newPickupLocation;
-            //this.Id = this.Id;
+            this.OrderNumber = newOrderNumber;
+            this.ReceivedDate = newReceivedDate;
+            this.RequestedPickupDate = newRequestedPickupDate;
+            this.DeliveredDate = newDeliveredDate;
+            this.PickupLocation = newPickupLocation;
+            this.Id = this.Id;
 
-            //conn.Close();
-            //if (conn != null)
-            //{
-            //    conn.Dispose();
-            //}
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
         }
 
 
