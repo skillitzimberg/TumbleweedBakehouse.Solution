@@ -10,13 +10,16 @@
     {
       @foreach (var product in Model)
       {
-        <a href='/products/@product.GetId()'>@product.GetProductName()</a>
+      <form class="" action="/orders/{id}/edit" method="post">
         <div class="form-group">
-          <input type="checkbox" name="toppings" id="pineapple" value="pineapple">
-          <label for="pineapple">pineapple</label>
+          <img src="/img/@Model.GetImgUrl()" alt="photo of @Model.GetName()">
+          <label for="@product.GetProductName()">@product.GetProductName()</label>
+          <input type="checkbox" name="toppings" id="@product.GetProductName()" value="@product.GetProductName()">
         </div>
+      </form>
       }
     }
   </div>
 
 </div>
+<a href='/products/@product.GetId()'>@product.GetProductName()</a>
