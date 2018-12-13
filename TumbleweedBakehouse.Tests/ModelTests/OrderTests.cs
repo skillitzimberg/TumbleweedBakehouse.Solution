@@ -69,7 +69,7 @@ namespace TumbleweedBakehouse.Tests
             List<Order> result = Order.GetAll();
 
             //Assert
-            CollectionAssert.AreEqual(testList, result);
+            CollectionAssert.AreEqual(result, testList);
 
 
         }
