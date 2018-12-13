@@ -10,6 +10,8 @@ This file contains testing information for the Customer Class Model. Click the l
 - [GetAll Returning Empty List](#GetAll-Tests)
 - [Equality Override Testing](#public-override-bool-equals)
 - [Save](#save-test-methods)
+- [Find](#find)
+- [Edit](#Edit)
 ---
 ## CustomerConstructor_CreatesIntanceOfCustomer_Customer
 
@@ -200,6 +202,7 @@ To **pass** this test, the code will connect to our database and will not return
 ## Public Override Bool Equals
 This method is very important because it will allow C# to view two identical objects as similar instead of two different objects.
 
+#### Customer.cs
     public override bool Equals(System.Object otherCustomer){
       if(!(otherCustomer is Customer))
       {
@@ -221,8 +224,9 @@ This method is very important because it will allow C# to view two identical obj
       }
     }
 
-To test this method:
-
+To test this method we only need to manipulate the ! in the if conditional:
+- Removing the ! will fail the test.
+- Keeping the ! will pass the test.
 
 ---
 ## Save Test Methods
@@ -290,8 +294,74 @@ To ** pass** this test write the following code:
       Assert.AreEqual(result, testId);
     }
 
- To **fail** this test, we can remove the line of code reading  `_id=(int)cmd.LastInsertedId;`  
+ To **fail** this test, we can remove the line of code in the  _Customer.cs_ file that reads:
+  - `_id=(int)cmd.LastInsertedId;`  
 
- To **pass** this test, replace the above statement.
+To **pass** this test, replace the above statement in the production code.
 
  ---
+## Find
+The find method uses an Id to search through the database to match with an identical id. All columns are then returned.
+
+#### CustomerTests.cs
+
+    [TestMethod]
+      public void Find_ReturnsCorrectCustomerFromDatabase_Customer()
+      {
+        Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+        newCustomer.Save();
+        Customer foundCustomer = Customer.Find(newCustomer.GetId());
+        Assert.AreEqual(newCustomer, foundCustomer);
+      }
+
+#### Customer.cs
+
+    public static Customer Find(int id){
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM customers WHERE id = (@thisId);";
+      cmd.Parameters.AddWithValue("@thisId", id);
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int customerId = 0;
+      string customerFirstName = "";
+      string customerLastName = "";
+      string customerPhoneNumber = "";
+      string customerEmail = "";
+      string customerHomeAddress = "";
+      string customerCity = " ";
+      string customerState = " ";
+      int customerZip = 0;
+      while (rdr.Read())
+      {
+         customerId = rdr.GetInt32(0);
+         customerFirstName = rdr.GetString(1);
+         customerLastName = rdr.GetString(2);
+         customerPhoneNumber = rdr.GetString(3);
+         customerEmail = rdr.GetString(4);
+         customerHomeAddress = rdr.GetString(5);
+         customerCity = rdr.GetString(6);
+         customerState = rdr.GetString(7);
+        customerZip = rdr.GetInt32(8);
+      }
+      Customer foundCustomer = new Customer(customerFirstName, customerLastName, customerPhoneNumber, customerEmail, customerHomeAddress, customerCity, customerState, customerZip, customerId);
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+      return foundCustomer;
+    }
+
+To **fail** this test switch the columns you return data from in the while loop. For example you could do this:
+  >Original:  `customerId = rdr.GetInt32(0);` and `customerZip = rdr.GetInt32(8);`
+
+
+  >Failing:`customerId = rdr.GetInt32(8);` and `customerZip = rdr.GetInt32(0);`
+
+To **pass** this test change the values in the while loop to return their actual column  
+
+ ---
+ ## Edit
+The edit method will allow a user to update any property of a customer.
+ #### Customer.cs
