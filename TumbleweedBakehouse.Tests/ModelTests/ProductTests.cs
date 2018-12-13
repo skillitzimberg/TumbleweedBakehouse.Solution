@@ -72,37 +72,37 @@ namespace TumbleweedBakehouse.Tests
       CollectionAssert.AreEqual(testList, result);
     }
 
-    //[TestMethod]
-    //public void Save_AssignsIdToObject_Id()
-    //{
-    //  //Arrange
-    //  Product testProduct = new Product("sourdough","raye","light and fluffy",true,3,1);
-    //  Product testProduct2 = new Product("sourdough","raye","light and fluffy",true,3,1);
-    //  //Act
-    //  testProduct2.Save();
-    //  testProduct.Save();
-    //  Product savedProduct = Product.GetAll()[0];
+    [TestMethod]
+    public void Save_AssignsIdToObject_Id()
+    {
+     //Arrange
+     Product testProduct = new Product("sourdough","raye","light and fluffy",true,3,1);
+     Product testProduct2 = new Product("sourdough","raye","light and fluffy",true,3,1);
+     //Act
+     testProduct2.Save();
+     testProduct.Save();
+     Product savedProduct = Product.GetAll()[0];
 
-    //  int result = savedProduct.GetId();
-    //  int testId = testProduct.GetId();
+     int result = savedProduct.GetId();
+     int testId = testProduct.GetId();
 
-    //  //Assert
-    //  Assert.AreEqual(testId, result);
-    //}
+     //Assert
+     Assert.AreEqual(testId, result);
+    }
 
-    //[TestMethod]
-    //public void Find_ReturnsCorrectItemFromDatabase_Item()
-    //{
-    //  //Arrange
-    //  Product testProduct = new Product("sourdough","raye","light and fluffy",true,3,1);
-    //  testProduct.Save();
+    [TestMethod]
+    public void Find_ReturnsCorrectItemFromDatabase_Item()
+    {
+     //Arrange
+     Product testProduct = new Product("sourdough","raye","light and fluffy",true,3,1);
+     testProduct.Save();
 
-    //  //Act
-    //  //Product foundProduct = Product.Find(testProduct.GetId());
+     //Act
+     //Product foundProduct = Product.Find(testProduct.GetId());
 
-    //  //Assert
-    //  Assert.AreEqual(testProduct, foundProduct);
-    //}
+     //Assert
+     Assert.AreEqual(testProduct, foundProduct);
+    }
 
     [TestMethod]
     public void Equals_ReturnsTrueIfCustomersAreTheSame_Product()
