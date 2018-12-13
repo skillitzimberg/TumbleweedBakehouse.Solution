@@ -3,11 +3,19 @@
 }
 <div class='row'>
   <div class='col-md-12'>
-    <h3>Order @Model.GetName()</h3>
-    
-    <h4>@customer.GetPhoneNumber()</h4>
-    <h4>@customer.GetEmail()</h4>
-    <h4>@customer.GetHomeAddress()</h4>
-    <h4>@customer.GetCity(), @customer.GetState(), @customer.GetZipCode()</h4>
+    <h3>Customer: @Model["customer"].GetName()</h3>
+
+    <h4>Phone: @Model["customer"].GetPhoneNumber()</h4>
+    <h4>Email: @Model["customer"].GetEmail()</h4>
+    <h4>Address: @Model["customer"].GetHomeAddress()</br>
+      @Model["customer"].GetCity(), @Model["customer"].GetState() @Model["customer"].GetZipCode()</h4>
+  </div>
+  <div class='col-md-12'>
+    <h3>Orders: @Model["order"].GetName()</h3>
+
+    <h4>Phone: @Model["order"].GetPhoneNumber()</h4>
+    <h4>Email: @Model["order"].GetEmail()</h4>
+    <h4>Address: @Model["order"].GetHomeAddress()</br>
+      @Model["order"].GetCity(), @Model["order"].GetState() @Model["order"].GetZipCode()</h4>
   </div>
 </div>
