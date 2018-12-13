@@ -27,7 +27,7 @@ namespace TumbleweedBakehouse.Controllers
         public ActionResult New()
         {
 
-            return new EmptyResult();
+            return View();
         }
     }
 }
