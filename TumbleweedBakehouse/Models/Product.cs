@@ -124,7 +124,7 @@ namespace TumbleweedBakehouse.Models
     }
 
 
-    public static Product Find()
+    public static Product Find(int id)
     {
 
       MySqlConnection conn = DB.Connection();
@@ -132,31 +132,25 @@ namespace TumbleweedBakehouse.Models
       var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"SELECT * FROM products WHERE id = (@searchId);";
 
-      //
-      // MySqlParameter searchId = new MySqlParameter();
-      // searchId.ParameterName = "@searchId";
-      // searchId.Value = id;
-      // cmd.Parameters.Add(searchId);
-
-      cmd.Parameters.AddWithValue("@searchId", this._id);
-
+      cmd.Parameters.AddWithValue("@searchId", id);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       int Id = 0;
       string productName = "";
       string type = "";
       string description = "";
-      // bool availability = true;
+      bool availability = true;
       float price = 0;
       while(rdr.Read())
       {
         Id = rdr.GetInt32(0);
         productName = rdr.GetString(1);
-        type = rdr.GetString()
-        description = rdr.GetString()
-        price = rdr.GetBoolean(2);
+        type = rdr.GetString(5);
+        description = rdr.GetString(2);
+        availability = rdr.GetBoolean(3);
+        price = rdr.GetFloat(4);
       }
-      Product newProduct = new Product(productName, type, description, price, id);
+      Product newProduct = new Product(productName, type, description, availability, price, id);
       conn.Close();
       if (conn != null)
       {

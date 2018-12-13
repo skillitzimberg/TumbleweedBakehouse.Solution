@@ -77,9 +77,9 @@ namespace TumbleweedBakehouse.Tests
     {
       //Arrange
       Product testProduct = new Product("sourdough","raye","light and fluffy",true,3,1);
-      Product testProduct2 = new Product("sourdough","raye","light and fluffy",true,3,1);
+
       //Act
-      testProduct2.Save();
+
       testProduct.Save();
       Product savedProduct = Product.GetAll()[0];
 
@@ -99,6 +99,8 @@ namespace TumbleweedBakehouse.Tests
 
       //Act
       Product foundProduct = Product.Find(testProduct.GetId());
+
+      Console.WriteLine("this is the product id" + foundProduct.GetId());
 
       //Assert
       Assert.AreEqual(testProduct, foundProduct);
