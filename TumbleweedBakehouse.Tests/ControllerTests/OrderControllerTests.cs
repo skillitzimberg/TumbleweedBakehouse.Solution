@@ -40,10 +40,10 @@ namespace TumbleweedBakehouse.Tests
             OrderController controller = new OrderController();
 
             //Act
-            ActionResult indexView = controller.New();
+            ActionResult newView = controller.New();
 
             //Assert
-            Assert.IsInstanceOfType(indexView, typeof(ViewResult));
+            Assert.IsInstanceOfType(newView, typeof(ViewResult));
         }
 
     }
