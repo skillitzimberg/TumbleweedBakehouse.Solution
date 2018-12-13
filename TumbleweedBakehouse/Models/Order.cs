@@ -16,11 +16,11 @@ namespace TumbleweedBakehouse.Models
 
     public Order(int orderNumber, Dictionary<string, object> orderedProduct, DateTime orderReceivedDate, int customer_id, int id = 0)
     {
-        this.Id = id;
-        this.OrderNumber = orderNumber;
-        this.OrderedProduct = orderedProduct;
-        this.OrderReceivedDate = orderReceivedDate;
-        this.Customer_id = customer_id;
+      this.Id = id;
+      this.OrderNumber = orderNumber;
+      this.OrderedProduct = orderedProduct;
+      this.OrderReceivedDate = orderReceivedDate;
+      this.Customer_id = customer_id;
     }
 
     //public override bool Equals(System.Object otherOrder)

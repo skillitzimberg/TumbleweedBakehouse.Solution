@@ -19,15 +19,15 @@ namespace TumbleweedBakehouse.Models
 
     public Customer (string firstName, string lastName, string phoneNumber, string email, string address, string city, string state, int zip, int id = 0)
     {
-        _firstName = firstName;
-        _lastName = lastName;
-        _phoneNumber = phoneNumber;
-        _email = email;
-        _homeAddress = address;
-        _city = city;
-        _state = state;
-        _zipCode = zip;
-        _id = id;
+      _firstName = firstName;
+      _lastName = lastName;
+      _phoneNumber = phoneNumber;
+      _email = email;
+      _homeAddress = address;
+      _city = city;
+      _state = state;
+      _zipCode = zip;
+      _id = id;
     }
     public string GetFirstName() {
       return _firstName;
@@ -81,5 +81,5 @@ namespace TumbleweedBakehouse.Models
       string firstLast = _firstName + " " + _lastName;
       return firstLast;
     }
-}
+  }
 }
