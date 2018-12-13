@@ -197,8 +197,7 @@ namespace TumbleweedBakehouse.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"UPDATE customers SET  firstName = @newFirstName, lastName = @newLastName, phoneNumber = @newPhoneNumber, email = @newEmail, address = @newAddress, city = newCity, state = @newState, zipcode = newZipcode WHERE id =@searchId;";
-
+      cmd.CommandText = @"UPDATE customers SET  firstName = @newFirstName, lastName = @newLastName, phoneNumber = @newPhoneNumber, email = @newEmail, address = @newAddress, city = @newCity, state = @newState, zipcode = @newZipcode WHERE id = @searchId;";
       cmd.Parameters.AddWithValue("@searchId", this._id);
       cmd.Parameters.AddWithValue("@newFirstName", this._firstName);
       cmd.Parameters.AddWithValue("@newLastName", this._lastName);
@@ -208,7 +207,6 @@ namespace TumbleweedBakehouse.Models
       cmd.Parameters.AddWithValue("@newCity",this._city);
       cmd.Parameters.AddWithValue("@newState",this._state);
       cmd.Parameters.AddWithValue("@newZipcode", this._zipCode);
-
       cmd.ExecuteNonQuery();
       _firstName = firstName;
       _lastName = lastName;
@@ -219,6 +217,7 @@ namespace TumbleweedBakehouse.Models
       _state = state;
       _zipCode = zip;
       conn.Close();
+      if (conn !=null)
       {
         conn.Dispose();
       }

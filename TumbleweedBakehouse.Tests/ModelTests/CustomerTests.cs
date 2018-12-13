@@ -7,7 +7,7 @@ using TumbleweedBakehouse.Models;
 namespace TumbleweedBakehouse.Tests
 {
   [TestClass]
-  public class CustomerTests : IDisposable
+  public class CustomerTests  : IDisposable
   {
     public void Dispose()
     {
@@ -216,22 +216,15 @@ namespace TumbleweedBakehouse.Tests
       Customer foundCustomer = Customer.Find(newCustomer.GetId());
       Assert.AreEqual(newCustomer, foundCustomer);
     }
-    // [TestMethod]
-    // public void Edit_UpdatesCustomerInDataBase_StringandInt()
-    // {
-    //   Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
-    //   newCustomer.Save();
-    //   string newString1 ="chris";
-    //   string newString2 = "rudnicky";
-    //   string newString3 = "7575640970";
-    //   string newString4 = " email";
-    //   string newString5 = "address ";
-    //   string newString6 = " city";
-    //   string newString7 = "state";
-    //   int newInt8 = 23188;
-    //   newCustomer.Edit(newString1, newString2, newString3, newString4, newString5, newString6, newString7, newInt8);
-    //   string result = Customer.Find(newCustomer.GetId()).GetFirstName();
-    //   Assert.AreEqual(newString1, result);
-    // }
+    [TestMethod]
+    public void Edit_UpdatesCustomerInDataBase_StringandInt()
+    {
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      newCustomer.Save();
+      string newString ="jake";
+      newCustomer.Edit(newString, "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      string result = Customer.Find(newCustomer.GetId()).GetFirstName();
+      Assert.AreEqual(newString, result);
+    }
   }
 }
