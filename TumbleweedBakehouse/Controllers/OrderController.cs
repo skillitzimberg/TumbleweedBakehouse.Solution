@@ -16,7 +16,7 @@ namespace TumbleweedBakehouse.Controllers
         {
             Dictionary<string, object> model = new Dictionary<string, object> { };
             
-            return new EmptyResult();
+            return View(model);
         }
     }
 }
