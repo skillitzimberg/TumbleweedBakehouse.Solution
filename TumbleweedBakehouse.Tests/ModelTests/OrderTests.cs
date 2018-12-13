@@ -142,6 +142,26 @@ namespace TumbleweedBakehouse.Tests
         }
 
         [TestMethod]
+        public void Find_ReturnsCorrectOrderFromDatabase_Item()
+        {
+            //Arrange
+            int testOrderNumber = 1;
+            DateTime testOrderReceivedDate = DateTime.Now;
+            DateTime testRequestedPickupDate = DateTime.Parse("12/15/2018");
+            DateTime testDeliveredDate = DateTime.Parse("12/16/2018");
+            string testPickupLocation = "Farmers Market 1";
+            int testCustomer_Id = 1;
+            Order testOrder = new Order(testOrderNumber, testOrderReceivedDate, testRequestedPickupDate, testDeliveredDate, testPickupLocation, testCustomer_Id);
+            testOrder.Save();
+
+            //Act
+            Order result = Order.Find(testOrder.Id);
+
+            //Assert
+            Assert.AreEqual(testOrder, result);
+        }
+
+        [TestMethod]
         public void ClearAll_ClearsOrderTableOfAllEntries_EmptyList()
         {
             //Arrange
