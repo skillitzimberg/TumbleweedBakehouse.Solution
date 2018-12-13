@@ -124,73 +124,73 @@ namespace TumbleweedBakehouse.Models
     }
 
 
-    //public static Product Find()
-    //{
+        public static Product Find()
+        {
 
-      //MySqlConnection conn = DB.Connection();
-      //conn.Open();
-      //var cmd = conn.CreateCommand() as MySqlCommand;
-      //cmd.CommandText = @"SELECT * FROM products WHERE id = (@searchId);";
-
-      //
-      // MySqlParameter searchId = new MySqlParameter();
-      // searchId.ParameterName = "@searchId";
-      // searchId.Value = id;
-      // cmd.Parameters.Add(searchId);
-
-      //cmd.Parameters.AddWithValue("@searchId", this._id);
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM products WHERE id = (@searchId);";
 
 
-      //var rdr = cmd.ExecuteReader() as MySqlDataReader;
-      //int Id = 0;
-      //string productName = "";
-      //string type = "";
-      //string description = "";
-      // bool availability = true;
-      //float price = 0;
-      //while(rdr.Read())
-      //{
-      //  Id = rdr.GetInt32(0);
-      //  productName = rdr.GetString(1);
-      //  type = rdr.GetString();
-      //  description = rdr.GetString();
-      //  price = rdr.GetBoolean(2);
-      //}
-      //Product newProduct = new Product(productName, type, description, price, id);
-      //conn.Close();
-      //if (conn != null)
-      //{
-      //  conn.Dispose();
-      //}
-      //return newProduct;
-    //}
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = id;
+            cmd.Parameters.Add(searchId);
+
+            cmd.Parameters.AddWithValue("@searchId", this._id);
+
+
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            int Id = 0;
+            string productName = "";
+            string type = "";
+            string description = "";
+            bool availability = true;
+            float price = 0;
+            while (rdr.Read())
+            {
+                Id = rdr.GetInt32(0);
+                productName = rdr.GetString(1);
+                type = rdr.GetString();
+                description = rdr.GetString();
+                price = rdr.GetBoolean(2);
+            }
+            Product newProduct = new Product(productName, type, description, price, id);
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return newProduct;
+        }
 
 
 
-    // public void Edit(string newCustomer)
-    // {
-    //   MySqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //   var cmd = conn.CreateCommand() as MySqlCommand;
-    //   cmd.CommandText = @"UPDATE Clients SET client = @newCustomer WHERE id = @searchId;";
-    //   MySqlParameter searchId = new MySqlParameter();
-    //   searchId.ParameterName = "@searchId";
-    //   searchId.Value = _id;
-    //   cmd.Parameters.Add(searchId);
-    //   MySqlParameter customer = new MySqlParameter();
-    //   customer.ParameterName = "@newCustomer";
-    //   customer.Value = newCustomer;
-    //   cmd.Parameters.Add(customer);
-    //   cmd.ExecuteNonQuery();
-    //   _customer = newCustomer;
-    //   conn.Close();
-    //   if (conn != null)
-    //   {
-    //     conn.Dispose();
-    //   }
-    // }
+        public void Edit(string newCustomer)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"UPDATE Clients SET client = @newCustomer WHERE id = @searchId;";
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = _id;
+            cmd.Parameters.Add(searchId);
+            MySqlParameter customer = new MySqlParameter();
+            customer.ParameterName = "@newCustomer";
+            customer.Value = newCustomer;
+            cmd.Parameters.Add(customer);
+            cmd.ExecuteNonQuery();
+            _customer = newCustomer;
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
 
-    public static void ClearAll()
+        public static void ClearAll()
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
