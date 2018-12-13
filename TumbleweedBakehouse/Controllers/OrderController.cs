@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace TumbleweedBakehouse.Controllers
 {
@@ -10,5 +11,12 @@ namespace TumbleweedBakehouse.Controllers
           return View();
         }
 
+        [HttpGet("/order/{customerId}")]
+        public ActionResult Show()
+        {
+            Dictionary<string, object> model = new Dictionary<string, object> { };
+            
+            return new EmptyResult();
+        }
     }
 }
