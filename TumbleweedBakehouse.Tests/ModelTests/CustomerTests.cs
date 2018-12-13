@@ -189,10 +189,17 @@ namespace TumbleweedBakehouse.Tests
       newCustomer.Save();
       List<Customer> result = Customer.GetAll();
       List<Customer> testList = new List<Customer>{newCustomer};
-      Console.WriteLine("result" + " " + result[0].GetFirstName());
-      Console.WriteLine("testList" + " " + testList[0].GetFirstName());
       CollectionAssert.AreEqual(testList, result);
     }
-
+    [TestMethod]
+    public void Save_AssignsIdToObject_Id()
+    {
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      newCustomer.Save();
+      Customer savedCustomer = Customer.GetAll()[0];
+      int result = savedCustomer.GetId();
+      int testId = newCustomer.GetId();
+      Assert.AreEqual(result, testId);
+    }
   }
 }
