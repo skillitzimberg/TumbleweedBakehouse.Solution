@@ -90,6 +90,19 @@ namespace TumbleweedBakehouse.Tests
       Assert.AreEqual(testId, result);
     }
 
+    [TestMethod]
+    public void Find_ReturnsCorrectItemFromDatabase_Item()
+    {
+      //Arrange
+      Product testProduct = new Product("sourdough","raye","light and fluffy",true,3,1);
+      testProduct.Save();
+
+      //Act
+      Product foundProduct = Product.Find(testProduct.GetId());
+
+      //Assert
+      Assert.AreEqual(testProduct, foundProduct);
+    }
 
     [TestMethod]
     public void Equals_ReturnsTrueIfCustomersAreTheSame_Product()
