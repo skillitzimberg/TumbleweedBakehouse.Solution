@@ -11,11 +11,9 @@
       @Model["customer"].GetCity(), @Model["customer"].GetState() @Model["customer"].GetZipCode()</h4>
   </div>
   <div class='col-md-12'>
-    <h3>Orders: @Model["order"].GetName()</h3>
-
-    <h4>Phone: @Model["order"].GetPhoneNumber()</h4>
-    <h4>Email: @Model["order"].GetEmail()</h4>
-    <h4>Address: @Model["order"].GetHomeAddress()</br>
-      @Model["order"].GetCity(), @Model["order"].GetState() @Model["order"].GetZipCode()</h4>
+    @foreach (var order in Model["orders"])
+    {
+      <h3>Orders: <a href="/orders/@Model["orders"].GetOrderId()"></a> @Model["orders"].GetOrderNumber()</h3>
+    }
   </div>
 </div>
