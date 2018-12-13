@@ -365,3 +365,58 @@ To **pass** this test change the values in the while loop to return their actual
  ## Edit
 The edit method will allow a user to update any property of a customer.
  #### Customer.cs
+
+     public void Edit(string firstName, string lastName, string phoneNumber, string email, string address, string city, string state, int zip){
+          MySqlConnection conn = DB.Connection();
+          conn.Open();
+          var cmd = conn.CreateCommand() as MySqlCommand;
+          cmd.CommandText = @"UPDATE customers SET  firstName = @newFirstName, lastName = @newLastName, phoneNumber = @newPhoneNumber, email = @newEmail, address = @newAddress, city = @newCity, state = @newState, zipcode = @newZipcode WHERE id = @searchId;";
+          cmd.Parameters.AddWithValue("@searchId", _id);
+          cmd.Parameters.AddWithValue("@newFirstName", firstName);
+          cmd.Parameters.AddWithValue("@newLastName", lastName);
+          cmd.Parameters.AddWithValue("@newPhoneNumber", phoneNumber);
+          cmd.Parameters.AddWithValue("@newEmail", email);
+          cmd.Parameters.AddWithValue("@newAddress", address);
+          cmd.Parameters.AddWithValue("@newCity",city);
+          cmd.Parameters.AddWithValue("@newState",state);
+          cmd.Parameters.AddWithValue("@newZipcode", zip);
+          cmd.ExecuteNonQuery();
+          _firstName = firstName;
+          _lastName = lastName;
+          _phoneNumber = phoneNumber;
+          _email = email;
+          _homeAddress = address;
+          _city = city;
+          _state = state;
+          _zipCode = zip;
+          conn.Close();
+          if (conn !=null)
+          {
+            conn.Dispose();
+          }
+        }
+
+#### CustomerTests.cs
+
+    [TestMethod]
+        public void Edit_UpdatesCustomerInDataBase_StringandInt()
+        {
+          Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+          newCustomer.Save();
+          string newString ="jake";
+          newCustomer.Edit(newString, "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+          string result = Customer.Find(newCustomer.GetId()).GetFirstName();
+          Assert.AreEqual(newString, result);
+        }
+
+  To ** fail** this test we could change the value that is being added during the AddWithValue() method. For example if we target:
+- `   cmd.Parameters.AddWithValue("@newFirstName", firstName);
+`   
+
+We can change _firstName_ to _lastName_ so that it looks like this:
+- `   cmd.Parameters.AddWithValue("@newFirstName", lastName);
+`   
+
+The test will now fail. To pass this test return the value to what it ought to be.
+
+---
