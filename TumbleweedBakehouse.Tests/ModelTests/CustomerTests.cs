@@ -7,17 +7,16 @@ using TumbleweedBakehouse.Models;
 namespace TumbleweedBakehouse.Tests
 {
   [TestClass]
-  public class CustomerTests
-  // : IDisposable
+  public class CustomerTests : IDisposable
   {
-    // public void Dispose()
-    // {
-    //   Customer.ClearAll();
-    // }
-    // public CustomerTest()
-    // {
-    //   DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=Customer_Tests;";
-    // }
+    public void Dispose()
+    {
+      Customer.ClearAll();
+    }
+   public CustomerTests()
+    {
+      DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=tumbleweedbakehouse_test;";
+    }
     [TestMethod]
     public void CustomerConstructor_CreatesIntanceOfCustomer_Customer()
     {
@@ -176,5 +175,24 @@ namespace TumbleweedBakehouse.Tests
       string result = newCustomer.FirstLast();
       Assert.AreEqual(firstLast, result);
     }
+    [TestMethod]
+    public void GetAll_ReturnsEmptyList_ItemList()
+    {
+      List<Customer> newCustomerList = new List<Customer> { };
+      List<Customer> result = Customer.GetAll();
+      CollectionAssert.AreEqual(newCustomerList, result );
+    }
+    [TestMethod]
+    public void Save_SavesToDataBase_CustomerList()
+    {
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      newCustomer.Save();
+      List<Customer> result = Customer.GetAll();
+      List<Customer> testList = new List<Customer>{newCustomer};
+      Console.WriteLine("result" + " " + result[0].GetFirstName());
+      Console.WriteLine("testList" + " " + testList[0].GetFirstName());
+      CollectionAssert.AreEqual(testList, result);
+    }
+
   }
 }
