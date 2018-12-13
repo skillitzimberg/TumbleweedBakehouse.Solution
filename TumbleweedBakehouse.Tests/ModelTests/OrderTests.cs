@@ -59,17 +59,22 @@ namespace TumbleweedBakehouse.Tests
         {
             //Arrange
             int testOrderNumber = 1;
-            DateTime testReceivedDate = DateTime.Now;
+            DateTime testOrderReceivedDate = DateTime.Now;
+            DateTime testRequestedPickupDate = DateTime.Parse("12/15/2018");
+            //testRequestedPickupDate = testRequestedPickupDate.Replace
+            DateTime testDeliveredDate = DateTime.Parse("12/16/2018");
+            string testPickupLocation = "Farmers Market 1";
             int testCustomer_Id = 1;
-            Order testOrder = new Order(testOrderNumber, testReceivedDate, testCustomer_Id);
+            Order testOrder = new Order(testOrderNumber, testOrderReceivedDate, testRequestedPickupDate, testDeliveredDate, testPickupLocation, testCustomer_Id);
 
             //Act
             testOrder.Save();
-            List<Order> testList = new List<Order> { testOrder };
-            List<Order> result = Order.GetAll();
+            List<Order> resultList = Order.GetAll();
+            Order result = resultList[0];
+
 
             //Assert
-            CollectionAssert.AreEqual(result, testList);
+            Assert.AreEqual(result, testOrder);
         }
 
         [TestMethod]

@@ -25,11 +25,14 @@ namespace TumbleweedBakehouse.Models
             this.PickupLocation = "";
         }
 
-        public Order(int orderNumber, DateTime orderReceivedDate, DateTime receivedDate, DateTime deliveredDate, string pickupLocation, int customer_id, int id = 0)
+        public Order(int orderNumber, DateTime orderReceivedDate, DateTime requestedPickupDate, DateTime deliveredDate, string pickupLocation, int customer_id, int id = 0)
         {
             this.Id = id;
             this.OrderNumber = orderNumber;
             this.ReceivedDate = orderReceivedDate;
+            this.RequestedPickupDate = requestedPickupDate;
+            this.DeliveredDate = deliveredDate;
+            this.PickupLocation = pickupLocation;
             this.Customer_id = customer_id;
             this.PickupLocation = "";
         }
@@ -134,7 +137,7 @@ namespace TumbleweedBakehouse.Models
                 DateTime DeliveredDate = rdr.GetDateTime(4);
                 string PickupLocation = rdr.GetString(5);
                 int Customer_id = rdr.GetInt32(6);
-                Order newOrder = new Order(OrderNumber, ReceivedDate, Customer_id, orderId);
+                Order newOrder = new Order(OrderNumber, ReceivedDate, RequestedPickupDate, DeliveredDate, PickupLocation, Customer_id, orderId);
                 allOrders.Add(newOrder);
             }
             conn.Close();
