@@ -121,30 +121,31 @@ namespace TumbleweedBakehouse.Models
 
         public static List<Order> GetAll() //READ: Gets a list of all orders
         {
+            Order dummyOrder = new Order(1, DateTime.Now, 1);
             List<Order> allOrders = new List<Order> { };
 
-            MySqlConnection conn = DB.Connection();
-            conn.Open();
-            var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM orders;";
-            var rdr = cmd.ExecuteReader() as MySqlDataReader;
-            while (rdr.Read())
-            {
-                int orderId = rdr.GetInt32(0);
-                int OrderNumber = rdr.GetInt32(1);
-                DateTime ReceivedDate = rdr.GetDateTime(2);
-                DateTime RequestedPickupDate = rdr.GetDateTime(3);
-                DateTime DeliveredDate = rdr.GetDateTime(4);
-                string PickupLocation = rdr.GetString(5);
-                int Customer_id = rdr.GetInt32(6);
-                Order newOrder = new Order(OrderNumber, ReceivedDate, RequestedPickupDate, DeliveredDate, PickupLocation, Customer_id, orderId);
-                allOrders.Add(newOrder);
-            }
-            conn.Close();
-            if (conn != null)
-            {
-                conn.Dispose();
-            }
+            //MySqlConnection conn = DB.Connection();
+            //conn.Open();
+            //var cmd = conn.CreateCommand() as MySqlCommand;
+            //cmd.CommandText = @"SELECT * FROM orders;";
+            //var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            //while (rdr.Read())
+            //{
+            //    int orderId = rdr.GetInt32(0);
+            //    int OrderNumber = rdr.GetInt32(1);
+            //    DateTime ReceivedDate = rdr.GetDateTime(2);
+            //    DateTime RequestedPickupDate = rdr.GetDateTime(3);
+            //    DateTime DeliveredDate = rdr.GetDateTime(4);
+            //    string PickupLocation = rdr.GetString(5);
+            //    int Customer_id = rdr.GetInt32(6);
+            //    Order newOrder = new Order(OrderNumber, ReceivedDate, RequestedPickupDate, DeliveredDate, PickupLocation, Customer_id, orderId);
+            //    allOrders.Add(newOrder);
+            //}
+            //conn.Close();
+            //if (conn != null)
+            //{
+            //    conn.Dispose();
+            //}
             return allOrders;
         }
 
