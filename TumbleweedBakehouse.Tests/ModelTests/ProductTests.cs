@@ -47,7 +47,7 @@ namespace TumbleweedBakehouse.Tests
 
       Product firstProduct = new Product ("sourdough","raye","light and fluffy",true,3,1);
       firstProduct.Save();
-  
+
       List<Product> newList = new List<Product> { firstProduct};
 
       //Act
@@ -72,9 +72,27 @@ namespace TumbleweedBakehouse.Tests
       CollectionAssert.AreEqual(testList, result);
     }
 
+    [TestMethod]
+    public void Save_AssignsIdToObject_Id()
+    {
+      //Arrange
+      Product testProduct = new Product("sourdough","raye","light and fluffy",true,3,1);
+      Product testProduct2 = new Product("sourdough","raye","light and fluffy",true,3,1);
+      //Act
+      testProduct2.Save();
+      testProduct.Save();
+      Product savedProduct = Product.GetAll()[0];
+
+      int result = savedProduct.GetId();
+      int testId = testProduct.GetId();
+
+      //Assert
+      Assert.AreEqual(testId, result);
+    }
+
 
     [TestMethod]
-    public void Equals_ReturnsTrueIfCustomersAreTheSame_Client()
+    public void Equals_ReturnsTrueIfCustomersAreTheSame_Product()
     {
       // Arrange, Act
       Product firstProduct = new Product ("sourdough","raye","light and fluffy",true,3,1);
