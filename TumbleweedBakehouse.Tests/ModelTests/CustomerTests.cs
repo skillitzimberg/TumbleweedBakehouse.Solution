@@ -182,6 +182,23 @@ namespace TumbleweedBakehouse.Tests
       List<Customer> result = Customer.GetAll();
       CollectionAssert.AreEqual(newCustomerList, result );
     }
+        [TestMethod]
+        public void GetAll_ReturnsPopulatedList_ItemList()
+        {
+            //Arrange
+            Customer newCustomer1 = new Customer("Charley", "McGowan", "5551231234", "fun@gmail.com", "123 Funzone St.", "Portland", "OR", 97211);
+            newCustomer1.Save();
+            Customer newCustomer2 = new Customer("Charley2", "McGowan2", "5552231234", "fun2@gmail.com", "1232 Funzone St.", "Portland2", "WA", 97212);
+            newCustomer2.Save();
+
+            //Act
+            List<Customer> result = Customer.GetAll();
+            List<Customer> testList = new List<Customer> { newCustomer1, newCustomer2 };
+
+            //Assert
+            CollectionAssert.AreEqual(result, testList);
+            
+        }
     [TestMethod]
     public void Equals_ReturnsTrueIfPropertiesAreTheSame_Customer()
     {
