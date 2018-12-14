@@ -9,7 +9,17 @@ body {
 }
 
 .logo {
+  font-size: 2.5em;
+  font-family: 'Charm', cursive;
+  display: block;
+}
+
+.logo a:hover {
   font-size: 1.5em;
+}
+
+.logoimg {
+  width: 95px;
 }
 
 .navbar-inverse {
@@ -17,7 +27,7 @@ body {
 }
 
 nav {
-  padding: 1em;
+  padding: .5em;
 }
 
 nav h4{
@@ -26,12 +36,19 @@ nav h4{
   list-style: none;
 }
 
-span a {
-  text-decoration: none;
-}
-
 a {
   text-decoration: none;
+  color: #333;
+}
+
+a:hover {
+  font-size: 1.2em;
+  text-decoration: none;
+  color: #333;
+}
+
+.centernav {
+  text-align: center;
 }
 
 label {
