@@ -151,9 +151,19 @@ Hot Cross Buns
 [HttpGet("/customer/show")] Show(int id) - @Model: Dictionary<string, object> {"customer", "order"}
 
 ### OrderController
-/order/{orderId}/customer/{customerId}/
-[HttpGet("/order")] Index() - @Model: ???  
-[HttpGet("/order/new")] New() - @Model: ???  
-[HttpPost("/order")] Create() - @Model: Dictionary<string, object>  
-[HttpGet("/order/{orderId}")] Show(int id) - @Model: Dictionary<string, object> {"order", "products"}  
-[HttpGet("/order/{orderId}")] Edit() - @Model: Dictionary<string, object>  
+[HttpGet("/order")] Index() - pass in @Model:  List<Order> {allOrders}
+[HttpGet("/order/new")] New() - pass in @Model: Customer
+[HttpPost("/order")] Create() - pass in @Model: Dictionary<string, object>  
+[HttpGet("/order/{orderId}")] Show(int id) - pass in @Model: Dictionary<string, object> {"order", "products"}  
+[HttpGet("/order/{orderId}/edit")] Edit() - pass in @Model: Dictionary<string, object>  
+[HttpPost("/order/{orderId}")] Update() - pass in @Model: Dictionary<string, object>  
+[HttpPost("/order/{orderId}")] Destroy() - pass in @Model: Dictionary<string, object>  
+
+### ProductController
+[HttpGet("/product")] Index() - pass in @Model:  List<Product> {allProducts}
+[HttpGet("/product/new")] New() - pass in @Model: Customer
+[HttpPost("/product")] Create() - pass in @Model: Dictionary<string, object>  
+[HttpGet("/product/{productId}")] Show(int id) - pass in @Model: Dictionary<string, object> {"product", "products"}  
+[HttpGet("/product/{productId}/edit")] Edit() - pass in @Model: Dictionary<string, object>  
+[HttpPost("/product/{productId}")] Update() - pass in @Model: Dictionary<string, object>  
+[HttpPost("/product/{productId}")] Destroy() - pass in @Model: Dictionary<string, object>  
