@@ -97,11 +97,11 @@ namespace TumbleweedBakehouse.Tests
       Product testProduct = new Product("sourdough","raye","light and fluffy","hello.com",true,3,1);
       testProduct.Save();
 
-     //Act
-     //Product foundProduct = Product.Find(testProduct.GetId());
+      //Act
+      Product foundProduct = Product.Find(testProduct.GetId());
 
-     //Assert
-     Assert.AreEqual(testProduct, foundProduct);
+      //Assert
+      Assert.AreEqual(testProduct, foundProduct);
     }
 
 
