@@ -84,34 +84,33 @@ namespace TumbleweedBakehouse.Models
       string firstLast = _firstName + " " + _lastName;
       return firstLast;
     }
-
     public static List<Customer> GetAll(){
       List<Customer> allCustomers = new List<Customer> {};
-     MySqlConnection conn = DB.Connection();
-     conn.Open();
-     MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-     cmd.CommandText = @"SELECT * FROM customers;";
-     MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-     while(rdr.Read())
-     {
-       int customerId = rdr.GetInt32(0);
-       string customerFirstName = rdr.GetString(1);
-       string customerLastName = rdr.GetString(2);
-       string customerPhoneNumber = rdr.GetString(3);
-       string customerEmail = rdr.GetString(4);
-       string customerAddress = rdr.GetString(5);
-       string customerCity = rdr.GetString(6);
-       string customerState = rdr.GetString(7);
-       int customerZip = rdr.GetInt32(8);
-       Customer newCustomer = new Customer(customerFirstName, customerLastName, customerPhoneNumber, customerEmail, customerAddress, customerCity, customerState, customerZip, customerId);
-       allCustomers.Add(newCustomer);
-     }
-     conn.Close();
-     if(conn != null)
-     {
-       conn.Dispose();
-     }
-     return allCustomers;
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM customers;";
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while(rdr.Read())
+      {
+        int customerId = rdr.GetInt32(0);
+        string customerFirstName = rdr.GetString(1);
+        string customerLastName = rdr.GetString(2);
+        string customerPhoneNumber = rdr.GetString(3);
+        string customerEmail = rdr.GetString(4);
+        string customerAddress = rdr.GetString(5);
+        string customerCity = rdr.GetString(6);
+        string customerState = rdr.GetString(7);
+        int customerZip = rdr.GetInt32(8);
+        Customer newCustomer = new Customer(customerFirstName, customerLastName, customerPhoneNumber, customerEmail, customerAddress, customerCity, customerState, customerZip, customerId);
+        allCustomers.Add(newCustomer);
+      }
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+      return allCustomers;
     }
 
     public override bool Equals(System.Object otherCustomer){
@@ -157,7 +156,72 @@ namespace TumbleweedBakehouse.Models
       }
     }
 
+    public static Customer Find(int id){
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM `customers` WHERE id = (@thisId);";
+      cmd.Parameters.AddWithValue("@thisId", id);
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int customerId = 0;
+      string customerFirstName = "";
+      string customerLastName = "";
+      string customerPhoneNumber = "";
+      string customerEmail = "";
+      string customerHomeAddress = "";
+      string customerCity = " ";
+      string customerState = " ";
+      int customerZip = 0;
+      while (rdr.Read())
+      {
+         customerId = rdr.GetInt32(0);
+         customerFirstName = rdr.GetString(1);
+         customerLastName = rdr.GetString(2);
+         customerPhoneNumber = rdr.GetString(3);
+         customerEmail = rdr.GetString(4);
+         customerHomeAddress = rdr.GetString(5);
+         customerCity = rdr.GetString(6);
+         customerState = rdr.GetString(7);
+        customerZip = rdr.GetInt32(8);
+      }
+      Customer foundCustomer = new Customer(customerFirstName, customerLastName, customerPhoneNumber, customerEmail, customerHomeAddress, customerCity, customerState, customerZip, customerId);
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+      return foundCustomer;
+    }
 
+    public void Edit(string firstName, string lastName, string phoneNumber, string email, string address, string city, string state, int zip){
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"UPDATE customers SET  firstName = @newFirstName, lastName = @newLastName, phoneNumber = @newPhoneNumber, email = @newEmail, address = @newAddress, city = @newCity, state = @newState, zipcode = @newZipcode WHERE id = @searchId;";
+      cmd.Parameters.AddWithValue("@searchId", _id);
+      cmd.Parameters.AddWithValue("@newFirstName", firstName);
+      cmd.Parameters.AddWithValue("@newLastName", lastName);
+      cmd.Parameters.AddWithValue("@newPhoneNumber", phoneNumber);
+      cmd.Parameters.AddWithValue("@newEmail", email);
+      cmd.Parameters.AddWithValue("@newAddress", address);
+      cmd.Parameters.AddWithValue("@newCity",city);
+      cmd.Parameters.AddWithValue("@newState",state);
+      cmd.Parameters.AddWithValue("@newZipcode", zip);
+      cmd.ExecuteNonQuery();
+      _firstName = firstName;
+      _lastName = lastName;
+      _phoneNumber = phoneNumber;
+      _email = email;
+      _homeAddress = address;
+      _city = city;
+      _state = state;
+      _zipCode = zip;
+      conn.Close();
+      if (conn !=null)
+      {
+        conn.Dispose();
+      }
+    }
 
     public static void ClearAll(){
       MySqlConnection conn = DB.Connection();
