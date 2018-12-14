@@ -41,12 +41,6 @@ namespace TumbleweedBakehouse.Controllers
           return View(thisProduct);
         }
 
-        [HttpGet("product/new")]
-        public ActionResult New()
-        {
-          return View();
-        }
-
         [HttpPost("/product")]
         public ActionResult Create(string name, string type, string description, bool available, float price)
         {
