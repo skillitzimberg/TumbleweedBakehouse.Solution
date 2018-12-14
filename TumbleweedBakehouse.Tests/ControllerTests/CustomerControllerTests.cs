@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using TumbleweedBakehouse.Controllers;
 
 namespace TumbleweedBakehouse.Tests
@@ -21,7 +22,7 @@ namespace TumbleweedBakehouse.Tests
         public void Edit_ReturnsCorrectView_True()
         {
           CustomerController controller = new CustomerController();
-          ActionResult editView = controller.Edit();
+          ActionResult editView = controller.Edit(0);
           Assert.IsInstanceOfType(editView,typeof(ViewResult));
         }
         [TestMethod]
@@ -37,6 +38,13 @@ namespace TumbleweedBakehouse.Tests
           CustomerController controller = new CustomerController();
           ActionResult showView = controller.Show();
           Assert.IsInstanceOfType(showView,typeof(ViewResult));
+        }
+        [TestMethod]
+        public void Edit_HasCorrectModelType_Dictionary()
+        {
+          ViewResult editView = new CustomerController().Edit(1) as ViewResult;
+          var result = editView.ViewData.Model;
+          Assert.IsInstanceOfType(result, typeof(Dictionary<string, object>));
         }
     }
 }

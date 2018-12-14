@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using TumbleweedBakehouse.Models;
 
 namespace TumbleweedBakehouse.Controllers
 {
@@ -10,9 +12,12 @@ namespace TumbleweedBakehouse.Controllers
           return View();
         }
         [HttpGet("/customer/{customerId}/edit")]
-        public ActionResult Edit()
+        public ActionResult Edit(int customerId)
         {
-          return View();
+          Dictionary<string, object> model = new Dictionary<string, object>();
+          Customer customer = Customer.Find(customerId);
+          model.Add("customer", customer);
+          return View(model);
         }
         [HttpGet("/customer/{customerId}/new")]
         public ActionResult New()
