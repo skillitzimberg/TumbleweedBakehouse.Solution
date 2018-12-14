@@ -25,8 +25,7 @@ namespace TumbleweedBakehouse.Controllers
             List<Order> orderList = Order.GetAll();
             model.Add("customers", customerList);
             model.Add("orders", orderList);
-            //return View(model);
-            return new EmptyResult();
+            return View(model);
         }
 
         [HttpPost("/order")]
