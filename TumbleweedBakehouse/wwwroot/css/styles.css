@@ -60,6 +60,9 @@ img {
   text-align: center;
 }
 
+.hide {
+  display: none;
+}
 .clickable  {
   cursor: pointer;
 }

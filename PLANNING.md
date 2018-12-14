@@ -1,4 +1,13 @@
 # Planning Document
+
+## Table of contents
+
+**[User Stories](#user-stories)**<br>
+**[Products](#products)**<br>
+**[Classes](#classes)**<br>
+**[Models/Methods](#models/methods)**<br>
+**[Controllers](#controllers)**
+
 # Valley Bread
 Create an MVC web application order/customer/product tracking app.
 
@@ -46,10 +55,21 @@ Semolina Rolls
 Pumpernickel  
 Hot Cross Buns  
 
-### Classes
+## Classes
 * ORDERS  
 * CUSTOMERS  
 * PRODUCTS  
+
+### Customer database columns/class properties
+- id: PRIMARY KEY, AUTO_INCREMENT
+- firstName
+- lastName
+- phoneNumber
+- email
+- address
+- city
+- state
+- zipcode
 
 ### Orders database columns/class properties
 - id: PRIMARY KEY, AUTO_INCREMENT  
@@ -59,17 +79,6 @@ Hot Cross Buns
 - deliveredDate  
 - pickupLocation    
 - customer_id: FOREIGN KEY  
-
-### Customer database columns/class properties
-- id: PRIMARY KEY, AUTO_INCREMENT
-- first_name
-- last_name
-- phone_number
-- email
-- address
-- city
-- state
-- zipcode
 
 ### Products database columns/class properties
 - id: PRIMARY KEY, AUTO_INCREMENT
@@ -131,17 +140,20 @@ Hot Cross Buns
 - public override bool Equals(System.Object otherProduct)
 - public void ClearAll()
 
+##Controllers
 ### HomeController
 [HttpGet("/")] Index() - @Model: none  
 
 ### CustomerController
-[HttpGet("/customers")] Index() - @Model: ???  
-[HttpGet("/customers/new")] New(int orderId) - @Model: ???  
-[HttpPost("/customers")] Create() - @Model: Dictionary<string, object>  
-[HttpGet("/customers/show")] Show(int id) - @Model: Dictionary<string, object> {"customer", "orders"}
+[HttpGet("/customer")] Index() - @Model: ???  
+[HttpGet("/customer/new")] New(int orderId) - @Model: ???  
+[HttpPost("/customer")] Create() - @Model: Dictionary<string, object>  
+[HttpGet("/customer/show")] Show(int id) - @Model: Dictionary<string, object> {"customer", "order"}
 
 ### OrderController
-[HttpGet("/orders")] Index() - @Model: ???  
-[HttpGet("/orders/new")] New() - @Model: ???  
-[HttpPost("/orders")] Create() - @Model: Dictionary<string, object>  
-[HttpGet("/orders/show")] Show(int id) - @Model: Dictionary<string, object> {"order", "products"}  
+/order/{orderId}/customer/{customerId}/
+[HttpGet("/order")] Index() - @Model: ???  
+[HttpGet("/order/new")] New() - @Model: ???  
+[HttpPost("/order")] Create() - @Model: Dictionary<string, object>  
+[HttpGet("/order/{orderId}")] Show(int id) - @Model: Dictionary<string, object> {"order", "products"}  
+[HttpGet("/order/{orderId}")] Edit() - @Model: Dictionary<string, object>  
