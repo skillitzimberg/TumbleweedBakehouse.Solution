@@ -80,7 +80,7 @@ namespace TumbleweedBakehouse.Models
     public int GetId(){
       return _id;
     }
-    public string FirstLast(){
+    public string GetFirstLast(){
       string firstLast = _firstName + " " + _lastName;
       return firstLast;
     }
