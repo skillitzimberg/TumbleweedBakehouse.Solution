@@ -7,7 +7,7 @@
 ### Model Tests
 - [Constructor Instantiation]("#constructor-instantiation)
 - [Get Set Tests](#property-get-set-tests)
-- [Creating a full name](#FirstLast_ConcatsFirstAndLastName_String)
+- [Creating a Full Name](#FirstLast_ConcatsFirstAndLastName_String)
 - [GetAll Returning Empty List](#GetAll-Tests)
 - [Equality Override Testing](#public-override-bool-equals)
 - [Save](#save-test-methods)
@@ -16,8 +16,9 @@
 
 ### Controller Tests
 
-- [Returning a correct view](#controller-returns-the-correct-view)
-- [Displaying the correct model type](#controller-has-the-correct-model-type)
+- [Returning a Correct View](#controller-returns-the-correct-view)
+- [Displaying the Correct Model Type](#controller-has-the-correct-model-type)
+- [Redirecting to the Correct Action](#controller-redirects-to-the-correct-action)
 ---
 
 # Model Tests
@@ -494,3 +495,31 @@ To **pass** this test set the return value to the intended object. In this case:
 - `return View(model);`
 
 ---
+## Controller Redirects To The Correct Action
+
+This test is run on any View file that passes data to another View file. Due to the similarity between each controller route that is tested, I will only use one example of this test. It can be safely assumed that all controllers that pass data to a separate page will be tested the same way.
+
+#### CustomerControllerTests.cs
+    [TestMethod]
+    public void Create_RedirectsToCorrectAction_Index()
+    {
+      CustomerController controller = new CustomerController();
+      ActionResult view = controller.Create("Ty","Butts","123123312234", "google@gmail.com", "Some road somewhere", "Portland", "Maine", 22030);
+      Assert.IsInstanceOfType(view, typeof(ViewResult));
+    }
+
+#### CustomerController.cs
+
+    [HttpPost("/customer/{customerId}")]
+    public ActionResult Create(string firstName, string lastName, string phoneNumber, string email, string homeAddress, string city, string state, int zipCode)
+    {
+      Customer newCustomer = new Customer(firstName, lastName, phoneNumber, email, homeAddress, city, state, zipCode);
+      newCustomer.Save();
+      List<Customer> allCustomers = Customer.GetAll();
+      return View("index", allCustomers);
+    }    
+<sup>Note that the route address for this controller is the same as the one in the [Edit](#controller-has-the-correct-model-type) method above. The difference is the **HttpPost** and the **HttpGet**. Post action methods redirecet information from one page to another.</sup>
+
+The code above will **pass** the test because it `Create()` returns a View.  
+ This test seems awful similar to returning a correct view....  
+To **fail** this test we can return a `new EmptyResult()`.
