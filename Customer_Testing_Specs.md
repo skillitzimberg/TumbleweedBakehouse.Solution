@@ -10,6 +10,8 @@ This file contains testing information for the Customer Class Model. Click the l
 - [GetAll Returning Empty List](#GetAll-Tests)
 - [Equality Override Testing](#public-override-bool-equals)
 - [Save](#save-test-methods)
+- [Find](#find)
+- [Edit](#Edit)
 ---
 ## CustomerConstructor_CreatesIntanceOfCustomer_Customer
 
@@ -200,8 +202,31 @@ To **pass** this test, the code will connect to our database and will not return
 ## Public Override Bool Equals
 This method is very important because it will allow C# to view two identical objects as similar instead of two different objects.
 
+#### Customer.cs
+    public override bool Equals(System.Object otherCustomer){
+      if(!(otherCustomer is Customer))
+      {
+        return false;
+      }
+      else
+      {
+        Customer newCustomer = (Customer) otherCustomer;
+        bool idEquality = (this.GetId() == newCustomer.GetId());
+        bool firstNameEquality = (this.GetFirstName() == newCustomer.GetFirstName());
+        bool lastNameEquality = (this.GetLastName() == newCustomer.GetLastName());
+        bool phoneNumEquality = (this.GetPhoneNumber() == newCustomer.GetPhoneNumber());
+        bool emailEquality = (this.GetEmail() == newCustomer.GetEmail());
+        bool addressEquality = (this.GetAddress() == newCustomer.GetAddress());
+        bool cityEquality = (this.GetCity() == newCustomer.GetCity());
+        bool stateEquality = (this.GetState() == newCustomer.GetState());
+        bool zipEquality = (this.GetZip()== newCustomer.GetZip());
+        return (idEquality && firstNameEquality && lastNameEquality && phoneNumEquality && emailEquality && addressEquality && cityEquality && stateEquality && zipEquality);
+      }
+    }
 
-
+To test this method we only need to manipulate the ! in the if conditional:
+- Removing the ! will fail the test.
+- Keeping the ! will pass the test.
 
 ---
 ## Save Test Methods
@@ -228,3 +253,170 @@ To **fail** this test don't include code for the save method. this is because vo
     {
 
     }
+
+To ** pass** this test write the following code:
+
+    public void Save()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText =@"INSERT INTO customers (firstName, lastName, phoneNumber, email, address, city, state, zipcode) VALUES (@CustomerFirstName, @CustomerLastName, @CustomerPhoneNumber, @CustomerEmail, @CustomerAddress, @CustomerCity, @CustomerState, @CustomerZipCode);";
+      cmd.Parameters.AddWithValue("@CustomerFirstName",this._firstName);
+      cmd.Parameters.AddWithValue("@CustomerLastName",this._lastName);
+      cmd.Parameters.AddWithValue("@CustomerPhoneNumber",this._phoneNumber);
+      cmd.Parameters.AddWithValue("@CustomerEmail",this._email);
+      cmd.Parameters.AddWithValue("@CustomerAddress",this._homeAddress);
+      cmd.Parameters.AddWithValue("@CustomerCity",this._city);
+      cmd.Parameters.AddWithValue("@CustomerState",this._state);
+      cmd.Parameters.AddWithValue("@CustomerZipCode",this._zipCode);
+      cmd.ExecuteNonQuery();
+      _id=(int)cmd.LastInsertedId;
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+
+### Save_AssignsIdToObject_Id()
+
+#### CustomerTests.cs
+
+    [TestMethod]
+    public void Save_AssignsIdToObject_Id()
+    {
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      newCustomer.Save();
+      Customer savedCustomer = Customer.GetAll()[0];
+      int result = savedCustomer.GetId();
+      int testId = newCustomer.GetId();
+      Assert.AreEqual(result, testId);
+    }
+
+ To **fail** this test, we can remove the line of code in the  _Customer.cs_ file that reads:
+  - `_id=(int)cmd.LastInsertedId;`  
+
+To **pass** this test, replace the above statement in the production code.
+
+ ---
+## Find
+The find method uses an Id to search through the database to match with an identical id. All columns are then returned.
+
+#### CustomerTests.cs
+
+    [TestMethod]
+      public void Find_ReturnsCorrectCustomerFromDatabase_Customer()
+      {
+        Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+        newCustomer.Save();
+        Customer foundCustomer = Customer.Find(newCustomer.GetId());
+        Assert.AreEqual(newCustomer, foundCustomer);
+      }
+
+#### Customer.cs
+
+    public static Customer Find(int id){
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM customers WHERE id = (@thisId);";
+      cmd.Parameters.AddWithValue("@thisId", id);
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int customerId = 0;
+      string customerFirstName = "";
+      string customerLastName = "";
+      string customerPhoneNumber = "";
+      string customerEmail = "";
+      string customerHomeAddress = "";
+      string customerCity = " ";
+      string customerState = " ";
+      int customerZip = 0;
+      while (rdr.Read())
+      {
+         customerId = rdr.GetInt32(0);
+         customerFirstName = rdr.GetString(1);
+         customerLastName = rdr.GetString(2);
+         customerPhoneNumber = rdr.GetString(3);
+         customerEmail = rdr.GetString(4);
+         customerHomeAddress = rdr.GetString(5);
+         customerCity = rdr.GetString(6);
+         customerState = rdr.GetString(7);
+        customerZip = rdr.GetInt32(8);
+      }
+      Customer foundCustomer = new Customer(customerFirstName, customerLastName, customerPhoneNumber, customerEmail, customerHomeAddress, customerCity, customerState, customerZip, customerId);
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+      return foundCustomer;
+    }
+
+To **fail** this test switch the columns you return data from in the while loop. For example you could do this:
+  >Original:  `customerId = rdr.GetInt32(0);` and `customerZip = rdr.GetInt32(8);`
+
+
+  >Failing:`customerId = rdr.GetInt32(8);` and `customerZip = rdr.GetInt32(0);`
+
+To **pass** this test change the values in the while loop to return their actual column  
+
+ ---
+ ## Edit
+The edit method will allow a user to update any property of a customer.
+ #### Customer.cs
+
+     public void Edit(string firstName, string lastName, string phoneNumber, string email, string address, string city, string state, int zip){
+          MySqlConnection conn = DB.Connection();
+          conn.Open();
+          var cmd = conn.CreateCommand() as MySqlCommand;
+          cmd.CommandText = @"UPDATE customers SET  firstName = @newFirstName, lastName = @newLastName, phoneNumber = @newPhoneNumber, email = @newEmail, address = @newAddress, city = @newCity, state = @newState, zipcode = @newZipcode WHERE id = @searchId;";
+          cmd.Parameters.AddWithValue("@searchId", _id);
+          cmd.Parameters.AddWithValue("@newFirstName", firstName);
+          cmd.Parameters.AddWithValue("@newLastName", lastName);
+          cmd.Parameters.AddWithValue("@newPhoneNumber", phoneNumber);
+          cmd.Parameters.AddWithValue("@newEmail", email);
+          cmd.Parameters.AddWithValue("@newAddress", address);
+          cmd.Parameters.AddWithValue("@newCity",city);
+          cmd.Parameters.AddWithValue("@newState",state);
+          cmd.Parameters.AddWithValue("@newZipcode", zip);
+          cmd.ExecuteNonQuery();
+          _firstName = firstName;
+          _lastName = lastName;
+          _phoneNumber = phoneNumber;
+          _email = email;
+          _homeAddress = address;
+          _city = city;
+          _state = state;
+          _zipCode = zip;
+          conn.Close();
+          if (conn !=null)
+          {
+            conn.Dispose();
+          }
+        }
+
+#### CustomerTests.cs
+
+    [TestMethod]
+        public void Edit_UpdatesCustomerInDataBase_StringandInt()
+        {
+          Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+          newCustomer.Save();
+          string newString ="jake";
+          newCustomer.Edit(newString, "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+          string result = Customer.Find(newCustomer.GetId()).GetFirstName();
+          Assert.AreEqual(newString, result);
+        }
+
+  To ** fail** this test we could change the value that is being added during the AddWithValue() method. For example if we target:
+- `   cmd.Parameters.AddWithValue("@newFirstName", firstName);
+`   
+
+We can change _firstName_ to _lastName_ so that it looks like this:
+- `   cmd.Parameters.AddWithValue("@newFirstName", lastName);
+`   
+
+The test will now fail. To pass this test return the value to what it ought to be.
+
+---
