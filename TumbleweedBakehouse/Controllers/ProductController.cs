@@ -49,10 +49,10 @@ namespace TumbleweedBakehouse.Controllers
         }
 
         [HttpPost("/products/{id}")]
-        public ActionResult Edit(string name, string type, string description, string url, float price)
+        public ActionResult Edit(string name, string type, string description, string url, bool available, float price,int id)
         {
-          Product newProduct = new Product (name,type,description,url,price);
-          newProduct.Edit();
+          Product newProduct = new Product (name,type,description,url,available,price,id);
+          newProduct.Edit(name,type,description,url);
           newProduct.Save();
           return RedirectToAction("Show");
         }
