@@ -19,6 +19,16 @@ namespace TumbleweedBakehouse.Controllers
           model.Add("customer", customer);
           return View(model);
         }
+        [HttpPost("/customer/{customerId}")]
+        public ActionResult Create(string firstName, string lastName, string phoneNumber, string email, string homeAddress, string city, string state, int zipCode)
+        {
+          Customer newCustomer = new Customer(firstName, lastName, phoneNumber, email, homeAddress, city, state, zipCode);
+          newCustomer.Save();
+          List<Customer> allCustomers = Customer.GetAll();
+          return View("index", allCustomers);
+          // return new EmptyResult();
+        }
+
         [HttpGet("/customer/{customerId}/new")]
         public ActionResult New()
         {

@@ -26,6 +26,20 @@ namespace TumbleweedBakehouse.Tests
           Assert.IsInstanceOfType(editView,typeof(ViewResult));
         }
         [TestMethod]
+        public void Edit_HasCorrectModelType_Dictionary()
+        {
+          ViewResult editView = new CustomerController().Edit(1) as ViewResult;
+          var result = editView.ViewData.Model;
+          Assert.IsInstanceOfType(result, typeof(Dictionary<string, object>));
+        }
+        [TestMethod]
+        public void Create_RedirectsToCorrectAction_Index()
+        {
+          CustomerController controller = new CustomerController();
+          ActionResult view = controller.Create("Ty","Butts","123123312234", "google@gmail.com", "Some road somewhere", "Portland", "Maine", 22030);
+          Assert.IsInstanceOfType(view, typeof(ViewResult));
+        }
+        [TestMethod]
         public void New_ReturnsCorrectView_True()
         {
           CustomerController controller = new CustomerController();
@@ -38,13 +52,6 @@ namespace TumbleweedBakehouse.Tests
           CustomerController controller = new CustomerController();
           ActionResult showView = controller.Show();
           Assert.IsInstanceOfType(showView,typeof(ViewResult));
-        }
-        [TestMethod]
-        public void Edit_HasCorrectModelType_Dictionary()
-        {
-          ViewResult editView = new CustomerController().Edit(1) as ViewResult;
-          var result = editView.ViewData.Model;
-          Assert.IsInstanceOfType(result, typeof(Dictionary<string, object>));
         }
     }
 }
