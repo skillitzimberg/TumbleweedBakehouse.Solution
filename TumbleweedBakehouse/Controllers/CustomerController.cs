@@ -9,7 +9,8 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/customer")]
         public ActionResult Index()
         {
-          return View();
+          List<Customer> allCustomers = Customer.GetAll();
+          return View(allCustomers);
         }
         [HttpGet("/customer/{customerId}/edit")]
         public ActionResult Edit(int customerId)
@@ -20,20 +21,27 @@ namespace TumbleweedBakehouse.Controllers
           return View(model);
         }
         [HttpPost("/customer/{customerId}")]
+        public ActionResult Update(string firstName, string lastName, string phoneNumber, string email, string homeAddress, string city, string state, int zipCode)
+        {
+          Customer newCustomer = new Customer(firstName, lastName, phoneNumber, email, homeAddress, city, state, zipCode);
+          newCustomer.Save();
+          return RedirectToAction("index");
+        }
+
+        [HttpGet("/customer/new")]
+        public ActionResult New()
+        {
+          List<Customer> allCustomers = Customer.GetAll();
+          return View(allCustomers);
+        }
+        [HttpPost("/customer")]
         public ActionResult Create(string firstName, string lastName, string phoneNumber, string email, string homeAddress, string city, string state, int zipCode)
         {
           Customer newCustomer = new Customer(firstName, lastName, phoneNumber, email, homeAddress, city, state, zipCode);
           newCustomer.Save();
-          List<Customer> allCustomers = Customer.GetAll();
-          return View("index", allCustomers);
-          // return new EmptyResult();
+          return RedirectToAction("index");
         }
 
-        [HttpGet("/customer/{customerId}/new")]
-        public ActionResult New()
-        {
-          return View();
-        }
         [HttpGet("/customer/{customerId}/")]
         public ActionResult Show()
         {

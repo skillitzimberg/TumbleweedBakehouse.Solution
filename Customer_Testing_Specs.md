@@ -515,9 +515,9 @@ This test is run on any View file that passes data to another View file. Due to 
     {
       Customer newCustomer = new Customer(firstName, lastName, phoneNumber, email, homeAddress, city, state, zipCode);
       newCustomer.Save();
-      List<Customer> allCustomers = Customer.GetAll();
-      return View("index", allCustomers);
-    }    
+      return RedirectToAction("index");
+    }
+
 <sup>Note that the route address for this controller is the same as the one in the [Edit](#controller-has-the-correct-model-type) method above. The difference is the **HttpPost** and the **HttpGet**. Post action methods redirecet information from one page to another.</sup>
 
 The code above will **pass** the test because it `Create()` returns a View.  

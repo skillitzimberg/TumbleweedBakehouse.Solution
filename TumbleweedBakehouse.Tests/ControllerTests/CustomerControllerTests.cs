@@ -2,12 +2,22 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TumbleweedBakehouse.Controllers;
+using TumbleweedBakehouse.Models;
 
 namespace TumbleweedBakehouse.Tests
 {
     [TestClass]
-    public class CustomerControllerTest
+    public class CustomerControllerTest : IDisposable
     {
+    public void Dispose()
+    {
+      Customer.ClearAll();
+    }
+   public CustomerControllerTests()
+    {
+      DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=tumbleweedbakehouse_test;";
+    }
+  }
         [TestMethod]
         public void Index_ReturnsCorrectView_True()
         {
@@ -17,6 +27,14 @@ namespace TumbleweedBakehouse.Tests
             ActionResult indexView = controller.Index();
             //Assert
             Assert.IsInstanceOfType(indexView, typeof(ViewResult));
+        }
+        [TestMethod]
+        public void Index_HasCorrectModelType_CustomerList()
+        {
+          List<Customer> emptyList = new List<Customer> { };
+          ViewResult  indexView = new CustomerController().Index() as ViewResult;
+          var result = indexView.ViewData.Model;
+          Assert.IsInstanceOfType(result, typeof(List<Customer>));
         }
         [TestMethod]
         public void Edit_ReturnsCorrectView_True()
@@ -36,8 +54,9 @@ namespace TumbleweedBakehouse.Tests
         public void Create_RedirectsToCorrectAction_Index()
         {
           CustomerController controller = new CustomerController();
-          ActionResult view = controller.Create("Ty","Butts","123123312234", "google@gmail.com", "Some road somewhere", "Portland", "Maine", 22030);
-          Assert.IsInstanceOfType(view, typeof(ViewResult));
+          RedirectToActionResult actionResult = controller.Create("Ty","Butts","123123312234", "google@gmail.com", "Some road somewhere", "Portland", "Maine", 22030) as RedirectToActionResult;
+          string result = actionResult.ActionName;
+          Assert.AreEqual(result, "Index");
         }
         [TestMethod]
         public void New_ReturnsCorrectView_True()
