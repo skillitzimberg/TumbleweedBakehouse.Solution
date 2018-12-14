@@ -26,6 +26,7 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/order/{customerId}/new")]
         public ActionResult New()
         {
+            Dictionary<string, object> model = new Dictionary<string, object> { };
 
             return View();
         }
