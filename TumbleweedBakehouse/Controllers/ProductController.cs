@@ -9,8 +9,8 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/product")]
         public ActionResult Index()
         {
-          Product newProductOne = new Product("sourdough","raye","light and fluffy",true,3,1);
-          Product newProductTwo = new Product("Honeybread","Wheat","hearty and sweet",true,5,2);
+          Product newProductOne = new Product("sourdough","raye","light and fluffy","URL",true,3,1);
+          Product newProductTwo = new Product("Honeybread","Wheat","hearty and sweet","URL",true,5,2);
           List<Product> productList = new List<Product> { newProductOne, newProductTwo, newProductOne, newProductTwo, newProductOne, newProductTwo, newProductOne, newProductTwo, newProductOne, newProductTwo };
 
           return View(productList);
