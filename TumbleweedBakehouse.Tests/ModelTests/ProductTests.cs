@@ -25,9 +25,9 @@ namespace TumbleweedBakehouse.Tests
     [TestMethod]
     public void ProductConstructor_CreatesInstanceofProduct_Product()
     {
-      Product newProduct = new Product ("sourdough","raye","light and fluffy",true,3,1);
+      Product testProduct = new Product("sourdough","raye","light and fluffy","hello.com",true,3,1);
 
-      Assert.AreEqual(typeof(Product),newProduct.GetType());
+      Assert.AreEqual(typeof(Product),testProduct.GetType());
     }
 
     [TestMethod]
@@ -45,7 +45,7 @@ namespace TumbleweedBakehouse.Tests
     {
       //Arrange
 
-      Product firstProduct = new Product ("sourdough","raye","light and fluffy",true,3,1);
+     Product firstProduct = new Product("sourdough","raye","light and fluffy","hello.com",true,3,1);
       firstProduct.Save();
 
       List<Product> newList = new List<Product> { firstProduct};
@@ -61,7 +61,7 @@ namespace TumbleweedBakehouse.Tests
     public void Save_SavesToDatabase_ProductList()
     {
       //Arrange
-      Product testProduct = new Product("sourdough","raye","light and fluffy",true,3,1);
+     Product testProduct = new Product("sourdough","raye","light and fluffy","hello.com",true,3,1);
 
       //Act
       testProduct.Save();
@@ -72,51 +72,67 @@ namespace TumbleweedBakehouse.Tests
       CollectionAssert.AreEqual(testList, result);
     }
 
-    //[TestMethod]
-    //public void Save_AssignsIdToObject_Id()
-    //{
-    //  //Arrange
-    //  Product testProduct = new Product("sourdough","raye","light and fluffy",true,3,1);
-    //  Product testProduct2 = new Product("sourdough","raye","light and fluffy",true,3,1);
-    //  //Act
-    //  testProduct2.Save();
-    //  testProduct.Save();
-    //  Product savedProduct = Product.GetAll()[0];
+    [TestMethod]
+    public void Save_AssignsIdToObject_Id()
+    {
+      //Arrange
+     Product testProduct = new Product("sourdough","raye","light and fluffy","hello.com",true,3,1);
 
-    //  int result = savedProduct.GetId();
-    //  int testId = testProduct.GetId();
+      //Act
 
-    //  //Assert
-    //  Assert.AreEqual(testId, result);
-    //}
+      testProduct.Save();
+      Product savedProduct = Product.GetAll()[0];
 
-    //[TestMethod]
-    //public void Find_ReturnsCorrectItemFromDatabase_Item()
-    //{
-    //  //Arrange
-    //  Product testProduct = new Product("sourdough","raye","light and fluffy",true,3,1);
-    //  testProduct.Save();
+      int result = savedProduct.GetId();
+      int testId = testProduct.GetId();
 
-    //  //Act
-    //  //Product foundProduct = Product.Find(testProduct.GetId());
+      //Assert
+      Assert.AreEqual(testId, result);
+    }
 
-    //  //Assert
-    //  Assert.AreEqual(testProduct, foundProduct);
-    //}
+    [TestMethod]
+    public void Find_ReturnsCorrectItemFromDatabase_Product()
+    {
+      //Arrange
+      Product testProduct = new Product("sourdough","raye","light and fluffy","hello.com",true,3,1);
+      testProduct.Save();
+
+     //Act
+     //Product foundProduct = Product.Find(testProduct.GetId());
+
+     //Assert
+     Assert.AreEqual(testProduct, foundProduct);
+    }
+
+
+    [TestMethod]
+    public void Edit_UpdatesProductInDatabase_List()
+    {
+      //Arrange
+
+      Product testProduct = new Product("sourdough","raye","light and fluffy","hello.com",true,3,1);
+      testProduct.Save();
+      string breadname = "miniWheat";
+
+      testProduct.Edit(breadname,"raye","light and fluffy","hello.com");
+
+      string result = Product.Find(testProduct.GetId()).GetProductName();
+
+      Assert.AreEqual(breadname, result);
+    }
+
+
 
     [TestMethod]
     public void Equals_ReturnsTrueIfCustomersAreTheSame_Product()
     {
       // Arrange, Act
-      Product firstProduct = new Product ("sourdough","raye","light and fluffy",true,3,1);
-      Product secondProduct = new Product ("sourdough","raye","light and fluffy",true,3,1);
+      Product firstProduct = new Product("sourdough","raye","light and fluffy","hello.com",true,3,1);
+      Product secondProduct = new Product("sourdough","raye","light and fluffy","hello.com",true,3,1);
 
       // Assert
       Assert.AreEqual(firstProduct, secondProduct);
     }
-
-
-
 
   }
 }
