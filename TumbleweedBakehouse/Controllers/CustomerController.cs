@@ -4,7 +4,7 @@ namespace TumbleweedBakehouse.Controllers
 {
     public class CustomerController : Controller
     {
-        [HttpGet("/yourclass")]
+        [HttpGet("/customer")]
         public ActionResult Index()
         {
           return View();

@@ -60,17 +60,17 @@ namespace TumbleweedBakehouse.Models
                 bool requestedDateEqualityDay = this.RequestedPickupDate.Day.Equals(newOrder.RequestedPickupDate.Day);
                 bool requestedDateEqualityHour = this.RequestedPickupDate.Hour.Equals(newOrder.RequestedPickupDate.Hour);
                 bool requestedDateEqualityMinute = this.RequestedPickupDate.Minute.Equals(newOrder.RequestedPickupDate.Minute);
-                
+
                 bool deliveredDateEqualityYear = this.DeliveredDate.Year.Equals(newOrder.DeliveredDate.Year);
                 bool deliveredDateEqualityMonth = this.DeliveredDate.Month.Equals(newOrder.DeliveredDate.Month);
                 bool deliveredDateEqualityDay = this.DeliveredDate.Day.Equals(newOrder.DeliveredDate.Day);
                 bool deliveredDateEqualityHour = this.DeliveredDate.Hour.Equals(newOrder.DeliveredDate.Hour);
                 bool deliveredDateEqualityMinute = this.DeliveredDate.Minute.Equals(newOrder.DeliveredDate.Minute);
-                               
+
                 bool pickupLocationEquality = this.PickupLocation == newOrder.PickupLocation;
                 bool customer_idEquality = this.Customer_id.Equals(newOrder.Customer_id);
 
-                return (idEquality && 
+                return (idEquality &&
                     orderNumberEquality &&
 
                     receivedDateEqualityYear &&
@@ -83,26 +83,26 @@ namespace TumbleweedBakehouse.Models
                     requestedDateEqualityMonth &&
                     requestedDateEqualityDay &&
                     requestedDateEqualityHour &&
-                    requestedDateEqualityMinute && 
+                    requestedDateEqualityMinute &&
 
                     deliveredDateEqualityYear &&
                     deliveredDateEqualityMonth &&
                     deliveredDateEqualityDay &&
                     deliveredDateEqualityHour &&
-                    deliveredDateEqualityMinute && 
+                    deliveredDateEqualityMinute &&
 
-                    pickupLocationEquality && 
+                    pickupLocationEquality &&
                     customer_idEquality);
             }
         }
 
         //CREATE: Creates a new Order
-        public void Save() 
+        public void Save()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO orders (orderNumber, receivedDate, requestedPickupDate, deliveredDate, pickupLocation, customer_id) 
+            cmd.CommandText = @"INSERT INTO orders (orderNumber, receivedDate, requestedPickupDate, deliveredDate, pickupLocation, customer_id)
                                             VALUES (@orderNumber, @receivedDate, @requestedPickupDate, @deliveredDate, @pickupLocation, @customer_id);";
             cmd.Parameters.AddWithValue("@orderNumber", this.OrderNumber);
             cmd.Parameters.AddWithValue("@receivedDate", this.ReceivedDate);
@@ -120,7 +120,7 @@ namespace TumbleweedBakehouse.Models
         }
 
         //READ: Gets a list of all orders
-        public static List<Order> GetAll() 
+        public static List<Order> GetAll()
         {
             List<Order> allOrders = new List<Order> { };
             MySqlConnection conn = DB.Connection();
@@ -149,7 +149,7 @@ namespace TumbleweedBakehouse.Models
         }
 
         //READ: Finds a particular order given order Id
-        public static Order Find(int searchId) 
+        public static Order Find(int searchId)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -190,7 +190,7 @@ namespace TumbleweedBakehouse.Models
         }
 
         //UPDATE: This will edit an existing order
-        public void Edit(int newOrderNumber, DateTime newReceivedDate, DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation) 
+        public void Edit(int newOrderNumber, DateTime newReceivedDate, DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -222,7 +222,7 @@ namespace TumbleweedBakehouse.Models
 
 
         //DELETE: Deletes ALL orders ((CAUTION!!!))
-        public static void ClearAll() 
+        public static void ClearAll()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
