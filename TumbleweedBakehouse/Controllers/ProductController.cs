@@ -9,13 +9,28 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/product")]
         public ActionResult Index()
         {
-          Product newProductOne = new Product("sourdough","raye","light and fluffy","/img/Challah.jpg",true,3,1);
-          newProductOne.Save();
-          Product newProductTwo = new Product("Honeybread","Wheat","hearty and sweet","/img/Challah.jpg",true,5,2);
-          newProductTwo.Save();
+
           List<Product> productList = Product.GetAll();
 
-          return View(productList);
+          List<Product> newList = new List<Product>{};
+          newList = Product.GetAll();
+
+          return View(newList);
+        }
+
+        [HttpGet("/product/new")]
+        public ActionResult New()
+        {
+          return View();
+        }
+
+        [HttpPost("/product")]
+        public ActionResult Create(string name, string type, string description, string  url, bool availability, float price)
+        {
+          Product newProduct = new Product (name, type, description, url, availability, price);
+
+          return View("show",newProduct);
+
         }
 
         [HttpGet("product/{id}")]
@@ -24,6 +39,21 @@ namespace TumbleweedBakehouse.Controllers
           Product thisProduct = Product.Find(id);
 
           return View(thisProduct);
+        }
+
+        [HttpGet("product/new")]
+        public ActionResult New()
+        {
+          return View();
+        }
+
+        [HttpPost("/product")]
+        public ActionResult Create(string name, string type, string description, bool available, float price)
+        {
+          Product newProduct = new Product (name,type,description,"url",available,price);
+          newProduct.Save();
+          return RedirectToAction("Index");
+
         }
 
     }
