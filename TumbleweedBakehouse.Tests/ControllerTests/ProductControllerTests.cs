@@ -20,5 +20,18 @@ namespace TumbleweedBakehouse.Tests
         Assert.IsInstanceOfType(indexView, typeof(ViewResult));
     }
 
+    [TestMethod]
+    public void Create_ReturnsCorrectActionType_RedirectToActionResult()
+    {
+      //Arrange
+      ProductController controller = new ProductController();
+
+      //Act
+      IActionResult view = controller.Create("sourdough","raye","light and fluffy","hello.com",true,3,1);
+
+      //Assert
+      Assert.IsInstanceOfType(view, typeof(RedirectToActionResult));
+    }
+
   }
 }
