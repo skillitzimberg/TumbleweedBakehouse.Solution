@@ -25,14 +25,14 @@ namespace TumbleweedBakehouse.Controllers
         {
           Customer newCustomer = new Customer(firstName, lastName, phoneNumber, email, homeAddress, city, state, zipCode);
           newCustomer.Save();
-          return RedirectToAction("index");
+          return RedirectToAction("show");
         }
 
         [HttpGet("/customer/new")]
         public ActionResult New()
         {
-          List<Customer> allCustomers = Customer.GetAll();
-          return View(allCustomers);
+          // List<Customer> allCustomers = Customer.GetAll();
+          return View();
         }
         [HttpPost("/customer")]
         public ActionResult Create(string firstName, string lastName, string phoneNumber, string email, string homeAddress, string city, string state, int zipCode)
@@ -42,10 +42,13 @@ namespace TumbleweedBakehouse.Controllers
           return RedirectToAction("index");
         }
 
-        [HttpGet("/customer/{customerId}/")]
-        public ActionResult Show()
+        [HttpGet("/customer/{customerId}")]
+        public ActionResult Show(int customerId)
         {
-          return View();
+          Dictionary<string, object> model = new Dictionary<string, object> { };
+          Customer customer = Customer.Find(customerId);
+          model.Add("customer", customer);
+          return View(model);
         }
     }
 }

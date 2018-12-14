@@ -160,7 +160,7 @@ namespace TumbleweedBakehouse.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM `customers` WHERE id = (@thisId);";
+      cmd.CommandText = @"SELECT * FROM customers WHERE id = (@thisId);";
       cmd.Parameters.AddWithValue("@thisId", id);
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       int customerId = 0;

@@ -73,5 +73,12 @@ namespace TumbleweedBakehouse.Tests
           ActionResult showView = controller.Show();
           Assert.IsInstanceOfType(showView,typeof(ViewResult));
         }
+        [TestMethod]
+        public void Show_HasCorrectModelType_Dictionary()
+        {
+          ViewResult editView = new CustomerController().Show(0) as ViewResult;
+          var result = editView.ViewData.Model;
+          Assert.IsInstanceOfType(result, typeof(Dictionary<string, object>));
+        }
     }
 }
