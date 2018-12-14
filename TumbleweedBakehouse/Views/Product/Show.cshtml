@@ -1,13 +1,12 @@
+@using TumbleweedBakehouse.Models;
 @{
   Layout = "_Layout";
 }
 <div class='row'>
   <div class='col-md-12'>
-    <h3>Order @Model.GetName()</h3>
+    <h3>@Model.GetProductName()</h3>
 
-    <h4>@Model.GetPhoneNumber()</h4>
-    <h4>@Model.GetEmail()</h4>
-    <h4>@Model.GetHomeAddress()</h4>
-    <h4>@Model.GetCity(), @Model.GetState(), @Model.GetZipCode()</h4>
+    <h4>@Model.GetDescription()</h4>
+    <h4>@Model.GetPrice()</h4>
   </div>
 </div>

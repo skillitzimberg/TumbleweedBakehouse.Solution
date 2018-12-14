@@ -129,12 +129,21 @@ Hot Cross Buns
 - public void ClearAll()
 
 ### Products
+- public string GetProductName()
+- public void SetProductName(string name)
+- public string GetProductType()
+- public void SetProductType(string type)
+- public string GetDescription()
+- public void SetDescription(string description)
+- public string GetUrl()
+- public void SetUrl(string url)
+- public float GetPrice()
+- public void SetPrice(float price)
 - public int GetId()
 - public List<Order> GetAll()
 - public void Save()
 - public Order Find(int searchId)
-- public List<Customer> GetCustomer()
-- public void Edit(int newOrderNumber, DateTime newReceivedDate, DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation)
+- public void Edit(string name, string type, string description, string url)
 
 **FOR TESTING HOUSEKEEPING:**
 - public override bool Equals(System.Object otherProduct)
