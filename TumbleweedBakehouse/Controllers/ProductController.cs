@@ -41,14 +41,14 @@ namespace TumbleweedBakehouse.Controllers
 
         }
 
-        [HttpGet("/products/{id}/edit")]
+        [HttpGet("/product/edit")]
         public ActionResult Edit()
         {
 
           return View();
         }
 
-        [HttpPost("/products/{id}")]
+        [HttpPost("/product/{id}")]
         public ActionResult Edit(string name, string type, string description, string url, bool available, float price,int id)
         {
           Product newProduct = new Product (name,type,description,url,available,price,id);
@@ -59,11 +59,3 @@ namespace TumbleweedBakehouse.Controllers
 
     }
 }
-
-
-
-// Dictionary<string, object> model = new Dictionary<string, object>();
-// Category category = Category.Find(categoryId);
-// model.Add("category", category);
-// Item item = Item.Find(itemId);
-// model.Add("item", item);
