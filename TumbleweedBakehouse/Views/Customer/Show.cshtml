@@ -1,0 +1,19 @@
+@{
+  Layout = "_Layout";
+}
+<div class='row'>
+  <div class='col-md-12'>
+    <h3>Customer: @Model["customer"].GetName()</h3>
+
+    <h4>Phone: @Model["customer"].GetPhoneNumber()</h4>
+    <h4>Email: @Model["customer"].GetEmail()</h4>
+    <h4>Address: @Model["customer"].GetHomeAddress()</br>
+      @Model["customer"].GetCity(), @Model["customer"].GetState() @Model["customer"].GetZipCode()</h4>
+  </div>
+  <div class='col-md-12'>
+    @foreach (var order in Model["orders"])
+    {
+      <h3>Orders: <a href="/orders/@Model["orders"].GetOrderId()"></a> @Model["orders"].GetOrderNumber()</h3>
+    }
+  </div>
+</div>

@@ -5,7 +5,6 @@ html, body {
 
 body {
   font-family: 'Noto Serif JP', sans-serif;
-  /* color: #bbe7FF; */
   padding-top: 1em;
 }
 
@@ -28,12 +27,10 @@ nav h4{
 }
 
 span a {
-  /* color: #ccf8FF; */
   text-decoration: none;
 }
 
 a {
-  /* color: #d86767; */
   text-decoration: none;
 }
 
@@ -46,4 +43,23 @@ form {
   border: 1px solid #333;
   border-radius: .5em;
   padding: .75em;
+}
+
+img {
+  width: 100%;
+}
+
+.productRow {
+  margin: auto;
+}
+
+.productGridItem {
+  border: 1px solid #333;
+  margin: .5em;
+  padding: 0;
+  text-align: center;
+}
+
+.clickable  {
+  cursor: pointer;
 }

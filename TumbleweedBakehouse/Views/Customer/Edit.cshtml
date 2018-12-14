@@ -1,0 +1,53 @@
+@{
+  Layout = "_Layout";
+}
+<div class='row'>
+
+  <div class='col-md-12'>
+    <form class="" action="/customers/{id}" method="post">
+      <h3>Customers</h3>
+      <div class='form-group'>
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName" id="firstName" value="@Model.GetFirstName">
+      </div>
+
+      <div class='form-group'>
+        <label for="lastName">Last Name</label>
+        <input type="text" name="lastName" id="lastName" value="@Model.GetLastName">
+      </div>
+
+      <div class='form-group'>
+        <label for="phoneNumber">Phone Number</label>
+        <input type="tel" name="phoneNumber" id="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="@Model.GetPhoneNumber">
+      </div>
+
+      <div class='form-group'>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" value="@Model.GetEmail">
+      </div>
+
+      <div class='form-group'>
+        <label for="homeAddress">Address</label>
+        <input type="text" name="homeAddress" id="homeAddress" value="@Model.GetAddress">
+      </div>
+
+      <div class='form-group'>
+        <label for="city">City</label>
+        <input type="text" name="city" id="city" value="@Model.GetCity">
+      </div>
+
+      <div class='form-group'>
+        <label for="state">State</label>
+        <input type="text" name="state" id="state" value="@Model.GetState">
+      </div>
+
+      <div class='form-group'>
+        <label for="zipCode">Zip/Postal Code</label>
+        <input type="text" name="zipCode" id="zipCode" value="@Model.SetZip">
+      </div>
+
+      <button type="submit" name="button">Add Customer</button>
+    </form>
+  </div>
+
+</div>
