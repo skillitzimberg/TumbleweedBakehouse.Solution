@@ -29,10 +29,13 @@ body {
 
 nav {
   padding: .5em;
+  background-image: url(/img/wheatpic.jpeg);
+  background-size: cover;
+  background-position: center;
 }
 
 nav h4{
-  margin: 20px 5px 0;
+  margin: 20px 10px 0;
   display: inline ;
   list-style: none;
   letter-spacing: 1px;
@@ -66,6 +69,10 @@ form {
 
 img {
   width: 100%;
+  /* -webkit-filter: contrast(5);
+  filter: contrast(5); */
+  -webkit-filter: brightness(1);
+  filter: brightness(1), contrast(5);
 }
 
 .productRow {
