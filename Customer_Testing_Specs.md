@@ -2,18 +2,27 @@
 <sup>_Chris Rudnicky_</sup>
 
 ---
-This file contains testing information for the Customer Class Model. Click the links below to learn more about each test.
+## This file contains testing information for the Customer Class Model. Click the links below to learn more about each test.
 
-- [Constructor Instantiation]("#CustomerConstructor_CreatesInstanceOfCustomer_Customer)
-- [Get Set Tests](#property-get-set-tests)
+- [Constructor Instantiation](#CustomerConstructor_CreatesInstanceOfCustomer_Customer)
+- [Get Set Tests](#get-set-tests)
 - [Creating a full name](#FirstLast_ConcatsFirstAndLastName_String)
 - [GetAll Returning Empty List](#GetAll-Tests)
 - [Equality Override Testing](#public-override-bool-equals)
 - [Save](#save-test-methods)
 - [Find](#find)
 - [Edit](#Edit)
+
+### Controller Tests
+
+- [Returning a Correct View](#controller-returns-the-correct-view)
+- [Displaying the Correct Model Type](#controller-has-the-correct-model-type)
+- [Redirecting to the Correct Action](#controller-redirects-to-the-correct-action)
 ---
-## CustomerConstructor_CreatesIntanceOfCustomer_Customer
+
+# Model Tests
+
+## Constructor Instantiation
 
 This test will test to see if our constructor works. Expect this test to automatically pass because without a constructor, C# will not be able to run any code.
 
@@ -420,3 +429,96 @@ We can change _firstName_ to _lastName_ so that it looks like this:
 The test will now fail. To pass this test return the value to what it ought to be.
 
 ---
+
+# Controller Tests
+
+## Controller Returns the Correct View
+
+All controllers will be tested to see if they return the correct type of view. It can be safely assumed that each controller route was tested, however due to the number of controllers being tested I will only include one example of this test.
+
+#### CustomerControllerTests.cs
+
+    [TestMethod]
+    public void New_ReturnsCorrectView_True()
+      {
+        CustomerController controller = new CustomerController();
+        ActionResult newView = controller.New();
+        Assert.IsInstanceOfType(newView,typeof(ViewResult));
+      }
+
+
+#### CustomerController.cs
+To **fail** this test we want the controller to return the incorrect view. To do this we will have the controller return a `new EmptyResult()`. EmptyResults are a representation of an ActionResult that does nothing. As such our test should compile and fail.
+
+    [HttpGet("/customer/{customerId}/new")]
+    public ActionResult New()
+    {
+      return new EmptyResult();
+    }
+
+To **pass** this test we want the controller to return a `View()`; which is a type of action result that renders a view to the response.
+
+---
+## Controller Has the Correct Model Type
+
+All controllers will be tested to see if they have the correct model type. It can be safely assumed that each controller route was tested, however due to the number of controllers being tested I will only include one example of this test.
+
+#### CustomerControllerTests.cs
+
+_An important note about this test is that you must pass an integer in because the edit method takes an integer_
+
+    [TestMethod]
+    public void Edit_HasCorrectModelType_Dictionary()
+    {
+      ViewResult editView = new CustomerController().Edit(1) as ViewResult;
+      var result = editView.ViewData.Model;
+      Assert.IsInstanceOfType(result, typeof(Dictionary<string, object>));
+    }
+
+#### CustomerController.cs
+
+    [HttpGet("/customer/{customerId}/edit")]
+    public ActionResult Edit(int customerId)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object>();
+      Customer customer = Customer.Find(customerId);
+      model.Add("customer", customer);
+      return View(model);
+    }
+<sup>_Note the parameter that this controller takes. Remember to pass an integer into the edit method call in the test file to avoid compilation errors_</sup>
+
+To **fail** this test set the return value to any datatype that is not a Dictionary<string, object>. eg:  
+  - `return View(0);`
+
+To **pass** this test set the return value to the intended object. In this case:
+- `return View(model);`
+
+---
+## Controller Redirects To The Correct Action
+
+This test is run on any View file that passes data to another View file. Due to the similarity between each controller route that is tested, I will only use one example of this test. It can be safely assumed that all controllers that pass data to a separate page will be tested the same way.
+
+#### CustomerControllerTests.cs
+    [TestMethod]
+    public void Create_RedirectsToCorrectAction_Index()
+    {
+      CustomerController controller = new CustomerController();
+      ActionResult view = controller.Create("Ty","Butts","123123312234", "google@gmail.com", "Some road somewhere", "Portland", "Maine", 22030);
+      Assert.IsInstanceOfType(view, typeof(ViewResult));
+    }
+
+#### CustomerController.cs
+
+    [HttpPost("/customer/{customerId}")]
+    public ActionResult Create(string firstName, string lastName, string phoneNumber, string email, string homeAddress, string city, string state, int zipCode)
+    {
+      Customer newCustomer = new Customer(firstName, lastName, phoneNumber, email, homeAddress, city, state, zipCode);
+      newCustomer.Save();
+      return RedirectToAction("index");
+    }
+
+<sup>Note that the route address for this controller is the same as the one in the [Edit](#controller-has-the-correct-model-type) method above. The difference is the **HttpPost** and the **HttpGet**. Post action methods redirecet information from one page to another.</sup>
+
+The code above will **pass** the test because it `Create()` returns a View.  
+ This test seems awful similar to returning a correct view....  
+To **fail** this test we can return a `new EmptyResult()`.
