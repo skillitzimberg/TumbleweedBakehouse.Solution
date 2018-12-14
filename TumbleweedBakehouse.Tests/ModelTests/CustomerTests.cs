@@ -168,11 +168,11 @@ namespace TumbleweedBakehouse.Tests
       Assert.AreEqual(newZip, result);
     }
     [TestMethod]
-    public void FirstLast_ConcatsFirstAndLastName_String()
+    public void GetFirstLast_ConcatsFirstAndLastName_String()
     {
       Customer newCustomer = new Customer("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
       string firstLast = "chris rudnicky";
-      string result = newCustomer.FirstLast();
+      string result = newCustomer.GetFirstLast();
       Assert.AreEqual(firstLast, result);
     }
     [TestMethod]
