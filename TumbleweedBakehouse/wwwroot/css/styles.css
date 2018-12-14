@@ -20,6 +20,7 @@ body {
 
 .logoimg {
   width: 95px;
+  margin-bottom: 25px;
 }
 
 .navbar-inverse {
@@ -31,9 +32,10 @@ nav {
 }
 
 nav h4{
-  margin-right: 1em;
+  margin: 20px 5px 0;
   display: inline ;
   list-style: none;
+  letter-spacing: 1px;
 }
 
 a {
