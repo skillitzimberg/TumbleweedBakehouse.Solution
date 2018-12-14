@@ -32,11 +32,7 @@ namespace TumbleweedBakehouse.Tests
       //Assert
       Assert.IsInstanceOfType(view, typeof(RedirectToActionResult));
     }
-    [TestMethod]
-    public void Edit_HasCorrectModelType_()
-    {
-      
-    }
+  
 
   }
 }

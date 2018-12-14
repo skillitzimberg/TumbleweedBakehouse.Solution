@@ -41,15 +41,18 @@ namespace TumbleweedBakehouse.Controllers
 
         }
 
-        [HttpGet("/product/edit")]
-        public ActionResult Edit()
+        [HttpGet("/product/{id}/edit")]
+        public ActionResult Edit(string name, string type, string description, string url, bool available, float price,int id)
         {
+          Product allProducts = new Product (name,type,description,url,available,price,id);
+          List<Product> productList =  new List<Product>{},
+           productList = allProducts.GetAll();
 
-          return View();
+          return View(productList);
         }
 
         [HttpPost("/product/{id}")]
-        public ActionResult Edit(string name, string type, string description, string url, bool available, float price,int id)
+        public ActionResult Update(string name, string type, string description, string url, bool available, float price,int id)
         {
           Product newProduct = new Product (name,type,description,url,available,price,id);
           newProduct.Edit(name,type,description,url);
