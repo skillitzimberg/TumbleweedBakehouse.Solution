@@ -76,12 +76,18 @@ img {
 }
 
 .productRow {
-  margin: auto;
+  border: 1px solid #333;
+  height: 50%;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
+  /* justify-content: space-around; */
+  /* align-content: space-around; */
 }
 
 .productGridItem {
   border: 1px solid #333;
-  margin: .5em;
+  margin: auto;
   padding: 0;
   text-align: center;
 }
