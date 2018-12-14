@@ -52,7 +52,7 @@ namespace TumbleweedBakehouse.Controllers
         public ActionResult Edit(string name, string type, string description, string url, float price)
         {
           Product newProduct = new Product (name,type,description,url,price);
-          newProduct.Edit()
+          newProduct.Edit();
           newProduct.Save();
           return RedirectToAction("Show");
         }
