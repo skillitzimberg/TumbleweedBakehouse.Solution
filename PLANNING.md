@@ -26,7 +26,6 @@ Create an MVC web application order/customer/product tracking app.
 * COSTING FOR SUPPLIES, GAS, ETC.
 * GROSS PROFITS
 
-
 ## Products
 Demi Baguettes  
 Spelt Sourdough  
@@ -55,12 +54,11 @@ Hot Cross Buns
 ### Orders database columns/class properties
 - id: PRIMARY KEY, AUTO_INCREMENT  
 - orderNumber  
-- product  
-- product_qty  
-- order_received_date  
-- order_delivered_date  
+- receivedDate  
+- requestedPickupDate  
+- deliveredDate  
+- pickupLocation    
 - customer_id: FOREIGN KEY  
-
 
 ### Customer database columns/class properties
 - id: PRIMARY KEY, AUTO_INCREMENT
@@ -69,25 +67,42 @@ Hot Cross Buns
 - phone_number
 - email
 - address
+- city
+- state
+- zipcode
 
 ### Products database columns/class properties
 - id: PRIMARY KEY, AUTO_INCREMENT
-- name
-- type
-- price
+- Name
 - description
+- availability
+- price
+- producttype
 
 ## Models/Methods
 ### Customer
-- public int GetId()
 - public string GetFirstName()
+- public string SetFirstName(string newName)
 - public string GetLastName()
-- public string GetFullName()
+- public string SetLastName(string newName)
 - public string GetPhoneNumber()
+- public string SetPhoneNumber(string number)
 - public string GetEmail()
+- public void SetEmail(string newEmail)
+- public string GetAddress()
+- public void SetAddress(string newAddress)
+- public string GetCity()
+- public void SetCity(string newCity)
+- public string GetState()
+- public void SetState(string newState)
+- public int GetZip()
+- public void SetZip(int newZip)
+- public int GetId()
+- public string FirstLast()
 - public List<Customer> GetAll()
 - public void Save()
-- public Customer Find(int id)
+- public static Customer Find(int id)
+- public void Edit(string firstName, string lastName, string phoneNumber, string email, string address, string city, string state, int zip)
 
 **FOR TESTING HOUSEKEEPING:**
 - public override bool Equals(System.Object otherCustomer)
@@ -97,11 +112,23 @@ Hot Cross Buns
 - public int GetId()
 - public List<Order> GetAll()
 - public void Save()
-- public Order Find(int id)
+- public Order Find(int searchId)
 - public List<Customer> GetCustomer()
-
+- public void Edit(int newOrderNumber, DateTime newReceivedDate, DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation)
 **FOR TESTING HOUSEKEEPING:**
 - public override bool Equals(System.Object otherOrder)
+- public void ClearAll()
+
+### Products
+- public int GetId()
+- public List<Order> GetAll()
+- public void Save()
+- public Order Find(int searchId)
+- public List<Customer> GetCustomer()
+- public void Edit(int newOrderNumber, DateTime newReceivedDate, DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation)
+
+**FOR TESTING HOUSEKEEPING:**
+- public override bool Equals(System.Object otherProduct)
 - public void ClearAll()
 
 ### HomeController
