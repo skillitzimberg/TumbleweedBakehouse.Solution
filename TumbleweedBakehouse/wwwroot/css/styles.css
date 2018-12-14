@@ -9,7 +9,18 @@ body {
 }
 
 .logo {
+  font-size: 2.5em;
+  font-family: 'Charm', cursive;
+  display: block;
+}
+
+.logo a:hover {
   font-size: 1.5em;
+}
+
+.logoimg {
+  width: 95px;
+  margin-bottom: 25px;
 }
 
 .navbar-inverse {
@@ -17,21 +28,32 @@ body {
 }
 
 nav {
-  padding: 1em;
+  padding: .5em;
+  background-image: url(/img/wheatpic.jpeg);
+  background-size: cover;
+  background-position: center;
 }
 
 nav h4{
-  margin-right: 1em;
+  margin: 20px 10px 0;
   display: inline ;
   list-style: none;
-}
-
-span a {
-  text-decoration: none;
+  letter-spacing: 1px;
 }
 
 a {
   text-decoration: none;
+  color: #333;
+}
+
+a:hover {
+  font-size: 1.2em;
+  text-decoration: none;
+  color: #333;
+}
+
+.centernav {
+  text-align: center;
 }
 
 label {
@@ -47,19 +69,32 @@ form {
 
 img {
   width: 100%;
+  /* -webkit-filter: contrast(5);
+  filter: contrast(5); */
+  -webkit-filter: brightness(1);
+  filter: brightness(1), contrast(5);
 }
 
 .productRow {
-  margin: auto;
+  border: 1px solid #333;
+  height: 50%;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
+  /* justify-content: space-around; */
+  /* align-content: space-around; */
 }
 
 .productGridItem {
   border: 1px solid #333;
-  margin: .5em;
+  margin: auto;
   padding: 0;
   text-align: center;
 }
 
+.hide {
+  display: none;
+}
 .clickable  {
   cursor: pointer;
 }
