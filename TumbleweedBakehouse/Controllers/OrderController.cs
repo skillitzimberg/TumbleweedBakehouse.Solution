@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using TumbleweedBakehouse.Models;
 
@@ -29,9 +30,12 @@ namespace TumbleweedBakehouse.Controllers
         }
 
         [HttpPost("/order")]
-        public ActionResult Create()
+        public ActionResult Create(int customerId, DateTime requestedPickupDate, string pickupLocation)
         {
-            return View();
+
+            Order newOrder = new Order(1, requestedPickupDate, pickupLocation, customerId);
+            newOrder.Save();
+            return RedirectToAction("Index");
         }
 
         [HttpGet("/order/{orderId}")]
