@@ -9,10 +9,7 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/product")]
         public ActionResult Index()
         {
-          // Product newProductOne = new Product("sourdough","raye","light and fluffy","/img/Challah.jpg",true,3,1);
-          // newProductOne.Save();
-          // Product newProductTwo = new Product("Honeybread","Wheat","hearty and sweet","/img/Challah.jpg",true,5,2);
-          // newProductTwo.Save();
+          
           List<Product> productList = Product.GetAll();
 
           return View(productList);
