@@ -9,6 +9,20 @@ namespace TumbleweedBakehouse.Controllers
         {
           return View();
         }
-
+        [HttpGet("/customer/{customerId}/edit")]
+        public ActionResult Edit()
+        {
+          return View();
+        }
+        [HttpGet("/customer/{customerId}/new")]
+        public ActionResult New()
+        {
+          return View();
+        }
+        [HttpGet("/customer/{customerId}/")]
+        public ActionResult Show()
+        {
+          return View();
+        }
     }
 }
