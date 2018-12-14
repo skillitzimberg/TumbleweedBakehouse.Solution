@@ -17,6 +17,7 @@
 ### Controller Tests
 
 - [Returning a correct view](#controller-returns-the-correct-view)
+- [Displaying the correct model type](#controller-has-the-correct-model-type)
 ---
 
 # Model Tests
@@ -455,4 +456,41 @@ To **fail** this test we want the controller to return the incorrect view. To do
       return new EmptyResult();
     }
 
-To **pass** this test we want the controller to return a `View()`; which is a type of action result that renders a view to the responcse. 
+To **pass** this test we want the controller to return a `View()`; which is a type of action result that renders a view to the response.
+
+---
+## Controller Has the Correct Model Type
+
+All controllers will be tested to see if they have the correct model type. It can be safely assumed that each controller route was tested, however due to the number of controllers being tested I will only include one example of this test.
+
+#### CustomerControllerTests.cs
+
+_An important note about this test is that you must pass an integer in because the edit method takes an integer_
+
+    [TestMethod]
+    public void Edit_HasCorrectModelType_Dictionary()
+    {
+      ViewResult editView = new CustomerController().Edit(1) as ViewResult;
+      var result = editView.ViewData.Model;
+      Assert.IsInstanceOfType(result, typeof(Dictionary<string, object>));
+    }
+
+#### CustomerController.cs
+
+    [HttpGet("/customer/{customerId}/edit")]
+    public ActionResult Edit(int customerId)
+    {
+      Dictionary<string, object> model = new Dictionary<string, object>();
+      Customer customer = Customer.Find(customerId);
+      model.Add("customer", customer);
+      return View(model);
+    }
+<sup>_Note the parameter that this controller takes. Remember to pass an integer into the edit method call in the test file to avoid compilation errors_</sup>
+
+To **fail** this test set the return value to any datatype that is not a Dictionary<string, object>. eg:  
+  - `return View(0);`
+
+To **pass** this test set the return value to the intended object. In this case:
+- `return View(model);`
+
+---
