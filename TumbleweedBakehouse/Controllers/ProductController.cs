@@ -24,14 +24,14 @@ namespace TumbleweedBakehouse.Controllers
           return View();
         }
 
-        [HttpPost("/product")]
-        public ActionResult Create(string name, string type, string description, string  url, bool availability, float price)
-        {
-          Product newProduct = new Product (name, type, description, url, availability, price);
-
-          return View("show",newProduct);
-
-        }
+        // [HttpPost("/product")]
+        // public ActionResult Create(string name, string type, string description, string  url, bool availability, float price)
+        // {
+        //   Product newProduct = new Product (name, type, description, url, availability, price);
+        //
+        //   return View("show",newProduct);
+        //
+        // }
 
         [HttpGet("product/{id}")]
         public ActionResult Show(int id)
@@ -39,12 +39,6 @@ namespace TumbleweedBakehouse.Controllers
           Product thisProduct = Product.Find(id);
 
           return View(thisProduct);
-        }
-
-        [HttpGet("product/new")]
-        public ActionResult New()
-        {
-          return View();
         }
 
         [HttpPost("/product")]
