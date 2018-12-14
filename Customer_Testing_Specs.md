@@ -4,16 +4,9 @@
 ---
 ## This file contains testing information for the Customer Class Model. Click the links below to learn more about each test.
 
-<<<<<<< HEAD
-### Model Tests
-- [Constructor Instantiation]("#constructor-instantiation)
-- [Get Set Tests](#property-get-set-tests)
-- [Creating a Full Name](#FirstLast_ConcatsFirstAndLastName_String)
-=======
 - [Constructor Instantiation](#CustomerConstructor_CreatesInstanceOfCustomer_Customer)
 - [Get Set Tests](#get-set-tests)
 - [Creating a full name](#FirstLast_ConcatsFirstAndLastName_String)
->>>>>>> 6e44ede0dcdc39be7a3f74d4e9531506e19ebad6
 - [GetAll Returning Empty List](#GetAll-Tests)
 - [Equality Override Testing](#public-override-bool-equals)
 - [Save](#save-test-methods)
