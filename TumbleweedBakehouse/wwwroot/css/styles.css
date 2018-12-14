@@ -26,6 +26,24 @@ nav h4{
   list-style: none;
 }
 
+.btn{
+  color:#999;
+  background:rgba(0, 0, 0, 0.5);
+  padding:10px 20px;
+  font-size:12px;
+  text-decoration:none;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.btn:hover{
+  border:none;
+  background:rgba(0, 0, 0, 0.4);
+  background:#fff;
+  padding:20px 20px; #000;
+  color:#1b1b1b;
+}
+
 span a {
   text-decoration: none;
 }
