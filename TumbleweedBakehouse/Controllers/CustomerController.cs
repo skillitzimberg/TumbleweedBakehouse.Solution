@@ -42,7 +42,7 @@ namespace TumbleweedBakehouse.Controllers
           return RedirectToAction("index");
         }
 
-        [HttpGet("/customer/{customerId}")]
+        [HttpGet("/customer/{id}")]
         public ActionResult Show(int id)
         {
           Customer thisCustomer = Customer.Find(id);

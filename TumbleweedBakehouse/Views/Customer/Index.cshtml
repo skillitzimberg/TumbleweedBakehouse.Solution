@@ -11,7 +11,7 @@
           @foreach (var customer in Model)
           {
             <li>
-              <a href='/customers/@customer.GetId()'>@customer.GetFirstLast()</a>
+              <a href='/customer/@customer.GetId()'>@customer.GetFirstLast()</a>
             </li>
           }
         </ul>
