@@ -25,6 +25,17 @@ namespace TumbleweedBakehouse.Models
       _price = price;
       _id = id;
     }
+    
+    public string GetProductAvailability()
+    {
+      return _availability;
+    }
+
+    public void SetProductAvailability()
+    {
+      _availability = availability;
+    }
+
 
     public string GetProductName()
     {

@@ -24,15 +24,6 @@ namespace TumbleweedBakehouse.Controllers
           return View();
         }
 
-        [HttpPost("/product")]
-        public ActionResult Create(string name, string type, string description, string  url, bool availability, float price)
-        {
-          Product newProduct = new Product (name, type, description, url, availability, price);
-
-          return View("show",newProduct);
-
-        }
-
         [HttpGet("product/{id}")]
         public ActionResult Show(int id)
         {
@@ -42,13 +33,43 @@ namespace TumbleweedBakehouse.Controllers
         }
 
         [HttpPost("/product")]
-        public ActionResult Create(string name, string type, string description, bool available, float price)
+        public ActionResult Create(string name, string type, string description, string url, bool available, float price,int id)
         {
-          Product newProduct = new Product (name,type,description,"url",available,price);
+          Product newProduct = new Product (name,type,description,url,available,price,id);
           newProduct.Save();
           return RedirectToAction("Index");
 
         }
 
+        [HttpGet("/product/{id}/edit")]
+        public ActionResult Edit(int id)
+        {
+          Product editProduct = Product.Find(id);
+          return View(editProduct);
+        }
+
+        [HttpPost("/product/{id}")]
+        public ActionResult Update(string name, string type, string description, string url, bool available, float price,int id)
+        {
+          Product newProduct = new Product (name,type,description,url,available,price,id);
+          newProduct.Edit(name,type,description,url);
+          newProduct.Save();
+          return RedirectToAction("Show");
+        }
+
     }
 }
+
+
+
+
+
+// [HttpGet("/product/{id}/edit")]
+// public ActionResult Edit(string name, string type, string description, string url, bool available, float price,int id)
+// {
+//
+//   List<Product> productList =  new List<Product>{},
+//    productList.GetAll();
+//
+//   return View(productList);
+// }

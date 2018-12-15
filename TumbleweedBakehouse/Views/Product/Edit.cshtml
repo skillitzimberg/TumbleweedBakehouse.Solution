@@ -1,39 +1,40 @@
+@using TumbleweedBakehouse.Models
 @{
   Layout = "_Layout";
 }
 <div class='row'>
 
   <div class='col-md-12'>
-    <form class="" action="/products/{id}" method="post">
+    <form class="" action="/product/{id}" method="post">
       <h3>Product</h3>
       <div class='form-group'>
         <label for="name">Name</label>
-        <input type="text" name="name" id="name" value="@Model.GetName">
+        <input type="text" name="name" id="name" value="@Model.GetProductName()">
       </div>
 
       <div class='form-group'>
         <label for="type">Type</label>
-        <input type="text" name="type" id="type" value="@Model.GetProductName">
+        <input type="text" name="type" id="type" value="@Model.GetProductType()">
       </div>
 
       <div class='form-group'>
         <label for="description">Description</label>
-        <input type="text-are" name="description" id="description" value="@Model.GetDescription">
+        <input type="text-are" name="description" id="description" value="@Model.GetDescription()">
       </div>
 
       <div class='form-group'>
         <label for="available">Available</label>
-        <input type="checkbox" name="available" id="available" value="@Model.GetAvailability">
+        <input type="checkbox" name="available" id="available" value="@Model.GetAvailability()">
       </div>
 
       <div class='form-group'>
         <label for="price">Price</label>
-        <input type="text" name="price" id="price" value="@Model.GetPrice">
+        <input type="text" name="price" id="price" value="@Model.GetPrice()">
       </div>
 
       <div class='form-group'>
         <label for="url">Image URL</label>
-        <input type="text" name="url" id="url" value="@Model.GetUrl">
+        <input type="text" name="url" id="url" value="@Model.GetUrl()">
       </div>
       <button type="submit" name="button">Update Product</button>
     </form>
