@@ -42,13 +42,10 @@ namespace TumbleweedBakehouse.Controllers
         }
 
         [HttpGet("/product/{id}/edit")]
-        public ActionResult Edit(string name, string type, string description, string url, bool available, float price,int id)
+        public ActionResult Edit(int id)
         {
-          Product allProducts = new Product (name,type,description,url,available,price,id);
-          List<Product> productList =  new List<Product>{},
-           productList = allProducts.GetAll();
-
-          return View(productList);
+          Product editProduct = Product.Find(id);
+          return View(editProduct);
         }
 
         [HttpPost("/product/{id}")]
@@ -62,3 +59,17 @@ namespace TumbleweedBakehouse.Controllers
 
     }
 }
+
+
+
+
+
+// [HttpGet("/product/{id}/edit")]
+// public ActionResult Edit(string name, string type, string description, string url, bool available, float price,int id)
+// {
+//
+//   List<Product> productList =  new List<Product>{},
+//    productList.GetAll();
+//
+//   return View(productList);
+// }
