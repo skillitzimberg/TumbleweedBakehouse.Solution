@@ -62,20 +62,6 @@ namespace TumbleweedBakehouse.Tests
         }
 
         [TestMethod]
-        public void New_ReturnsCorrectView_New()
-        {
-            //Arrange
-            OrderController controller = new OrderController();
-            RedirectToActionResult actionResult = controller.New() as RedirectToActionResult;
-
-            //Act
-            string result = actionResult.ActionName;
-
-            //Assert
-            Assert.AreEqual(result, "Index");
-        }
-
-        [TestMethod]
         public void New_AcceptsCorrectModel_Dictionary()
         {
             //Arrange

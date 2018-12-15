@@ -26,12 +26,12 @@ namespace TumbleweedBakehouse.Models
       _id = id;
     }
     
-    public string GetProductAvailability()
+    public bool GetProductAvailability()
     {
       return _availability;
     }
 
-    public void SetProductAvailability()
+    public void SetProductAvailability(bool availability)
     {
       _availability = availability;
     }

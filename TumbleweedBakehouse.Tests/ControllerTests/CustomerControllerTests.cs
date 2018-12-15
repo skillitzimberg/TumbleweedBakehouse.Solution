@@ -70,7 +70,7 @@ namespace TumbleweedBakehouse.Tests
         public void Show_ReturnsCorrectView_True()
         {
           CustomerController controller = new CustomerController();
-          ActionResult showView = controller.Show();
+          ActionResult showView = controller.Show(1);
           Assert.IsInstanceOfType(showView,typeof(ViewResult));
         }
         [TestMethod]
