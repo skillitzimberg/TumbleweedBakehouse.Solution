@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TumbleweedBakehouse.Models;
+using System;
 
 namespace TumbleweedBakehouse.Controllers
 {
@@ -15,24 +16,24 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/customer/{customerId}/edit")]
         public ActionResult Edit(int customerId)
         {
-          Dictionary<string, object> model = new Dictionary<string, object>();
+          Dictionary<string, object> model = new Dictionary<string, object>( );
           Customer customer = Customer.Find(customerId);
           model.Add("customer", customer);
-          return View(model);
+          return View("edit", model);
         }
         [HttpPost("/customer/{customerId}")]
-        public ActionResult Update(string firstName, string lastName, string phoneNumber, string email, string homeAddress, string city, string state, int zipCode)
+        public ActionResult Update(int customerId, string firstName, string lastName, string phoneNumber, string email, string homeAddress, string city, string state, int zipCode)
         {
-          Customer newCustomer = new Customer(firstName, lastName, phoneNumber, email, homeAddress, city, state, zipCode);
-          newCustomer.Save();
-          return RedirectToAction("index");
+          Customer customer = Customer.Find(customerId);
+          customer.Edit(firstName, lastName, phoneNumber, email, homeAddress, city, state, zipCode);
+          return RedirectToAction("index", new {id = customerId});
         }
 
         [HttpGet("/customer/new")]
         public ActionResult New()
         {
-          List<Customer> allCustomers = Customer.GetAll();
-          return View(allCustomers);
+          // List<Customer> allCustomers = Customer.GetAll();
+          return View();
         }
         [HttpPost("/customer")]
         public ActionResult Create(string firstName, string lastName, string phoneNumber, string email, string homeAddress, string city, string state, int zipCode)
@@ -42,10 +43,13 @@ namespace TumbleweedBakehouse.Controllers
           return RedirectToAction("index");
         }
 
-        [HttpGet("/customer/{customerId}/")]
-        public ActionResult Show()
+        [HttpGet("/customer/{customerId}")]
+        public ActionResult Show(int customerId)
         {
-          return View();
+          Dictionary<string, object> model = new Dictionary<string, object> { };
+          Customer customer = Customer.Find(customerId);
+          model.Add("customer", customer);
+          return View(model);
         }
     }
 }
