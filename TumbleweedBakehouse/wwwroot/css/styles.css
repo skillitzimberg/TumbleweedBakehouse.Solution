@@ -80,11 +80,11 @@ img {
 }
 
 .products {
-  width: 95%;
-  margin: auto;
+  /* width: 95%; */
+  /* margin: auto; */
   border: 1px solid #333;
   /* height: 50%; */
-  /* display: flex; */
+  display: flex;
   /* flex-direction: row; */
   /* flex-wrap: wrap; */
   /* justify-content: space-around; */
@@ -102,6 +102,7 @@ img {
 .hide {
   display: none;
 }
+
 .clickable  {
   cursor: pointer;
 }
