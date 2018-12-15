@@ -8,6 +8,10 @@ body {
   padding-top: 1em;
 }
 
+.container-fluid {
+  /* width: 100%; */
+}
+
 .logo {
   font-size: 2.5em;
   font-family: 'Charm', cursive;
@@ -41,12 +45,12 @@ nav h4{
   letter-spacing: 1px;
 }
 
-a {
+nav a {
   text-decoration: none;
   color: #333;
 }
 
-a:hover {
+nav a:hover {
   font-size: 1.2em;
   text-decoration: none;
   color: #333;
@@ -71,14 +75,16 @@ img {
   width: 100%;
   /* -webkit-filter: contrast(5);
   filter: contrast(5); */
-  -webkit-filter: brightness(1);
-  filter: brightness(1), contrast(5);
+  /* -webkit-filter: brightness(1); */
+  /* filter: brightness(1), contrast(5); */
 }
 
-.productRow {
+.products {
+  /* width: 95%; */
+  /* margin: auto; */
   border: 1px solid #333;
-  height: 50%;
-  /* display: flex; */
+  /* height: 50%; */
+  display: flex;
   /* flex-direction: row; */
   /* flex-wrap: wrap; */
   /* justify-content: space-around; */
@@ -87,7 +93,8 @@ img {
 
 .productGridItem {
   border: 1px solid #333;
-  margin: auto;
+  width: 30%;
+  margin: 15px;
   padding: 0;
   text-align: center;
 }
@@ -95,6 +102,7 @@ img {
 .hide {
   display: none;
 }
+
 .clickable  {
   cursor: pointer;
 }
