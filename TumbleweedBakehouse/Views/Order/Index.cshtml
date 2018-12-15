@@ -1,18 +1,31 @@
+@using  TumbleweedBakehouse.Models;
 @{
-  Layout = "_Layout";
+    Layout = "_Layout";
 }
 <div class='row'>
-  <div class='col-md-4'>
-    <h3>Orders</h3>
-
-    @if (Model.Count != 0)
-    {
-      <ul>
-        @foreach (var order in Model)
+    <div class='col-md-4'>
+        <h3>Orders</h3>
+        <h5><a href="/order/new">Place a new order</a></h5>
+        @if (Model["orders"].Count != 0)
         {
-          <li><a href='/orders/@order.GetId()'>@order.GetOrderNumber() :: @order.GetPickUpLocation() :: @order.GetPickUpDate()</a></li>
+            <div class="col-md-12">
+                @foreach (var order in Model["orders"])
+                {
+                    <hr style="border: 1px solid #eca155" />
+                    <p>
+                        <a href='/orders/@order.Id'>
+                            <h3>Order Id: @order.Id</h3>
+                            <hr />
+                        </a>
+                    <p><strong>Order Number:</strong> @order.OrderNumber</p>
+                    <p><strong>Pickup Location:</strong> @order.PickupLocation</p>
+                    <p><strong>Order Recieved one:</strong> @order.ReceivedDate.ToString("dd/MM/yyyy")</p>
+                    <p><strong>Requested Pickup Date:</strong> @order.RequestedPickupDate.ToString("dd/MM/yyyy")</p>
+                    <p><strong>Order was delivered on:</strong> @order.DeliveredDate.ToString("dd/MM/yyyy")</p>
+                    <p><strong>Customer Number:</strong> @order.Customer_id</p>
+                    </p>
+                }
+            </div>
         }
-      </ul>
-    }
-  </div>
+    </div>
 </div>

@@ -9,13 +9,19 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/product")]
         public ActionResult Index()
         {
-          // Product newProductOne = new Product("sourdough","raye","light and fluffy","/img/Challah.jpg",true,3,1);
-          // newProductOne.Save();
-          // Product newProductTwo = new Product("Honeybread","Wheat","hearty and sweet","/img/Challah.jpg",true,5,2);
-          // newProductTwo.Save();
+
           List<Product> productList = Product.GetAll();
 
-          return View(productList);
+          List<Product> newList = new List<Product>{};
+          newList = Product.GetAll();
+
+          return View(newList);
+        }
+
+        [HttpGet("/product/new")]
+        public ActionResult New()
+        {
+          return View();
         }
 
         [HttpGet("product/{id}")]
@@ -26,5 +32,44 @@ namespace TumbleweedBakehouse.Controllers
           return View(thisProduct);
         }
 
+        [HttpPost("/product")]
+        public ActionResult Create(string name, string type, string description, string url, bool available, float price,int id)
+        {
+          Product newProduct = new Product (name,type,description,url,available,price,id);
+          newProduct.Save();
+          return RedirectToAction("Index");
+
+        }
+
+        [HttpGet("/product/{id}/edit")]
+        public ActionResult Edit(int id)
+        {
+          Product editProduct = Product.Find(id);
+          return View(editProduct);
+        }
+
+        [HttpPost("/product/{id}")]
+        public ActionResult Update(string name, string type, string description, string url, bool available, float price,int id)
+        {
+          Product newProduct = new Product (name,type,description,url,available,price,id);
+          newProduct.Edit(name,type,description,url);
+          newProduct.Save();
+          return RedirectToAction("Show");
+        }
+
     }
 }
+
+
+
+
+
+// [HttpGet("/product/{id}/edit")]
+// public ActionResult Edit(string name, string type, string description, string url, bool available, float price,int id)
+// {
+//
+//   List<Product> productList =  new List<Product>{},
+//    productList.GetAll();
+//
+//   return View(productList);
+// }

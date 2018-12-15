@@ -16,13 +16,36 @@ namespace TumbleweedBakehouse.Models
         public string PickupLocation { get; set; }
         public int Customer_id { get; set; }
 
-        public Order(int orderNumber, DateTime orderReceivedDate, int customer_id, int id = 0)
+        public Order(int orderNumber, DateTime requestedPickupDate, int customer_id, int id = 0)
         {
             this.Id = id;
             this.OrderNumber = orderNumber;
-            this.ReceivedDate = orderReceivedDate;
+            this.ReceivedDate = DateTime.Now;
+            this.RequestedPickupDate = requestedPickupDate;
             this.Customer_id = customer_id;
             this.PickupLocation = "";
+        }
+
+        public Order(int orderNumber, DateTime requestedPickupDate, string pickupLocation ,int customer_id, int id = 0)
+        {
+            this.Id = id;
+            this.OrderNumber = orderNumber;
+            this.ReceivedDate = DateTime.Now;
+            this.Customer_id = customer_id;
+            this.PickupLocation = pickupLocation;
+
+        }
+
+        public Order(int orderNumber, DateTime requestedPickupDate, DateTime deliveredDate, string pickupLocation, int customer_id, int id = 0)
+        {
+            this.Id = id;
+            this.OrderNumber = orderNumber;
+            this.ReceivedDate = DateTime.Now;   
+            this.RequestedPickupDate = requestedPickupDate;
+            this.DeliveredDate = deliveredDate;
+            this.PickupLocation = pickupLocation;
+            this.Customer_id = customer_id;
+            this.PickupLocation = pickupLocation;
         }
 
         public Order(int orderNumber, DateTime orderReceivedDate, DateTime requestedPickupDate, DateTime deliveredDate, string pickupLocation, int customer_id, int id = 0)
@@ -187,6 +210,42 @@ namespace TumbleweedBakehouse.Models
             }
 
             return newOrder;
+        }
+
+        //READ: this will get all products
+        public List<Product> GetProductsInOrder()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT products.* FROM order
+      JOIN products_order ON (order.id = products_orders.order_id)
+      JOIN products ON (products_orders.product_id = products.id)
+      WHERE order.id = @OrderId;";
+
+            cmd.Parameters.AddWithValue("@OrderId", this.Id);
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            List<Product> products = new List<Product> { };
+
+            while (rdr.Read())
+            {
+                int id = rdr.GetInt32(0);
+                string name = rdr.GetString(1);
+                string description = rdr.GetString(2);
+                bool availability = rdr.GetBoolean(3);
+                float price = rdr.GetFloat(4);
+                string type = rdr.GetString(5);
+                string url = rdr.GetString(6);
+                Product foundProduct = new Product(name, type, description, url, availability, price, id);
+                products.Add(foundProduct);
+            }
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return products;
         }
 
         //UPDATE: This will edit an existing order

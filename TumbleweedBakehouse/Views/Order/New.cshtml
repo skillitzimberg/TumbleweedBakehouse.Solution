@@ -1,53 +1,45 @@
 @{
-  Layout = "_Layout";
+    Layout = "_Layout";
 }
 <div class='row'>
 
-  <div class='col-md-12'>
-    <form class="" action="/orders" method="post">
-      <h3>New Order</h3>
-      <div class='form-group'>
-        <label for="firstName">First Name</label>
-        <input type="text" name="firstName" id="firstName">
-      </div>
+    <div class='col-md-12'>
 
-      <div class='form-group'>
-        <label for="lastName">Last Name</label>
-        <input type="text" name="lastName" id="lastName">
-      </div>
+        <h4>This is the total number of customers: @Model["customers"].Count</h4>
 
-      <div class='form-group'>
-        <label for="phoneNumber">Phone Number</label>
-        <input type="tel" name="phoneNumber" id="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="555-555-5555">
-      </div>
+        <form class="" action="/order" method="post">
 
-      <div class='form-group'>
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="tumbleweedbakehouse@gmail.com">
-      </div>
+            <h3>New Order</h3>
 
-      <div class='form-group'>
-        <label for="homeAddress">Address</label>
-        <input type="text" name="homeAddress" id="homeAddress">
-      </div>
+            @if (Model["customers"].Count != 0)
+            {
+                <label for='customerId'>Select a customer:</label>
 
-      <div class='form-group'>
-        <label for="city">City</label>
-        <input type="text" name="city" id="city">
-      </div>
+                <select id='customerId' name='customerId' type='text'>
 
-      <div class='form-group'>
-        <label for="state">State</label>
-        <input type="text" name="state" id="state">
-      </div>
+                    @foreach (var customer in @Model["customers"])
+                    {
+                        <option value='@customer.GetId()'>@customer.GetFirstLast()</option>
+                    }
+                </select>
+            }
 
-      <div class='form-group'>
-        <label for="zipCode">Zip/Postal Code</label>
-        <input type="number" name="zipCode" id="zipCode">
-      </div>
+            <p><a href="/customer/new">Click here to add a new Customer</a></p>
 
-      <button type="submit" name="button">Place Order</button>
-    </form>
-  </div>
+            <div class='form-group'>
+                <label for="requestedPickupDate">What is the pick up date? There's a minimum of 2 business days from the day the order is placed.</label>
+                <input type="date" name="requestedPickupDate" id="requestedPickupDate">
+            </div>
 
+            <div class='form-group'>
+                <label for="pickupLocation">Where would you like to pick up the order?</label>
+                <select id='pickupLocation' name='pickupLocation' type='text'>
+                    <option value='Alamosa'>ALAMOSA (Available Tuesdays)</option>
+                    <option value='La Jara'>LA JARA (Available Saturdays)</option>
+                </select>
+            </div>
+
+            <button type="submit" name="button">Place Order</button>
+        </form>
+    </div>
 </div>
