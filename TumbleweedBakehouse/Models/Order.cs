@@ -16,20 +16,34 @@ namespace TumbleweedBakehouse.Models
         public string PickupLocation { get; set; }
         public int Customer_id { get; set; }
 
-        public Order(int orderNumber, DateTime orderReceivedDate, int customer_id, int id = 0)
+        public Order(int orderNumber, DateTime requestedPickupDate, int customer_id, int id = 0)
         {
             this.Id = id;
             this.OrderNumber = orderNumber;
-            this.ReceivedDate = orderReceivedDate;
+            this.ReceivedDate = DateTime.Now;
+            this.RequestedPickupDate = requestedPickupDate;
             this.Customer_id = customer_id;
             this.PickupLocation = "";
         }
 
-        public Order(int orderNumber, DateTime orderReceivedDate, string pickupLocation ,int customer_id, int id = 0)
+        public Order(int orderNumber, DateTime requestedPickupDate, string pickupLocation ,int customer_id, int id = 0)
         {
             this.Id = id;
             this.OrderNumber = orderNumber;
-            this.ReceivedDate = orderReceivedDate;
+            this.ReceivedDate = DateTime.Now;
+            this.Customer_id = customer_id;
+            this.PickupLocation = pickupLocation;
+
+        }
+
+        public Order(int orderNumber, DateTime requestedPickupDate, DateTime deliveredDate, string pickupLocation, int customer_id, int id = 0)
+        {
+            this.Id = id;
+            this.OrderNumber = orderNumber;
+            this.ReceivedDate = DateTime.Now;   
+            this.RequestedPickupDate = requestedPickupDate;
+            this.DeliveredDate = deliveredDate;
+            this.PickupLocation = pickupLocation;
             this.Customer_id = customer_id;
             this.PickupLocation = pickupLocation;
         }
