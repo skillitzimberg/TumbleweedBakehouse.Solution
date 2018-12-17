@@ -24,15 +24,18 @@ namespace TumbleweedBakehouse.Controllers
             Dictionary<string, object> model = new Dictionary<string, object> { };
             List<Customer> customerList = Customer.GetAll();
             List<Order> orderList = Order.GetAll();
+            List<Product> productList = Product.GetAll();
             model.Add("customers", customerList);
             model.Add("orders", orderList);
+            model.Add("products", productList);
             return View(model);
         }
 
         [HttpPost("/order")]
-        public ActionResult Create(int customerId, DateTime requestedPickupDate, string pickupLocation)
+        public ActionResult Create(int customerId, DateTime requestedPickupDate, string pickupLocation, int productId, int qty)
         {
-
+            Dictionary<string, object> orderedProducts = new Dictionary<string, object> { };
+            //foreach ()
             Order newOrder = new Order(1, requestedPickupDate, pickupLocation, customerId);
             newOrder.Save();
             return RedirectToAction("Index");

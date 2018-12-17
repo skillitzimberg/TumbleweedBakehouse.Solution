@@ -1,3 +1,5 @@
+@using TumbleweedBakehouse.Models;
+
 @{
     Layout = "_Layout";
 }
@@ -39,7 +41,29 @@
                 </select>
             </div>
 
-            <button type="submit" name="button">Place Order</button>
-        </form>
-    </div>
+            <div class='products'>
+                @if (Model.Count != 0)
+                {
+                    @foreach (var product in Model["products"])
+                    {
+                    <a href='/product/@product.GetId()'>
+                        <input id="productId" type="hidden" name="productId" value="@product.GetId()">
+                        <div class="productGridItem col-md-4" class="clickable" data-toggle="modal" data-target="#addToOrder">
+                            <img src="@product.GetUrl()" alt="photo of @product.GetProductName()">
+                            <p class=" clickable">@product.GetProductName()</p>
+                            <p>$@product.GetPrice()</p>
+                            <label class="col-md-6 control-label" for="qty">Quantity:</label>
+                            <div class="col-md-6">
+                                <input id="qty" name="qty" type="number" placeholder="#" class="form-control input-md">
+                            </div>
+                        </div>
+                    </a>
+       
+                    }
+                }
+            </div>
+
+    <button type="submit" name="button">Place Order</button>
+    </form>
+</div>
 </div>
