@@ -235,5 +235,44 @@ namespace TumbleweedBakehouse.Models
         conn.Dispose();
       }
     }
+
+
+    // Need dictionary for products etc...
+    public  List<Order> FindOrders()
+    {
+      // List<Order> allOrders = new List<Order> { };
+      // MySqlConnection conn = DB.Connection();
+      // conn.Open();
+      // MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      // cmd.CommandText=@"SELECT * FROM `orders` WHERE id = @(searchId);";
+      // cmd.Parameters.AddWithValue("@searchId", this._id);
+      // var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      //
+      // int orderId  = 0;
+      // int orderNumber = 0;
+      // DateTime requestedPickupDate = new DateTime();
+      // string pickupLocation ="";
+      //
+      // while (rdr.Read())
+      // {
+      //   orderId = rdr.GetInt32(0);
+      //   orderNumber = rdr.GetInt32(1);
+      //   requestedPickupDate = rdr.GetDateTime(3);
+      //   pickupLocation = rdr.GetString(6);
+      //   Order foundOrder = new Order(orderNumber, requestedPickupDate, pickupLocation, orderId);
+      //   allOrders.Add(foundOrder);
+      // }
+      // conn.Close();
+      // if (conn != null)
+      // {
+      //   conn.Dispose();
+      // }
+      int testOrderNumber = 1;
+      DateTime testReceivedDate = DateTime.Now;
+      int testCustomer_Id = 1;
+      Order testOrder = new Order(testOrderNumber, testReceivedDate, testCustomer_Id);
+      List<Order> result = new List<Order> {testOrder};
+      return result;
+    }
   }
 }
