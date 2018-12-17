@@ -249,7 +249,7 @@ namespace TumbleweedBakehouse.Tests
     {
       Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
       List<Order> newList = new List<Order> {};
-      List<Order> result = newCustomer.FindOrders();
+      List<Order> result = Customer.FindOrders(newCustomer.GetId());
       CollectionAssert.AreEqual(newList, result);
     }
   }
