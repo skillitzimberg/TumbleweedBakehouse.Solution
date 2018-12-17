@@ -12,6 +12,7 @@ namespace TumbleweedBakehouse.Tests
     public void Dispose()
     {
       Customer.ClearAll();
+      Order.ClearAll();
     }
    public CustomerTests()
     {
@@ -197,7 +198,7 @@ namespace TumbleweedBakehouse.Tests
 
             //Assert
             CollectionAssert.AreEqual(result, testList);
-            
+
         }
     [TestMethod]
     public void Equals_ReturnsTrueIfPropertiesAreTheSame_Customer()
@@ -242,6 +243,38 @@ namespace TumbleweedBakehouse.Tests
       newCustomer.Edit(newString, "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
       string result = Customer.Find(newCustomer.GetId()).GetFirstName();
       Assert.AreEqual(newString, result);
+    }
+    [TestMethod]
+    public void FindOrders_ReturnsEmptyOrderList_Order()
+    {
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      List<Order> newList = new List<Order> {};
+      List<Order> result = Customer.FindOrders(newCustomer.GetId());
+      CollectionAssert.AreEqual(newList, result);
+    }
+    [TestMethod]
+    public void FindOrder_RetrievesAllOrderswithcustomer_OrderList()
+    {
+      //Arrange
+      int testOrderNumber = 1;
+      DateTime testRequestedPickupDate = DateTime.Parse("12/15/2018");
+      string testPickupLocation = "Farmers Market 1";
+      int testCustomer_Id = 1;
+      Order testOrder = new Order(testOrderNumber, testRequestedPickupDate, testPickupLocation, testCustomer_Id);
+      testOrder.Save();
+
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      newCustomer.Save();
+
+    //Act
+    List<Order> testList = Customer.FindOrders(newCustomer.GetId());
+    List<Order> result = new List<Order>{testOrder};
+
+    //Assert
+    CollectionAssert.AreEqual(result, testList);
+
+
+
     }
   }
 }
