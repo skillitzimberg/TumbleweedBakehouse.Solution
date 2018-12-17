@@ -32,12 +32,17 @@ namespace TumbleweedBakehouse.Controllers
         }
 
         [HttpPost("/order")]
-        public ActionResult Create(int customerId, DateTime requestedPickupDate, string pickupLocation, int productId, int qty)
+        public ActionResult Create(int customerId, DateTime requestedPickupDate, string pickupLocation, int[] productId, int[] qty)
         {
-            Dictionary<string, object> orderedProducts = new Dictionary<string, object> { };
-            //foreach ()
             Order newOrder = new Order(1, requestedPickupDate, pickupLocation, customerId);
             newOrder.Save();
+            for (int i = 0; i < productId.Length; i++)
+            {
+                if (qty[i] != 0 && qty[i] != null)
+                {
+                newOrder.AddProductToOrder(Product.Find(productId[i]), qty[i]);
+                }
+            }   
             return RedirectToAction("Index");
         }
 

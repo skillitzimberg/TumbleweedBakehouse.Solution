@@ -9,7 +9,6 @@ namespace TumbleweedBakehouse.Models
   {
         public int Id { get; set; }
         public int OrderNumber { get; set; }
-        public Dictionary<string, object> OrderedProduct{ get; set; }
         public DateTime ReceivedDate { get; set; }
         public DateTime RequestedPickupDate { get; set; }
         public DateTime DeliveredDate { get; set; }
@@ -125,18 +124,50 @@ namespace TumbleweedBakehouse.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO orders (orderNumber, receivedDate, requestedPickupDate, deliveredDate, pickupLocation, customer_id)
-                                            VALUES (@orderNumber, @receivedDate, @requestedPickupDate, @deliveredDate, @pickupLocation, @customer_id);";
+
+            cmd.CommandText = @"SELECT COUNT(*) FROM orders WHERE customer_id = @customer_id;";
+            cmd.Parameters.AddWithValue("@customer_id", this.Customer_id);
             cmd.Parameters.AddWithValue("@orderNumber", this.OrderNumber);
             cmd.Parameters.AddWithValue("@receivedDate", this.ReceivedDate);
             cmd.Parameters.AddWithValue("@requestedPickupDate", this.RequestedPickupDate);
             cmd.Parameters.AddWithValue("@deliveredDate", this.DeliveredDate);
             cmd.Parameters.AddWithValue("@pickupLocation", this.PickupLocation);
-            cmd.Parameters.AddWithValue("@customer_id", this.Customer_id);
+
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            while (rdr.Read())
+            {
+                int newOrderNumberValue = rdr.GetInt32(0);
+                this.OrderNumber = newOrderNumberValue+1;
+            }
+            conn.Close();
+
+            conn.Open();
+            cmd.CommandText = @"INSERT INTO orders (orderNumber, receivedDate, requestedPickupDate, deliveredDate, pickupLocation, customer_id)
+                                            VALUES (@orderNumber, @receivedDate, @requestedPickupDate, @deliveredDate, @pickupLocation, @customer_id);";
+
             cmd.ExecuteNonQuery();
             this.Id = (int)cmd.LastInsertedId;
+
             conn.Close();
             if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
+        //CREATE: Adds a product to the order
+        public void AddProductToOrder(Product newProduct, int qty)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"INSERT INTO products_orders (product_id, order_id, productQty) VALUES (@ProductId, @OrderId, @ProductQty);";
+            cmd.Parameters.AddWithValue("@ProductId", newProduct.GetId());
+            cmd.Parameters.AddWithValue("@OrderId", this.Id);
+            cmd.Parameters.AddWithValue("@ProductQty", qty);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if(conn != null)
             {
                 conn.Dispose();
             }
@@ -294,7 +325,7 @@ namespace TumbleweedBakehouse.Models
                 conn.Dispose();
             }
         }
-
+        
 
     }
 }
