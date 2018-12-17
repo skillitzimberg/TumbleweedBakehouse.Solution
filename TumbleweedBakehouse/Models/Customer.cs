@@ -244,7 +244,7 @@ namespace TumbleweedBakehouse.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText=@"SELECT * FROM orders WHERE customer_Id = @searchId;";
+      cmd.CommandText=@"SELECT * FROM orders WHERE customer_id = @searchId;";
       cmd.Parameters.AddWithValue("@searchId", id);
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
@@ -258,8 +258,8 @@ namespace TumbleweedBakehouse.Models
         orderId = rdr.GetInt32(0);
         orderNumber = rdr.GetInt32(1);
         requestedPickupDate = rdr.GetDateTime(3);
-        pickupLocation = rdr.GetString(6);
-        Order foundOrder = new Order(orderNumber, requestedPickupDate, pickupLocation, orderId);
+        pickupLocation = rdr.GetString(5);
+        Order foundOrder = new Order(orderNumber, requestedPickupDate, pickupLocation, id, orderId);
         allOrders.Add(foundOrder);
       }
       conn.Close();
@@ -267,11 +267,6 @@ namespace TumbleweedBakehouse.Models
       {
         conn.Dispose();
       }
-      int testOrderNumber = 1;
-      DateTime testReceivedDate = DateTime.Now;
-      int testCustomer_Id = 1;
-      Order testOrder = new Order(testOrderNumber, testReceivedDate, testCustomer_Id);
-      List<Order> result = new List<Order> {testOrder};
       return allOrders;
     }
   }
