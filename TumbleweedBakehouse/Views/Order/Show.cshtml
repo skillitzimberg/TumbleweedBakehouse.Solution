@@ -12,10 +12,34 @@
         <h5>Pickup Location: @Model["thisOrder"].PickupLocation</h5>
         <h5>Date Delivered: @Model["thisOrder"].DeliveredDate</h5>
 
-        @*@foreach (var product in Model["products"])
+        @*@foreach (var product in Model["orderInventory"])
         {
-            <h3>Orders: <a href="/products/@Model["products"].GetProductId()"></a> @Model["products"].GetProductName()</h3>
+            <p>
+                <a href="/products/product.GetProductId()">@product.GetProductName()</a>
+            </p>
+            <p>
+                Quantity: @Model["thisOrder"].GetProductsQTYInOrder(@product.GetId())
+            </p>
         }*@
+
+        <div class="col-md-12">
+            <table style="width:50%" class="table-striped">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+
+                </tr>
+                @foreach (var product in Model["orderInventory"])
+                {
+                    <tr>
+                        <td><a href="/products/product.GetProductId()">@product.GetProductName()</a></td>
+                        <td>  @Model["thisOrder"].GetProductsQTYInOrder(@product.GetId())</td>
+
+
+                    </tr>
+                }
+            </table>
+        </div>
         <p><a href="/order/@Model["thisOrder"].Id/edit">Edit this order</a></p>
     </div>
 </div>

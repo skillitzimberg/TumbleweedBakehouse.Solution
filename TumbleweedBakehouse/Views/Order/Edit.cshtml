@@ -49,14 +49,14 @@
                     </tr>
                     <tr>
                         <td> @Customer.Find(Model["order"].Customer_id).GetFirstLast()</td>
-                        <td> @Model["order"].ReceivedDate.ToString("yyyy-mm-dd")</td>
+                        <td> @Model["order"].ReceivedDate.ToString("yyyy-MM-dd")</td>
                         <td>
                             <div class='form-group'>
-                                Original Date: @Model["order"].RequestedPickupDate.ToString("yyyy-mm-dd")
+                                Original Date: @Model["order"].RequestedPickupDate.ToString("yyyy-MM-dd")
                                 <hr />
                                 <div class='form-group'>
                                     <label for="requestedPickupDate">New Pickup Date:</label>
-                                    <input type="date" name="requestedPickupDate" id="requestedPickupDate" value="@Model["order"].RequestedPickupDate.ToString("yyyy-mm-dd")">
+                                    <input type="date" name="requestedPickupDate" id="requestedPickupDate" value="@Model["order"].RequestedPickupDate.ToString("yyyy-MM-dd")">
                                 </div>
                             </div>
                         </td>
@@ -74,10 +74,10 @@
                         </td>
                         <td>
                             <div class='form-group'>
-                                Original Delivery Date: @Model["order"].DeliveredDate.ToString("yyyy-mm-dd")
+                                Original Delivery Date: @Model["order"].DeliveredDate.ToString("yyyy-MM-dd")
                                 <hr />
                                 <label for="DeliveredDate">New Pickup Date:</label>
-                                <input type="date" name="DeliveredDate" id="DeliveredDate" value='@Model["order"].DeliveredDate.ToString("yyyy-mm-dd")'>
+                                <input type="date" name="DeliveredDate" id="DeliveredDate" value='@Model["order"].DeliveredDate.ToString("yyyy-MM-dd")'>
                             </div>
                         </td>
                     </tr>
@@ -91,22 +91,19 @@
                         <th>Quantity</th>
                         <th>Price</th>
                     </tr>
-                    @foreach (Product product in @Model["thisOrdersProducts"])
+                    @foreach (Product product in @Model["orderInventory"])
                     {
                     <tr>
                         <td>
-                          Product product
                             @product.GetProductName();
                         </td>
                         <td>
-                            quantity quantity
-
+                            @Model["thisOrder"].GetProductsQTYInOrder(@product.GetId())
                         </td>
                         <td>
-                            price price
-                            @product.GetPrice();
+                            $@product.GetPrice();
                         </td>
-                    </tr>foreach
+                    </tr>
                     }
                 </table>
             </div>

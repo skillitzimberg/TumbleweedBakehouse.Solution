@@ -8,8 +8,16 @@ using System;
 namespace TumbleweedBakehouse.Tests
 {
     [TestClass]
-    public class OrderControllerTest
+    public class OrderControllerTest : IDisposable
     {
+
+        public void Dispose()
+        {
+            Product.ClearAll();
+            Order.ClearAll();
+            Customer.ClearAll();
+        }
+
         [TestMethod]
         public void Index_ReturnsAViewResult_True()
         {
@@ -41,9 +49,14 @@ namespace TumbleweedBakehouse.Tests
         {
             //Arrange
             OrderController controller = new OrderController();
+            Customer testCustomer = new Customer("Charley", "McGowan", "555-555-5555", "something@email.com", "123 Fun street", "Portland", "OR", 97222);
+            testCustomer.Save();
+            Order testOrder = new Order(DateTime.Parse("12/12/2012"), testCustomer.GetId());
+            testOrder.Save();
+
 
             //Act
-            ActionResult indexView = controller.Show(1);
+            ActionResult indexView = controller.Show(0);
 
             //Assert
             Assert.IsInstanceOfType(indexView, typeof(ViewResult));
@@ -109,11 +122,11 @@ namespace TumbleweedBakehouse.Tests
             Assert.IsInstanceOfType(editView, typeof(ViewResult));
         }
 
-        [TestMethod]
-        public void Edit_()
-        {
+        //[TestMethod]
+        //public void Edit_()
+        //{
 
-        }
+        //}
 
     }
 }

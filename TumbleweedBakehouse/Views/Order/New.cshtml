@@ -27,6 +27,8 @@
             }
 
             <p><a href="/customer/new">Click here to add a new Customer</a></p>
+            <p><a href="/order">Click here to see all orders</a></p>
+
 
             <div class='form-group'>
                 <label for="requestedPickupDate">What is the pick up date? There's a minimum of 2 business days from the day the order is placed.</label>
@@ -46,7 +48,7 @@
                 {
                     @foreach (var product in Model["products"])
                     {
-                    
+
                         <input id="productId" type="hidden" name="productId" value="@product.GetId()">
                         <div class="productGridItem col-md-3" class="clickable" data-toggle="modal" data-target="#addToOrder">
                             <a href='/product/@product.GetId()'>
@@ -62,7 +64,7 @@
                     }
                 }
             </div>
-    <button type="submit" name="button">Place Order</button>
-    </form>
+            <button type="submit" name="button">Place Order</button>
+        </form>
 </div>
 </div>

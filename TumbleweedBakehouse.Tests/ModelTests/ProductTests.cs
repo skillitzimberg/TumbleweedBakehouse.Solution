@@ -14,6 +14,7 @@ namespace TumbleweedBakehouse.Tests
    public void Dispose()
     {
       Product.ClearAll();
+      Order.ClearAll();
     }
 
     public ProductTest()
@@ -114,7 +115,7 @@ namespace TumbleweedBakehouse.Tests
       testProduct.Save();
       string breadname = "miniWheat";
 
-      testProduct.Edit(breadname,"raye","light and fluffy","hello.com");
+      testProduct.Edit(breadname,"raye","light and fluffy","hello.com", true, 3);
 
       string result = Product.Find(testProduct.GetId()).GetProductName();
 

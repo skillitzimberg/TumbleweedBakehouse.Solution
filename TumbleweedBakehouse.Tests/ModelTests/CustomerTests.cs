@@ -12,6 +12,7 @@ namespace TumbleweedBakehouse.Tests
         {
             Customer.ClearAll();
             Order.ClearAll();
+            Product.ClearAll();
         }
 
         public CustomerTests()

@@ -292,47 +292,83 @@ namespace TumbleweedBakehouse.Models
 			return products;
 		}
 
-        //READ: this will get all products in the order
-        public List<int> GetProductsQTYInOrder()
+		//READ: this will get all products QUANTITY in the order
+		public List<int> GetProductsQTYInOrder()
 
-        {
-            MySqlConnection conn = DB.Connection();
-            conn.Open();
-            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT products.id
-	                                , products.Name
-	                                , products_orders.productQty
-                                FROM orders
-                                JOIN products_orders
-                                ON orders.id = products_orders.order_id
-                                JOIN products
-                                ON products_orders.product_id = products.id
-                                WHERE orders.id = @OrderId;";
+		{
+			MySqlConnection conn = DB.Connection();
+			conn.Open();
+			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+			cmd.CommandText = @"SELECT products.id
+									, products.Name
+									, products_orders.productQty
+								FROM orders
+								JOIN products_orders
+								ON orders.id = products_orders.order_id
+								JOIN products
+								ON products_orders.product_id = products.id
+								WHERE orders.id = @OrderId;";
 
-            cmd.Parameters.AddWithValue("@OrderId", this.Id);
+			cmd.Parameters.AddWithValue("@OrderId", this.Id);
 
-            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-            List<int> productQty = new List<int>{};
+			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+			List<int> productQty = new List<int>{};
 
-            while (rdr.Read())
-            {
-                int id = rdr.GetInt32(0);
-                string name = rdr.GetString(1);
-                int qty = rdr.GetInt32(2);
-                productQty.Add(qty);
-            }
+			while (rdr.Read())
+			{
+				int id = rdr.GetInt32(0);
+				string name = rdr.GetString(1);
+				int qty = rdr.GetInt32(2);
+				productQty.Add(qty);
+			}
 
-            conn.Close();
-            if (conn != null)
-            {
-                conn.Dispose();
-            }
-            return productQty;
-        }
+			conn.Close();
+			if (conn != null)
+			{
+				conn.Dispose();
+			}
+			return productQty;
+		}
 
-        //UPDATE: This will edit an existing order
-        public void Edit(int newOrderNumber, DateTime newReceivedDate, DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation)
-        {
+		//READ: this will get individual product QUANTITY in an order
+		public int GetProductsQTYInOrder(int productId)
+
+		{
+			MySqlConnection conn = DB.Connection();
+			conn.Open();
+			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+			cmd.CommandText = @"SELECT products.id
+									, products.Name
+									, products_orders.productQty
+								FROM orders
+								JOIN products_orders
+								ON orders.id = products_orders.order_id
+								JOIN products
+								ON products_orders.product_id = products.id
+								WHERE orders.id = @OrderId AND products.id = @ProductId;";
+
+			cmd.Parameters.AddWithValue("@OrderId", this.Id);
+			cmd.Parameters.AddWithValue("@ProductId", productId);
+
+			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+			int qty = 0;
+
+			while (rdr.Read())
+			{
+				qty = rdr.GetInt32(2);
+			}
+
+			conn.Close();
+			if (conn != null)
+			{
+				conn.Dispose();
+			}
+			return qty;
+		}
+
+		//UPDATE: This will edit an existing order
+		public void Edit(int newOrderNumber, DateTime newReceivedDate, DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation)
+		{
 			MySqlConnection conn = DB.Connection();
 			conn.Open();
 			var cmd = conn.CreateCommand() as MySqlCommand;
