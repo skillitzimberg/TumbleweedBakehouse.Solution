@@ -5,21 +5,18 @@ html, body {
 
 body {
   font-family: 'Noto Serif JP', sans-serif;
-  padding-top: 1em;
-}
-
-.container-fluid {
-  /* width: 100%; */
+  padding: 1em 0 2em;
 }
 
 .logo {
-  font-size: 2.5em;
-  font-family: 'Charm', cursive;
+  font-size: 3.5em;
+  font-family: 'Caveat', cursive;
   display: block;
+  letter-spacing: 1px;
 }
 
 .logo a:hover {
-  font-size: 1.5em;
+  font-size: 1.1em;
 }
 
 .logoimg {
@@ -33,7 +30,7 @@ body {
 
 nav {
   padding: .5em;
-  background-image: url(/img/wheatpic.jpeg);
+  /* background-image: url(/img/wheatpic.jpeg); */
   background-size: cover;
   background-position: center;
 }
@@ -60,6 +57,31 @@ nav a:hover {
   text-align: center;
 }
 
+img {
+  width: 100%;
+}
+
+img.splash {
+  width: 95%;
+  display: block;
+  margin: auto;
+  border: 1px solid #333;
+  border-radius: 8px;
+}
+
+#showProduct {
+  width: 50%;
+  margin: auto;
+}
+
+.markets {
+  width: 50%;
+  float: left;
+  margin: 0 10px 20px 0;
+  border: 1px solid #333;
+  border-radius: 8px;
+}
+
 label {
   display: block;
 }
@@ -71,40 +93,34 @@ form {
   padding: .75em;
 }
 
-img {
-  width: 100%;
-  /* -webkit-filter: contrast(5);
-  filter: contrast(5); */
-  /* -webkit-filter: brightness(1); */
-  /* filter: brightness(1), contrast(5); */
-}
-
 .products {
-  /* width: 95%; */
-  /* margin: auto; */
-  border: 1px solid #333;
-  /* height: 50%; */
+  width: 95%;
+  margin: auto;
+  height: 50%;
   display: flex;
-  /* flex-direction: row; */
-  /* flex-wrap: wrap; */
-  /* justify-content: space-around; */
-  /* align-content: space-around; */
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-around;
 }
 
 .productGridItem {
   border: 1px solid #333;
+  border-radius: 5px;
   width: 30%;
-  margin: 15px;
-  padding: 0;
+  margin: 5px;
+  padding: 5px;
   text-align: center;
 }
 
-.hide {
-  display: none;
+article {
+    width: 95%;
+    margin: auto;
+    text-align: justify;
 }
 
-.clickable  {
-  cursor: pointer;
+iframe {
+  display: inline;
 }
 
 table {
