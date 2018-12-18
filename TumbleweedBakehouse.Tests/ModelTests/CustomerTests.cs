@@ -227,16 +227,71 @@ namespace TumbleweedBakehouse.Tests
             Customer newCustomer2 = new Customer("chris", "rudnicky", "7575640970", "email", "address", "city", "state", 23188);
             Assert.AreEqual(newCustomer1, newCustomer2);
         }
+    [TestMethod]
+    public void Equals_ReturnsTrueIfPropertiesAreTheSame_Customer()
+    {
+      Customer newCustomer1 = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      Customer newCustomer2 = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      Assert.AreEqual(newCustomer1, newCustomer2);
+    }
+    [TestMethod]
+    public void Save_SavesToDataBase_CustomerList()
+    {
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      newCustomer.Save();
+      List<Customer> result = Customer.GetAll();
+      List<Customer> testList = new List<Customer>{newCustomer};
+      CollectionAssert.AreEqual(testList, result);
+    }
+    [TestMethod]
+    public void Save_AssignsIdToObject_Id()
+    {
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      newCustomer.Save();
+      Customer savedCustomer = Customer.GetAll()[0];
+      int result = savedCustomer.GetId();
+      int testId = newCustomer.GetId();
+      Assert.AreEqual(result, testId);
+    }
+    [TestMethod]
+    public void Find_ReturnsCorrectCustomerFromDatabase_Customer()
+    {
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      newCustomer.Save();
+      Customer foundCustomer = Customer.Find(newCustomer.GetId());
+      Assert.AreEqual(newCustomer, foundCustomer);
+    }
+    [TestMethod]
+    public void Edit_UpdatesCustomerInDataBase_StringandInt()
+    {
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      newCustomer.Save();
+      string newString ="jake";
+      newCustomer.Edit(newString, "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      string result = Customer.Find(newCustomer.GetId()).GetFirstName();
+      Assert.AreEqual(newString, result);
+    }
+    [TestMethod]
+    public void FindOrders_ReturnsEmptyOrderList_Order()
+    {
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      List<Order> newList = new List<Order> {};
+      List<Order> result = Customer.FindOrders(newCustomer.GetId());
+      CollectionAssert.AreEqual(newList, result);
+    }
+    [TestMethod]
+    public void FindOrder_RetrievesAllOrderswithcustomer_OrderList()
+    {
+      //Arrange
+      Customer newCustomer = new Customer ("chris", "rudnicky", "7575640970", "email", "address", "city", "state" , 23188);
+      newCustomer.Save();
+      int testOrderNumber = 1;
+      DateTime testRequestedPickupDate = DateTime.Parse("12/15/2018");
+      string testPickupLocation = "Farmers Market 1";
+      int testCustomer_Id = 1;
+      Order testOrder = new Order(testOrderNumber, testRequestedPickupDate, testPickupLocation, newCustomer.GetId());
+      testOrder.Save();
 
-        [TestMethod]
-        public void Save_SavesToDataBase_CustomerList()
-        {
-            Customer newCustomer = new Customer("chris", "rudnicky", "7575640970", "email", "address", "city", "state", 23188);
-            newCustomer.Save();
-            List<Customer> result = Customer.GetAll();
-            List<Customer> testList = new List<Customer> { newCustomer };
-            CollectionAssert.AreEqual(testList, result);
-        }
 
         [TestMethod]
         public void Save_AssignsIdToObject_Id()

@@ -48,6 +48,8 @@ namespace TumbleweedBakehouse.Controllers
         {
           Dictionary<string, object> model = new Dictionary<string, object> { };
           Customer customer = Customer.Find(customerId);
+          List<Order> orders = Customer.FindOrders(customerId);
+          model.Add("orders", orders);
           model.Add("customer", customer);
           return View(model);
         }
