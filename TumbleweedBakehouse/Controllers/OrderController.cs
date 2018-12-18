@@ -46,7 +46,7 @@ namespace TumbleweedBakehouse.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet("/order/{orderId}/thisOrder")]
+        [HttpGet("order/{orderId}/thisOrder")]
         public ActionResult Show(int orderId)
         {
             Dictionary<string, object> model = new Dictionary<string, object> { };
@@ -55,34 +55,40 @@ namespace TumbleweedBakehouse.Controllers
             model.Add("thisOrder", Order.Find(orderId));
             model.Add("orders", orderList);
             model.Add("products", productList);
-            //return View(model);
-            return new EmptyResult();
-        }
-
-        [HttpGet("/order/allCustomers")]
-        public ActionResult CustomerIndex(int customerId)
-        {
-            Dictionary<string, object> model = new Dictionary<string, object> { };
-            //Customer currentCustomer = Customer.Find(customerId);
-            List<Order> orderList = Order.GetAll();
-            model.Add("orders",orderList);
             return View(model);
         }
 
-        [HttpGet("/order/{customerId}/show/{orderId}")]
-        public ActionResult ShowCustomerOrder(int customerId, int orderId)
+        [HttpGet("/order/{orderId}/edit")]
+        public ActionResult Edit(int orderId)
         {
-            Dictionary<string, object> model = new Dictionary<string, object> { };
-
+            Order model = Order.Find(orderId);
             return View(model);
         }
 
-        [HttpGet("/order/{customerId}/new")]
-        public ActionResult NewCustomerOrder(int customerId)
-        {
-            Dictionary<string, object> model = new Dictionary<string, object> { };
+        //[HttpGet("/order/allCustomers")]
+        //public ActionResult CustomerIndex(int customerId)
+        //{
+        //    Dictionary<string, object> model = new Dictionary<string, object> { };
+        //    //Customer currentCustomer = Customer.Find(customerId);
+        //    List<Order> orderList = Order.GetAll();
+        //    model.Add("orders",orderList);
+        //    return View(model);
+        //}
 
-            return View();
-        }
+        //[HttpGet("/order/{customerId}/show/{orderId}")]
+        //public ActionResult ShowCustomerOrder(int customerId, int orderId)
+        //{
+        //    Dictionary<string, object> model = new Dictionary<string, object> { };
+
+        //    return View(model);
+        //}
+
+        //[HttpGet("/order/{customerId}/new")]
+        //public ActionResult NewCustomerOrder(int customerId)
+        //{
+        //    Dictionary<string, object> model = new Dictionary<string, object> { };
+
+        //    return View();
+        //}
     }
 }

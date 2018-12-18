@@ -55,7 +55,7 @@ namespace TumbleweedBakehouse.Tests
             //Arrange
             Customer testCustomer = new Customer("Charley", "McGowan", "555-555-5555", "something@email.com", "123 Fun street", "Portland", "OR", 97222);
             testCustomer.Save();
-            Order testOrder = new Order(DateTime.Parse("12/12/2012"), 1);
+            Order testOrder = new Order(DateTime.Parse("12/12/2012"), testCustomer.GetId());
             testOrder.Save();
             ViewResult showView = new OrderController().Show(testCustomer.GetId()) as ViewResult;
 
@@ -92,6 +92,22 @@ namespace TumbleweedBakehouse.Tests
             Assert.IsInstanceOfType(result, typeof(Dictionary<string, object>));
         }
 
+        [TestMethod]
+        public void Edit_ReturnsAViewResult_True()
+        {
+            //Arrange
 
+            Customer testCustomer = new Customer("Charley", "McGowan", "555-555-5555", "something@email.com", "123 Fun street", "Portland", "OR", 97222);
+            testCustomer.Save();
+            Order testOrder = new Order(DateTime.Parse("12/12/2012"), testCustomer.GetId());
+            testOrder.Save();
+            OrderController controller = new OrderController();
+
+            //Act
+            ActionResult editView = controller.Edit(testCustomer.GetId());
+
+            //Assert
+            Assert.IsInstanceOfType(editView, typeof(ViewResult));
+        }
     }
 }

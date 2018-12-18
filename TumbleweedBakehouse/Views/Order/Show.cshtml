@@ -4,16 +4,17 @@
     Layout = "_Layout";
 }
 <div class='row'>
-    <div class='col-md-12'>
+    <div class='col-md-6'>
         <h3>Order: @Model["thisOrder"].OrderNumber</h3>
 
-        <h4>@Model["thisOrder"].ReceivedDate</h4>
-        <h4>@Model["thisOrder"].PickupLocation</h4>
-        <h4>@Model["thisOrder"].DeliveredDate</h4>
+        <h5>Order Recieved: @Model["thisOrder"].ReceivedDate</h5>
+        <h5>Pickup Location: @Model["thisOrder"].PickupLocation</h5>
+        <h5>Date Delivered: @Model["thisOrder"].DeliveredDate</h5>
 
         @*@foreach (var product in Model["products"])
         {
             <h3>Orders: <a href="/products/@Model["products"].GetProductId()"></a> @Model["products"].GetProductName()</h3>
         }*@
+        <p><a href="/Order/Edit">Edit this order</a></p>
     </div>
 </div>

@@ -24,7 +24,7 @@
                 @foreach (var order in Model["orders"])
                 {
                     <tr>
-                        <td><a href='/orders/@order.Id/thisOrder'> @order.Id</a></td>
+                        <td><a href='/order/@order.Id/thisOrder'> @order.Id</a></td>
                         <td> @Customer.Find(order.Customer_id).GetFirstLast()</td>
                         <td> @order.PickupLocation</td>
                         <td> @order.ReceivedDate.ToString("dd/MM/yyyy")</td>
