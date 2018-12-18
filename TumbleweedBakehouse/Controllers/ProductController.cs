@@ -48,8 +48,8 @@ namespace TumbleweedBakehouse.Controllers
         public ActionResult Update(int productId, string name, string type, string description, string url, bool availablity, float price)
         {
           Product product = Product.Find(productId);
-        product.Edit(name, type, description, url, availablity, price);
-        return RedirectToAction("index", new{id = productId});
+          product.Edit(name, type, description, url, availablity, price);
+          return RedirectToAction("index", new{id = productId});
         }
 
     }
