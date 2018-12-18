@@ -36,6 +36,7 @@ namespace TumbleweedBakehouse.Controllers
         {
             Order newOrder = new Order(1, requestedPickupDate, pickupLocation, customerId);
             newOrder.Save();
+
             for (int i = 0; i < productId.Length; i++)
             {
                 if (qty[i] != 0 && qty[i] != null)
@@ -63,8 +64,10 @@ namespace TumbleweedBakehouse.Controllers
         {
             Dictionary<string, object> model = new Dictionary<string, object> { }; 
             Order newOrder = Order.Find(orderId);
+            List<Product> thisOrdersProducts = newOrder.GetProductsInOrder();
             List<Product> allProducts = Product.GetAll();
             model.Add("order", newOrder);
+            model.Add("thisOrdersProducts", thisOrdersProducts);
             model.Add("products", allProducts);
             return View(model);
         }

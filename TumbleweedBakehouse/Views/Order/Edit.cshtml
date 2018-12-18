@@ -49,14 +49,14 @@
                     </tr>
                     <tr>
                         <td> @Customer.Find(Model["order"].Customer_id).GetFirstLast()</td>
-                        <td> @Model["order"].ReceivedDate.ToString("mm/dd/yyyy")</td>
+                        <td> @Model["order"].ReceivedDate.ToString("yyyy-mm-dd")</td>
                         <td>
                             <div class='form-group'>
-                                Original Date: @Model["order"].RequestedPickupDate.ToString("mm/dd/yyyy")
+                                Original Date: @Model["order"].RequestedPickupDate.ToString("yyyy-mm-dd")
                                 <hr />
                                 <div class='form-group'>
                                     <label for="requestedPickupDate">New Pickup Date:</label>
-                                    <input type="date" name="requestedPickupDate" id="requestedPickupDate">
+                                    <input type="date" name="requestedPickupDate" id="requestedPickupDate" value="@Model["order"].RequestedPickupDate.ToString("yyyy-mm-dd")">
                                 </div>
                             </div>
                         </td>
@@ -74,10 +74,10 @@
                         </td>
                         <td>
                             <div class='form-group'>
-                                Original Delivery Date: @Model["order"].DeliveredDate.ToString("mm/dd/yyyy")
+                                Original Delivery Date: @Model["order"].DeliveredDate.ToString("yyyy-mm-dd")
                                 <hr />
                                 <label for="DeliveredDate">New Pickup Date:</label>
-                                <input type="datetime" name="DeliveredDate" id="DeliveredDate" value='@Model["order"].DeliveredDate.ToString("mm/dd/yyyy")'>
+                                <input type="date" name="DeliveredDate" id="DeliveredDate" value='@Model["order"].DeliveredDate.ToString("yyyy-mm-dd")'>
                             </div>
                         </td>
                     </tr>
@@ -89,45 +89,25 @@
                     <tr>
                         <th>Product</th>
                         <th>Quantity</th>
-                        <th>Requested Pickup Date</th>
-                        <th>Requested Pickup Location</th>
-                        <th>Delivered Date</th>
+                        <th>Price</th>
                     </tr>
+                    @foreach (Product product in @Model["thisOrdersProducts"])
+                    {
                     <tr>
-                        <td> @Customer.Find(Model["order"].Customer_id).GetFirstLast()</td>
-                        <td> @Model["order"].ReceivedDate.ToString("mm/dd/yyyy")</td>
                         <td>
-                            <div class='form-group'>
-                                Original Date: @Model["order"].RequestedPickupDate.ToString("mm/dd/yyyy")
-                                <hr />
-                                <div class='form-group'>
-                                    <label for="requestedPickupDate">New Pickup Date:</label>
-                                    <input type="date" name="requestedPickupDate" id="requestedPickupDate">
-                                </div>
-                            </div>
+                          Product product
+                            @product.GetProductName();
                         </td>
                         <td>
-                            <div class='form-group'>
-                                Original Pickup Location: @Model["order"].PickupLocation
+                            quantity quantity
 
-                                <hr />
-                                <label for="pickupLocation">New Pickup Location:</label>
-                                <select id='pickupLocation' name='pickupLocation' type='text'>
-                                    <option value='Alamosa'>ALAMOSA (Available Tuesdays)</option>
-                                    <option value='La Jara'>LA JARA (Available Saturdays)</option>
-                                </select>
-                            </div>
                         </td>
                         <td>
-                            <div class='form-group'>
-                                Original Delivery Date: @Model["order"].DeliveredDate.ToString("mm/dd/yyyy")
-                                <hr />
-                                <label for="DeliveredDate">New Pickup Date:</label>
-                                @Html.TextBoxFor(model => model.DeliveredDate, "dd/MM/yyyy" new { @class = "someclass", type = "date" })
-                                <input type="datetime" name="DeliveredDate" id="DeliveredDate" value='@Model["order"].DeliveredDate.ToString("mm/dd/yyyy")'>
-                            </div>
+                            price price
+                            @product.GetPrice();
                         </td>
-                    </tr>
+                    </tr>foreach
+                    }
                 </table>
             </div>
 
