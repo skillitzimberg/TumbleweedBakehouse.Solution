@@ -270,7 +270,6 @@ namespace TumbleweedBakehouse.Models
 
 			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
 			List<Product> products = new List<Product> { };
-            List<int> productQty = new List<int>;
 
 			while (rdr.Read())
 			{
@@ -281,10 +280,8 @@ namespace TumbleweedBakehouse.Models
 				float price = rdr.GetFloat(4);
 				string type = rdr.GetString(5);
 				string url = rdr.GetString(6);
-                int qty = rdr.GetInt32(7);
 				Product foundProduct = new Product(name, type, description, url, availability, price, id);
 				products.Add(foundProduct);
-                productQty.Add(qty);
 			}
 
 			conn.Close();
