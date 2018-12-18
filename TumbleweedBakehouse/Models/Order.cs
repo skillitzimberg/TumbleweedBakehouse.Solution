@@ -312,7 +312,7 @@ namespace TumbleweedBakehouse.Models
             cmd.Parameters.AddWithValue("@OrderId", this.Id);
 
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-            List<int> productQty = new List<int>;
+            List<int> productQty = new List<int>{};
 
             while (rdr.Read())
             {
