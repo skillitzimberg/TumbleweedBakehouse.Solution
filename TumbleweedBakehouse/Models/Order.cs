@@ -269,8 +269,8 @@ namespace TumbleweedBakehouse.Models
 			cmd.Parameters.AddWithValue("@OrderId", this.Id);
 
 			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-			List<Product> products = new List<Product> { };
-            List<int> productQty = new List<int>;
+			List<Product> products = new List<Product> {};
+            List<int> productQty = new List<int>{};
 
 			while (rdr.Read())
 			{
@@ -303,19 +303,19 @@ namespace TumbleweedBakehouse.Models
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"SELECT products.id
-	                                , products.Name
-	                                , products_orders.productQty
-                                FROM orders
-                                JOIN products_orders
-                                ON orders.id = products_orders.order_id
-                                JOIN products
-                                ON products_orders.product_id = products.id
-                                WHERE orders.id = @OrderId;";
+            , products.Name
+            , products_orders.productQty
+          FROM orders
+          JOIN products_orders
+          ON orders.id = products_orders.order_id
+          JOIN products
+          ON products_orders.product_id = products.id
+          WHERE orders.id = @OrderId;";
 
             cmd.Parameters.AddWithValue("@OrderId", this.Id);
 
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-            List<int> productQty = new List<int>;
+            List<int> productQty = new List<int>{};
 
             while (rdr.Read())
             {
