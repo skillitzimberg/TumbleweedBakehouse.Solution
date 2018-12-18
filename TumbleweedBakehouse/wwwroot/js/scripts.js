@@ -39,12 +39,12 @@ Cart.prototype.setPickupDate = function(pickupDate) {
 
 var cart = new Cart();
 
-$(document).ready(function(){
-   var storage = window.localStorage;
-    $('.productGridItem').click(function(event) {
-      var productName = $("input.productName").val();
-      var productPrice = $("input.productPrice").val();
-      alert(productName + " " + productPrice);
-      event.preventDefault();
-    });
-});
+// $(document).ready(function(){
+//    var storage = window.localStorage;
+//     $('.productGridItem').click(function(event) {
+//       var productName = $("input.productName").val();
+//       var productPrice = $("input.productPrice").val();
+//       alert(productName + " " + productPrice);
+//       event.preventDefault();
+//     });
+// });

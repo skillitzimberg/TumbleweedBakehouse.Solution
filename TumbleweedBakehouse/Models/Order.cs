@@ -280,8 +280,8 @@ namespace TumbleweedBakehouse.Models
 				bool availability = rdr.GetBoolean(3);
 				float price = rdr.GetFloat(4);
 				string type = rdr.GetString(5);
-				string url = rdr.GetString(6);
-				Product foundProduct = new Product(name, type, description, url, availability, price, id);
+				byte[] img = rdr.GetBytes(6);
+				Product foundProduct = new Product(name, type, description, img, availability, price, id);
 				products.Add(foundProduct);
 			}
 

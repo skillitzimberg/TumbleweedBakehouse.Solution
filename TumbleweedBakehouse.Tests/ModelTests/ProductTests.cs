@@ -8,7 +8,7 @@ using TumbleweedBakehouse.Models;
 namespace TumbleweedBakehouse.Tests
 {
   [TestClass]
-  public class ProductTest : IDisposable
+  public class ProductTest  : IDisposable
   {
 
    public void Dispose()
@@ -61,7 +61,7 @@ namespace TumbleweedBakehouse.Tests
     public void Save_SavesToDatabase_ProductList()
     {
       //Arrange
-     Product testProduct = new Product("sourdough","raye","light and fluffy","hello.com",true,3,1);
+     Product testProduct = new Product("sourdough","raye","light and fluffy","https://github.com/skillitzimberg/TumbleweedBakehouse.Solution.git",true,3,1);
 
       //Act
       testProduct.Save();
@@ -114,7 +114,7 @@ namespace TumbleweedBakehouse.Tests
       testProduct.Save();
       string breadname = "miniWheat";
 
-      testProduct.Edit(breadname,"raye","light and fluffy","hello.com");
+      testProduct.Edit(breadname,"raye","light and fluffy","hello.com",true,3);
 
       string result = Product.Find(testProduct.GetId()).GetProductName();
 

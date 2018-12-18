@@ -1,6 +1,8 @@
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System;
+using Microsoft.AspNetCore.Http;
+
 
 namespace TumbleweedBakehouse.Models
 {
@@ -12,14 +14,13 @@ namespace TumbleweedBakehouse.Models
     private string _description;
     private bool _availability;
     private float _price;
-    private string _url;
+    private byte[] _img;
     private int _id;
 
-    public Product (
-    string name,
+    public Product (string name,
     string type,
     string description,
-    string url,
+    byte[] img,
     bool availability,
     float price,
     int id = 0)
@@ -28,7 +29,7 @@ namespace TumbleweedBakehouse.Models
       _type = type;
       _description = description;
       _availability = availability;
-      _url = url;
+      _img = img;
       _price = price;
       _id = id;
     }
@@ -74,19 +75,14 @@ namespace TumbleweedBakehouse.Models
       _description = description;
     }
 
-    public string GetUrl()
+    public byte[] GetImg()
     {
-      return "/img/"+ _url + ".jpg";
+      return _img;
     }
 
-    public string InputUrl()
+    public void SetImg(byte[] img)
     {
-      return _url;
-    }
-
-    public void SetUrl(string url)
-    {
-      _url =  url;
+      _img =  img;
     }
 
     public float GetPrice()
@@ -120,8 +116,8 @@ namespace TumbleweedBakehouse.Models
           bool availability = rdr.GetBoolean(3);
           float price = rdr.GetFloat(4);
           string type= rdr.GetString(5);
-          string url = rdr.GetString(6);
-          Product newProduct = new Product(name, type, description, url, availability, price, id);
+          byte[] img = rdr.GetBytes(6);
+          Product newProduct = new Product(name, type, description, img, availability, price, id);
           allProducts.Add(newProduct);
         }
         conn.Close();
@@ -137,7 +133,7 @@ namespace TumbleweedBakehouse.Models
         MySqlConnection conn = DB.Connection();
         conn.Open();
         var cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"INSERT INTO products (Name, description, url, availability, price, producttype) VALUES (@name, @description, @url,  @availability, @price,
+        cmd.CommandText = @"INSERT INTO products (Name, description, img, availability, price, producttype) VALUES (@name, @description, @img,  @availability, @price,
           @type);";
 
           cmd.Parameters.AddWithValue("@name", this._name);
@@ -150,7 +146,7 @@ namespace TumbleweedBakehouse.Models
 
           cmd.Parameters.AddWithValue("@type", this._type);
 
-          cmd.Parameters.AddWithValue("@url", this._url);
+          cmd.Parameters.AddWithValue("@img", this._img);
 
           cmd.ExecuteNonQuery();
           _id = (int) cmd.LastInsertedId;
@@ -179,7 +175,7 @@ namespace TumbleweedBakehouse.Models
           string description = "";
           bool availability = true;
           float price = 0;
-          string url = "";
+          byte[] img = {};
 
           while(rdr.Read())
           {
@@ -189,9 +185,9 @@ namespace TumbleweedBakehouse.Models
             description = rdr.GetString(2);
             availability = rdr.GetBoolean(3);
             price = rdr.GetFloat(4);
-            url = rdr.GetString(6);
+            img = rdr.GetBytes(6);
           }
-          Product newProduct = new Product(productName, type, description, url, availability, price, id);
+          Product newProduct = new Product(productName, type, description, img, availability, price, id);
           conn.Close();
           if (conn != null)
           {
@@ -202,33 +198,26 @@ namespace TumbleweedBakehouse.Models
 
 
 
-        public void Edit(string name, string producttype, string description, string url, bool availability, float price)
+        public void Edit(string name, string producttype, string description, byte[] img, bool availability, float price)
         {
           MySqlConnection conn = DB.Connection();
           conn.Open();
           var cmd = conn.CreateCommand() as MySqlCommand;
-          cmd.CommandText = @"UPDATE products SET Name = @Name, description = @description, producttype = @producttype, url = @url, availability = @available, price = @price WHERE id = @searchId;";
+          cmd.CommandText = @"UPDATE products SET Name = @Name, description = @description, producttype = @producttype, img = @img, availability = @available, price = @price WHERE id = @searchId;";
 
           cmd.Parameters.AddWithValue("@searchId", _id);
           cmd.Parameters.AddWithValue("@Name",name);
           cmd.Parameters.AddWithValue("@description",description);
           cmd.Parameters.AddWithValue("@producttype", producttype);
-          cmd.Parameters.AddWithValue("@url",url);
+          cmd.Parameters.AddWithValue("@img",img);
           cmd.Parameters.AddWithValue("@available", availability);
           cmd.Parameters.AddWithValue("@price", price);
-
-
-
-
-
-
-
 
           cmd.ExecuteNonQuery();
           _description = description;
           _name = name;
           _type = producttype;
-          _url = url;
+          _img = img;
           _availability = availability;
           _price = price;
 
@@ -270,9 +259,9 @@ namespace TumbleweedBakehouse.Models
             bool typeEquality = this.GetProductType() == newProduct.GetProductType();
             bool descriptionEquality = this.GetDescription() == newProduct.GetDescription();
             bool priceEquality = this.GetPrice() == newProduct.GetPrice();
-            bool urlEquality = this.GetUrl() == newProduct.GetUrl();
+            bool imgEquality = this.GetImg() == newProduct.GetImg();
 
-            return (idEquality && nameEquality && typeEquality && descriptionEquality && priceEquality && urlEquality);
+            return (idEquality && nameEquality && typeEquality && descriptionEquality && priceEquality && imgEquality);
           }
         }
 

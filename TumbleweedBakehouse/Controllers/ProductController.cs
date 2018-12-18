@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TumbleweedBakehouse.Models;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace TumbleweedBakehouse.Controllers
 {
@@ -29,9 +31,19 @@ namespace TumbleweedBakehouse.Controllers
         }
 
         [HttpPost("/product")]
-        public ActionResult Create(string name, string type, string description, string url, bool available, float price,int id)
+        public ActionResult Create(string name, string type, string description,IFormFile  img, bool available, float price,int id)
         {
-          Product newProduct = new Product (name,type,description,url,available,price,id);
+          byte[] newImg = new byte[0];
+            if (img != null)
+            {
+                using (Stream fileStream = img.OpenReadStream())
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    fileStream.CopyTo(ms);
+                    newImg = ms.ToArray();
+                }
+            }
+          Product newProduct = new Product (name,type,description,newImg,available,price,id);
           newProduct.Save();
           return RedirectToAction("Index");
 
@@ -45,26 +57,12 @@ namespace TumbleweedBakehouse.Controllers
       }
 
         [HttpPost("/product/{productId}")]
-        public ActionResult Update(int productId, string name, string type, string description, string url, bool availablity, float price)
+        public ActionResult Update(int productId, string name, string type, string description, byte[] img, bool availablity, float price)
         {
           Product product = Product.Find(productId);
-        product.Edit(name, type, description, url, availablity, price);
+        product.Edit(name, type, description, img, availablity, price);
         return RedirectToAction("index", new{id = productId});
         }
 
     }
 }
-
-
-
-
-
-// [HttpGet("/product/{id}/edit")]
-// public ActionResult Edit(string name, string type, string description, string url, bool available, float price,int id)
-// {
-//
-//   List<Product> productList =  new List<Product>{},
-//    productList.GetAll();
-//
-//   return View(productList);
-// }

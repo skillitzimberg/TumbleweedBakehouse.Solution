@@ -46,11 +46,11 @@
                 {
                     @foreach (var product in Model["products"])
                     {
-                    
+
                         <input id="productId" type="hidden" name="productId" value="@product.GetId()">
                         <div class="productGridItem col-md-3" class="clickable" data-toggle="modal" data-target="#addToOrder">
                             <a href='/product/@product.GetId()'>
-                                <img src="@product.GetUrl()" alt="photo of @product.GetProductName()">
+                                <img src="@product.GetImg()" alt="photo of @product.GetProductName()">
                                 <p class=" clickable">@product.GetProductName()</p>
                                 <p>$@product.GetPrice()</p>
                             </a>
