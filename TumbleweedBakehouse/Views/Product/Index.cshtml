@@ -8,7 +8,7 @@
     {
       @foreach (var product in Model)
       {
-        <div class="productGridItem">
+        <div class='productGridItem' id='@product.GetId()'>
           <a href='/product/@product.GetId()'>
             <img src="@product.GetUrl()" alt="photo of @product.GetProductName()">
             <p id="productName">@product.GetProductName()</p>

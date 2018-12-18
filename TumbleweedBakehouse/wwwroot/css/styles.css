@@ -69,6 +69,11 @@ img.splash {
   border-radius: 8px;
 }
 
+#showProduct {
+  width: 50%;
+  margin: auto;
+}
+
 .markets {
   width: 50%;
   float: left;
@@ -111,13 +116,6 @@ article {
     width: 95%;
     margin: auto;
     text-align: justify;
-}
-
-#map {
-  width: 90%;
-  height: 400px;
-  margin: 10px auto;
-  background-color: grey;
 }
 
 iframe {
