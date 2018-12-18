@@ -106,9 +106,10 @@ form {
 
 .productGridItem {
   border: 1px solid #333;
+  border-radius: 5px;
   width: 30%;
-  margin: 15px;
-  padding: 0;
+  margin: 5px;
+  padding: 5px;
   text-align: center;
 }
 

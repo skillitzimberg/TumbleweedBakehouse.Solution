@@ -10,9 +10,13 @@
       {
         <div class='productGridItem' id='@product.GetId()'>
           <a href='/product/@product.GetId()'>
-            <img src="@product.GetUrl()" alt="photo of @product.GetProductName()">
-            <p id="productName">@product.GetProductName()</p>
-            <p id="productPrice">$@product.GetPrice()</p>
+            <img src='@product.GetUrl()' alt='photo of @product.GetProductName()'>
+
+            <p>@product.GetProductName()</p>
+            <input type='hidden' class='productName' value="@product.GetProductName()">
+
+            <p>$@product.GetPrice()</p>
+            <input type='hidden' class='productPrice' value="@product.GetPrice()">
           </a>
         </div>
       }

@@ -21,7 +21,7 @@ function Customer(firstName, lastName, phoneNumber, email, address1, state, zip)
   this.zip = 0;
 }
 
-Cart.prototype.addCustomer = function(pickupLocation) {
+Cart.prototype.addCustomer = function(customer) {
   this.customer.push(customer);
 }
 
@@ -40,9 +40,11 @@ Cart.prototype.setPickupDate = function(pickupDate) {
 var cart = new Cart();
 
 $(document).ready(function(){
-    $(@product.GetId()).click(function(){
-      var productName = $(this).( "p#productName" ).text();
-      var productPrice = $(this).( "p#productPrice" ).text();
+   var storage = window.localStorage;
+    $('.productGridItem').click(function(event) {
+      var productName = $("input.productName").val();
+      var productPrice = $("input.productPrice").val();
       alert(productName + " " + productPrice);
+      event.preventDefault();
     });
 });
