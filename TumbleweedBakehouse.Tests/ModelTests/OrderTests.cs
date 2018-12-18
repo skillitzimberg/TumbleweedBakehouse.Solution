@@ -1,15 +1,12 @@
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MySql.Data.MySqlClient;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using TumbleweedBakehouse.Models;
-using System.Diagnostics;
 
 namespace TumbleweedBakehouse.Tests
 {
-  [TestClass]
-  public class OrderTests : IDisposable
+    [TestClass]
+    public class OrderTests : IDisposable
     {
         public void Dispose()
         {
@@ -34,7 +31,6 @@ namespace TumbleweedBakehouse.Tests
 
             //Assert
             Assert.AreEqual(typeof(Order), testOrder.GetType());
-
         }
 
         [TestMethod]
@@ -51,7 +47,6 @@ namespace TumbleweedBakehouse.Tests
 
             //Assert
             Assert.AreEqual(testOrder1, testOrder2);
-
         }
 
         [TestMethod]
@@ -67,7 +62,6 @@ namespace TumbleweedBakehouse.Tests
             testOrder.Save();
             List<Order> resultList = Order.GetAll();
             Order result = resultList[0];
-
 
             //Assert
             Assert.AreEqual(result, testOrder);
@@ -89,7 +83,6 @@ namespace TumbleweedBakehouse.Tests
             testOrder.Save();
             List<Order> resultList = Order.GetAll();
             Order result = resultList[0];
-
 
             //Assert
             Assert.AreEqual(result, testOrder);
@@ -117,25 +110,22 @@ namespace TumbleweedBakehouse.Tests
             int testCustomer_Id1 = 1;
             Order testOrder1 = new Order(testOrderNumber1, testOrderReceivedDate1, testCustomer_Id1);
 
-            int testOrderNumber2 = 2;
+            int testOrderNumber2 = 1;
             DateTime testOrderReceivedDate2 = DateTime.Now;
             int testCustomer_Id2 = 2;
             Order testOrder2 = new Order(testOrderNumber2, testOrderReceivedDate2, testCustomer_Id2);
 
-            int testOrderNumber3 = 3;
+            int testOrderNumber3 = 1;
             DateTime testOrderReceivedDate3 = DateTime.Now;
             int testCustomer_Id3 = 3;
             Order testOrder3 = new Order(testOrderNumber3, testOrderReceivedDate3, testCustomer_Id3);
 
             //Act
-            List<Order> testList = new List<Order> { testOrder1, testOrder2, testOrder3 };
-
             testOrder1.Save();
             testOrder2.Save();
             testOrder3.Save();
-
+            List<Order> testList = new List<Order> { testOrder1, testOrder2, testOrder3 };
             List<Order> resultList = Order.GetAll();
-
 
             //Assert
             CollectionAssert.AreEqual(resultList, testList);
@@ -154,7 +144,7 @@ namespace TumbleweedBakehouse.Tests
             Order testOrder = new Order(testOrderNumber, testOrderReceivedDate, testRequestedPickupDate, testDeliveredDate, testPickupLocation, testCustomer_Id);
             testOrder.Save();
 
-            int testOrderNumber2 = 1;
+            int testOrderNumber2 = 2;
             DateTime testOrderReceivedDate2 = DateTime.Now;
             DateTime testRequestedPickupDate2 = DateTime.Parse("12/15/2018");
             DateTime testDeliveredDate2 = DateTime.Parse("12/16/2018");
@@ -196,7 +186,6 @@ namespace TumbleweedBakehouse.Tests
 
             //Assert
             Assert.AreEqual(result, testOrder);
-
         }
 
         [TestMethod]
@@ -214,9 +203,65 @@ namespace TumbleweedBakehouse.Tests
             Order.ClearAll();
             List<Order> testList = Order.GetAll();
 
-
             //Assert
             Assert.AreEqual(testList.Count, 0);
         }
-  }
+
+        [TestMethod]
+        public void Save_SavesCustomerOrderNumberInOrder_Int()
+        {
+            //Arrange
+            DateTime testOrderReceivedDate1 = DateTime.Now;
+            int testCustomer_Id1 = 1;
+            Order testOrder1 = new Order(testOrderReceivedDate1, testCustomer_Id1);
+
+            DateTime testOrderReceivedDate2 = DateTime.Now;
+            int testCustomer_Id2 = 2;
+            Order testOrder2 = new Order(testOrderReceivedDate2, testCustomer_Id2);
+
+            DateTime testOrderReceivedDate3 = DateTime.Now;
+            int testCustomer_Id3 = 1;
+            Order testOrder3 = new Order(testOrderReceivedDate3, testCustomer_Id3);
+
+            //Act
+            testOrder1.Save();
+            testOrder2.Save();
+            testOrder3.Save();
+            List<Order> testList = new List<Order> { testOrder1, testOrder2, testOrder3 };
+            List<Order> resultList = Order.GetAll();
+
+            //Assert
+            CollectionAssert.AreEqual(resultList, testList);
+        }
+
+        [TestMethod]
+        public void Edit_UpdatesCurrentOrderAfterMultipleCustomersInput_True()
+        {
+            //Arrange
+            DateTime testOrderReceivedDate1 = DateTime.Now;
+            int testCustomer_Id1 = 1;
+            Order testOrder1 = new Order(testOrderReceivedDate1, testCustomer_Id1);
+
+            DateTime testOrderReceivedDate2 = DateTime.Now;
+            int testCustomer_Id2 = 2;
+            Order testOrder2 = new Order(testOrderReceivedDate2, testCustomer_Id2);
+
+            DateTime testOrderReceivedDate3 = DateTime.Now;
+            int testCustomer_Id3 = 1;
+            Order testOrder3 = new Order(testOrderReceivedDate3, testCustomer_Id3);
+
+            //Act
+            testOrder1.Save();
+            testOrder2.Save();
+            testOrder3.Save();
+
+            testOrder3.Edit(DateTime.Parse("12/12/2012"), DateTime.Parse("1/1/2001"), "Los Angeles");
+
+            Order result = Order.Find(testOrder3.Id);
+
+            //Assert
+            Assert.AreEqual(testOrder3, result);
+
+        }
+    }
 }

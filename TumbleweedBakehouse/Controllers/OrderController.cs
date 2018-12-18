@@ -46,19 +46,26 @@ namespace TumbleweedBakehouse.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet("/order/{orderId}")]
-        public ActionResult Show()
+        [HttpGet("/order/{orderId}/thisOrder")]
+        public ActionResult Show(int orderId)
         {
-            return View();
+            Dictionary<string, object> model = new Dictionary<string, object> { };
+            List<Order> orderList = Order.GetAll();
+            List<Product> productList = Product.GetAll();
+            model.Add("thisOrder", Order.Find(orderId));
+            model.Add("orders", orderList);
+            model.Add("products", productList);
+            //return View(model);
+            return new EmptyResult();
         }
 
-        [HttpGet("/order/{customerId}")]
+        [HttpGet("/order/allCustomers")]
         public ActionResult CustomerIndex(int customerId)
         {
             Dictionary<string, object> model = new Dictionary<string, object> { };
             //Customer currentCustomer = Customer.Find(customerId);
             List<Order> orderList = Order.GetAll();
-
+            model.Add("orders",orderList);
             return View(model);
         }
 

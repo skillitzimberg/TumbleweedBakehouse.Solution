@@ -20,20 +20,18 @@
                     <th>Delivered Date</th>
                     <th>Customer ID #:</th>
                     <th>Order Number</th>
-
-
                 </tr>
                 @foreach (var order in Model["orders"])
                 {
-
                     <tr>
-                        <td><a href='/orders/@order.Id'> @order.Id</a></td>
+                        <td><a href='/orders/@order.Id/thisOrder'> @order.Id</a></td>
                         <td> @Customer.Find(order.Customer_id).GetFirstLast()</td>
                         <td> @order.PickupLocation</td>
                         <td> @order.ReceivedDate.ToString("dd/MM/yyyy")</td>
                         <td> @order.RequestedPickupDate.ToString("dd/MM/yyyy")</td>
                         <td> @order.DeliveredDate.ToString("dd/MM/yyyy")</td>
                         <td> @order.Customer_id</td>
+                        <td> @order.OrderNumber </td>
                     </tr>
                 }
             </table>

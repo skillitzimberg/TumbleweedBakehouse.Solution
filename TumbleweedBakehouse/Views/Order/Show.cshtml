@@ -1,16 +1,19 @@
+@using  TumbleweedBakehouse.Models;
+
 @{
-  Layout = "_Layout";
+    Layout = "_Layout";
 }
 <div class='row'>
-  <div class='col-md-12'>
-    <h3>Order: @Model["order"].GetOrderNumber()</h3>
+    <div class='col-md-12'>
+        <h3>Order: @Model["thisOrder"].OrderNumber</h3>
 
-    <h4>@Model["order"].ReceivedDate()</h4>
-    <h4>@Model["order"].PickupLocation()</h4>
-    <h4>@Model["order"].DeliveredDate()</h4>
-    @foreach (var product in Model["products"])
-    {
-      <h3>Orders: <a href="/products/@Model["products"].GetProductId()"></a> @Model["products"].GetProductName()</h3>
-    }
-  </div>
+        <h4>@Model["thisOrder"].ReceivedDate</h4>
+        <h4>@Model["thisOrder"].PickupLocation</h4>
+        <h4>@Model["thisOrder"].DeliveredDate</h4>
+
+        @*@foreach (var product in Model["products"])
+        {
+            <h3>Orders: <a href="/products/@Model["products"].GetProductId()"></a> @Model["products"].GetProductName()</h3>
+        }*@
+    </div>
 </div>
