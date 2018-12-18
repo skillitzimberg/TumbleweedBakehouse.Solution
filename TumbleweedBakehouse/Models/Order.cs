@@ -1,20 +1,27 @@
 using MySql.Data.MySqlClient;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 namespace TumbleweedBakehouse.Models
 {
+    public class Order
+    {
+        public int Id { get; set; } //Order database id
+        public int OrderNumber { get; set; } //Order Number per customer
+        public DateTime ReceivedDate { get; set; } //Date the order was created
+        public DateTime RequestedPickupDate { get; set; } //Date requested for the order to be picked up
+        public DateTime DeliveredDate { get; set; } //Date the order was actually delivered
+        public string PickupLocation { get; set; } //The location the order will be picked up
+        public int Customer_id { get; set; } //Customer database id
 
-  public class Order
-  {
-        public int Id { get; set; }
-        public int OrderNumber { get; set; }
-        public Dictionary<string, object> OrderedProduct{ get; set; }
-        public DateTime ReceivedDate { get; set; }
-        public DateTime RequestedPickupDate { get; set; }
-        public DateTime DeliveredDate { get; set; }
-        public string PickupLocation { get; set; }
-        public int Customer_id { get; set; }
+        public Order(DateTime requestedPickupDate, int customer_id, int id = 0)
+        {
+            this.Id = id;
+            this.ReceivedDate = DateTime.Now;
+            this.RequestedPickupDate = requestedPickupDate;
+            this.Customer_id = customer_id;
+            this.PickupLocation = "";
+        }
 
         public Order(int orderNumber, DateTime requestedPickupDate, int customer_id, int id = 0)
         {
@@ -26,21 +33,20 @@ namespace TumbleweedBakehouse.Models
             this.PickupLocation = "";
         }
 
-        public Order(int orderNumber, DateTime requestedPickupDate, string pickupLocation ,int customer_id, int id = 0)
+        public Order(int orderNumber, DateTime requestedPickupDate, string pickupLocation, int customer_id, int id = 0)
         {
             this.Id = id;
             this.OrderNumber = orderNumber;
             this.ReceivedDate = DateTime.Now;
             this.Customer_id = customer_id;
             this.PickupLocation = pickupLocation;
-
         }
 
         public Order(int orderNumber, DateTime requestedPickupDate, DateTime deliveredDate, string pickupLocation, int customer_id, int id = 0)
         {
             this.Id = id;
             this.OrderNumber = orderNumber;
-            this.ReceivedDate = DateTime.Now;   
+            this.ReceivedDate = DateTime.Now;
             this.RequestedPickupDate = requestedPickupDate;
             this.DeliveredDate = deliveredDate;
             this.PickupLocation = pickupLocation;
@@ -125,6 +131,21 @@ namespace TumbleweedBakehouse.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+
+            cmd.CommandText = @"SELECT COUNT(*) FROM orders WHERE customer_id = @customer_id;";
+
+            cmd.Parameters.AddWithValue("@customer_id", this.Customer_id);
+
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+            while (rdr.Read())
+            {
+                int newOrderNumberValue = rdr.GetInt32(0);
+                this.OrderNumber = newOrderNumberValue + 1;
+            }
+            conn.Close();
+
+            conn.Open();
             cmd.CommandText = @"INSERT INTO orders (orderNumber, receivedDate, requestedPickupDate, deliveredDate, pickupLocation, customer_id)
                                             VALUES (@orderNumber, @receivedDate, @requestedPickupDate, @deliveredDate, @pickupLocation, @customer_id);";
             cmd.Parameters.AddWithValue("@orderNumber", this.OrderNumber);
@@ -132,9 +153,28 @@ namespace TumbleweedBakehouse.Models
             cmd.Parameters.AddWithValue("@requestedPickupDate", this.RequestedPickupDate);
             cmd.Parameters.AddWithValue("@deliveredDate", this.DeliveredDate);
             cmd.Parameters.AddWithValue("@pickupLocation", this.PickupLocation);
-            cmd.Parameters.AddWithValue("@customer_id", this.Customer_id);
+
             cmd.ExecuteNonQuery();
             this.Id = (int)cmd.LastInsertedId;
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
+        //CREATE: Adds a product to the order
+        public void AddProductToOrder(Product newProduct, int qty)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"INSERT INTO products_orders (product_id, order_id, productQty) VALUES (@ProductId, @OrderId, @ProductQty);";
+            cmd.Parameters.AddWithValue("@ProductId", newProduct.GetId());
+            cmd.Parameters.AddWithValue("@OrderId", this.Id);
+            cmd.Parameters.AddWithValue("@ProductQty", qty);
+            cmd.ExecuteNonQuery();
             conn.Close();
             if (conn != null)
             {
@@ -198,7 +238,6 @@ namespace TumbleweedBakehouse.Models
                 DeliveredDate = rdr.GetDateTime(4);
                 PickupLocation = rdr.GetString(5);
                 Customer_id = rdr.GetInt32(6);
-
             }
 
             Order newOrder = new Order(OrderNumber, ReceivedDate, RequestedPickupDate, DeliveredDate, PickupLocation, Customer_id, orderId);
@@ -255,7 +294,7 @@ namespace TumbleweedBakehouse.Models
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
 
-            cmd.CommandText = @"UPDATE orders SET orderNumber = @newOrderNumber, receivedDate = @newReceivedDate, requestedPickupDate = @newRequestedPickupDate, deliveredDate = @newDeliveredDate, pickupLocation = @newPickupLocation WHERE id = @searchId;";
+            cmd.CommandText = @"UPDATE orders SET receivedDate = @newReceivedDate, requestedPickupDate = @newRequestedPickupDate, deliveredDate = @newDeliveredDate, pickupLocation = @newPickupLocation WHERE id = @searchId;";
 
             cmd.Parameters.AddWithValue("@searchId", this.Id);
             cmd.Parameters.AddWithValue("@newOrderNumber", newOrderNumber);
@@ -279,6 +318,32 @@ namespace TumbleweedBakehouse.Models
             }
         }
 
+        //UPDATE: This will edit an existing order with less inputs
+        public void Edit(DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+
+            cmd.CommandText = @"UPDATE orders SET requestedPickupDate = @newRequestedPickupDate, deliveredDate = @newDeliveredDate, pickupLocation = @newPickupLocation WHERE id = @searchId;";
+
+            cmd.Parameters.AddWithValue("@searchId", this.Id);
+            cmd.Parameters.AddWithValue("@newRequestedPickupDate", newRequestedPickupDate);
+            cmd.Parameters.AddWithValue("@newDeliveredDate", newDeliveredDate);
+            cmd.Parameters.AddWithValue("@newPickupLocation", newPickupLocation);
+            cmd.ExecuteNonQuery();
+
+            this.RequestedPickupDate = newRequestedPickupDate;
+            this.DeliveredDate = newDeliveredDate;
+            this.PickupLocation = newPickupLocation;
+            this.Id = this.Id;
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
 
         //DELETE: Deletes ALL orders ((CAUTION!!!))
         public static void ClearAll()
@@ -294,7 +359,5 @@ namespace TumbleweedBakehouse.Models
                 conn.Dispose();
             }
         }
-
-
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TumbleweedBakehouse.Models;
 using TumbleweedBakehouse.Controllers;
 using System.Collections.Generic;
+using System;
 
 namespace TumbleweedBakehouse.Tests
 {
@@ -42,10 +43,27 @@ namespace TumbleweedBakehouse.Tests
             OrderController controller = new OrderController();
 
             //Act
-            ActionResult indexView = controller.Show();
+            ActionResult indexView = controller.Show(1);
 
             //Assert
             Assert.IsInstanceOfType(indexView, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Show_AcceptsCorrectModel_Dictionary()
+        {
+            //Arrange
+            Customer testCustomer = new Customer("Charley", "McGowan", "555-555-5555", "something@email.com", "123 Fun street", "Portland", "OR", 97222);
+            testCustomer.Save();
+            Order testOrder = new Order(DateTime.Parse("12/12/2012"), testCustomer.GetId());
+            testOrder.Save();
+            ViewResult showView = new OrderController().Show(testCustomer.GetId()) as ViewResult;
+
+            //Act
+            var result = showView.ViewData.Model;
+
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(Dictionary<string, object>));
         }
 
         [TestMethod]
@@ -74,7 +92,22 @@ namespace TumbleweedBakehouse.Tests
             Assert.IsInstanceOfType(result, typeof(Dictionary<string, object>));
         }
 
+        [TestMethod]
+        public void Edit_ReturnsAViewResult_True()
+        {
+            //Arrange
 
+            Customer testCustomer = new Customer("Charley", "McGowan", "555-555-5555", "something@email.com", "123 Fun street", "Portland", "OR", 97222);
+            testCustomer.Save();
+            Order testOrder = new Order(DateTime.Parse("12/12/2012"), testCustomer.GetId());
+            testOrder.Save();
+            OrderController controller = new OrderController();
 
+            //Act
+            ActionResult editView = controller.Edit(testCustomer.GetId());
+
+            //Assert
+            Assert.IsInstanceOfType(editView, typeof(ViewResult));
+        }
     }
 }

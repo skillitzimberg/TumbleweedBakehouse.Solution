@@ -15,7 +15,14 @@ namespace TumbleweedBakehouse.Models
     private string _url;
     private int _id;
 
-    public Product (string name, string type, string description, string url, bool availability, float price, int id = 0)
+    public Product (
+    string name,
+    string type,
+    string description,
+    string url,
+    bool availability,
+    float price,
+    int id = 0)
     {
       _name = name;
       _type = type;
