@@ -46,7 +46,7 @@
                 {
                     @foreach (var product in Model["products"])
                     {
-
+                    
                         <input id="productId" type="hidden" name="productId" value="@product.GetId()">
                         <div class="productGridItem col-md-3" class="clickable" data-toggle="modal" data-target="#addToOrder">
                             <a href='/product/@product.GetId()'>
@@ -59,13 +59,10 @@
                                 <input id="qty" name="qty" type="number" placeholder="#" class="form-control input-sm" value="0">
                             </div>
                         </div>
-
                     }
                 }
             </div>
-
-            <button type="submit" name="button">Place Order</button>
-      </form>
-    </div>
-
+    <button type="submit" name="button">Place Order</button>
+    </form>
+</div>
 </div>
