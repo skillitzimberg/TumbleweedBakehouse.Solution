@@ -9,16 +9,12 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/product")]
         public ActionResult Index()
         {
-
-          List<Product> productList = Product.GetAll();
-
           List<Product> newList = new List<Product>{};
           newList = Product.GetAll();
-
           return View(newList);
         }
 
-        [HttpGet("/product/new")]
+        [HttpPost("/product/new")]
         public ActionResult New()
         {
           return View();
@@ -46,15 +42,14 @@ namespace TumbleweedBakehouse.Controllers
         {
           Product editProduct = Product.Find(id);
           return View(editProduct);
-        }
+      }
 
-        [HttpPost("/product/{id}")]
-        public ActionResult Update(string name, string type, string description, string url, bool available, float price,int id)
+        [HttpPost("/product/{productId}")]
+        public ActionResult Update(int productId, string name, string type, string description, string url, bool availablity, float price)
         {
-          Product newProduct = new Product (name,type,description,url,available,price,id);
-          newProduct.Edit(name,type,description,url);
-          newProduct.Save();
-          return RedirectToAction("Show");
+          Product product = Product.Find(productId);
+        product.Edit(name, type, description, url, availablity, price);
+        return RedirectToAction("index", new{id = productId});
         }
 
     }
