@@ -35,8 +35,7 @@ namespace TumbleweedBakehouse.Controllers
 
             Order newOrder = new Order(1, requestedPickupDate, pickupLocation, customerId);
             newOrder.Save();
-            // return RedirectToAction("Index");
-            return RedirectToAction("Show");
+            return RedirectToAction("Index");
         }
 
         [HttpGet("/order/{orderId}")]
