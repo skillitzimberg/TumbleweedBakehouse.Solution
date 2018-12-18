@@ -10,5 +10,11 @@ namespace TumbleweedBakehouse.Controllers
           return View();
         }
 
+        [HttpGet("/market")]
+        public ActionResult Market()
+        {
+          return View();
+        }
+
     }
 }
