@@ -38,6 +38,7 @@ namespace TumbleweedBakehouse.Models
 			this.Id = id;
 			this.OrderNumber = orderNumber;
 			this.ReceivedDate = DateTime.Now;
+			this.RequestedPickupDate = requestedPickupDate;
 			this.Customer_id = customer_id;
 			this.PickupLocation = pickupLocation;
 		}

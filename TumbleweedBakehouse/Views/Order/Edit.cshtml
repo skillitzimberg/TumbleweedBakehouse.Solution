@@ -51,21 +51,11 @@
                         <td> @Customer.Find(Model["order"].Customer_id).GetFirstLast()</td>
                         <td> @Model["order"].ReceivedDate.ToString("yyyy-MM-dd")</td>
                         <td>
-                            <div class='form-group'>
-                                Original Date: @Model["order"].RequestedPickupDate.ToString("yyyy-MM-dd")
-                                <hr />
-                                <div class='form-group'>
-                                    <label for="requestedPickupDate">New Pickup Date:</label>
                                     <input type="date" name="requestedPickupDate" id="requestedPickupDate" value="@Model["order"].RequestedPickupDate.ToString("yyyy-MM-dd")">
                                 </div>
                             </div>
                         </td>
                         <td>
-                            <div class='form-group'>
-                                Original Pickup Location: @Model["order"].PickupLocation
-
-                                <hr />
-                                <label for="pickupLocation">New Pickup Location:</label>
                                 <select id='pickupLocation' name='pickupLocation' type='text'>
                                     <option value='Alamosa'>ALAMOSA (Available Tuesdays)</option>
                                     <option value='La Jara'>LA JARA (Available Saturdays)</option>
@@ -73,10 +63,6 @@
                             </div>
                         </td>
                         <td>
-                            <div class='form-group'>
-                                Original Delivery Date: @Model["order"].DeliveredDate.ToString("yyyy-MM-dd")
-                                <hr />
-                                <label for="DeliveredDate">New Pickup Date:</label>
                                 <input type="date" name="DeliveredDate" id="DeliveredDate" value='@Model["order"].DeliveredDate.ToString("yyyy-MM-dd")'>
                             </div>
                         </td>
@@ -90,18 +76,27 @@
                         <th>Product</th>
                         <th>Quantity</th>
                         <th>Price</th>
+                        <th>Total Price</th>
                     </tr>
                     @foreach (Product product in @Model["orderInventory"])
                     {
                     <tr>
                         <td>
-                            @product.GetProductName();
+                            @product.GetProductName()
                         </td>
                         <td>
-                            @Model["thisOrder"].GetProductsQTYInOrder(@product.GetId())
+                            <div class='form-group'>
+                                <div class='form-group'>
+                                    <input type="number" name="qty" id="qty" value='@Model["order"].GetProductsQTYInOrder(@product.GetId())'>
+                                </div>
+                            </div>
+
                         </td>
                         <td>
-                            $@product.GetPrice();
+                            $@product.GetPrice().ToString("0.00")
+                        </td>
+                        <td>
+                            $@((product.GetPrice() * @Model["order"].GetProductsQTYInOrder(@product.GetId())).ToString("0.00"))
                         </td>
                     </tr>
                     }
