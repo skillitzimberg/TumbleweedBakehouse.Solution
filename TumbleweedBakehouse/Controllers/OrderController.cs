@@ -61,7 +61,11 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/order/{orderId}/edit")]
         public ActionResult Edit(int orderId)
         {
-            Order model = Order.Find(orderId);
+            Dictionary<string, object> model = new Dictionary<string, object> { }; 
+            Order newOrder = Order.Find(orderId);
+            List<Product> allProducts = Product.GetAll();
+            model.Add("order", newOrder);
+            model.Add("products", allProducts);
             return View(model);
         }
 

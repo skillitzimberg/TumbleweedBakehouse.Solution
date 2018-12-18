@@ -109,5 +109,11 @@ namespace TumbleweedBakehouse.Tests
             //Assert
             Assert.IsInstanceOfType(editView, typeof(ViewResult));
         }
+
+        [TestMethod]
+        public void Edit_()
+        {
+
+        }
     }
 }
