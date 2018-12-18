@@ -297,6 +297,7 @@ namespace TumbleweedBakehouse.Models
 
         //READ: this will get all products in the order
         public List<int> GetProductsQTYInOrder()
+
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -334,7 +335,7 @@ namespace TumbleweedBakehouse.Models
 
         //UPDATE: This will edit an existing order
         public void Edit(int newOrderNumber, DateTime newReceivedDate, DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation)
-		{
+        {
 			MySqlConnection conn = DB.Connection();
 			conn.Open();
 			var cmd = conn.CreateCommand() as MySqlCommand;

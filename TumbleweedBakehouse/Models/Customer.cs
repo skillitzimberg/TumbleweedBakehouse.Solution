@@ -235,9 +235,6 @@ namespace TumbleweedBakehouse.Models
         conn.Dispose();
       }
     }
-
-
-    // Need dictionary for products etc...
     public static List<Order> FindOrders(int id)
     {
       List<Order> allOrders = new List<Order> { };

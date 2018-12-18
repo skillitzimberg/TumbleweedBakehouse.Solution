@@ -96,7 +96,6 @@ namespace TumbleweedBakehouse.Tests
         public void Edit_ReturnsAViewResult_True()
         {
             //Arrange
-
             Customer testCustomer = new Customer("Charley", "McGowan", "555-555-5555", "something@email.com", "123 Fun street", "Portland", "OR", 97222);
             testCustomer.Save();
             Order testOrder = new Order(DateTime.Parse("12/12/2012"), testCustomer.GetId());
@@ -115,5 +114,6 @@ namespace TumbleweedBakehouse.Tests
         {
 
         }
+
     }
 }

@@ -76,12 +76,17 @@ namespace TumbleweedBakehouse.Models
 
     public string GetUrl()
     {
+      return "/img/"+ _url + ".jpg";
+    }
+
+    public string InputUrl()
+    {
       return _url;
     }
 
     public void SetUrl(string url)
     {
-      _url = url;
+      _url =  url;
     }
 
     public float GetPrice()
@@ -102,167 +107,175 @@ namespace TumbleweedBakehouse.Models
     public static List<Product> GetAll()
     {
       List<Product> allProducts = new List<Product> {};
-      MySqlConnection conn = DB.Connection();
-      conn.Open();
-      var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM products;";
-      var rdr = cmd.ExecuteReader() as MySqlDataReader;
-      while(rdr.Read())
-      {
-        int id = rdr.GetInt32(0);
-        string name = rdr.GetString(1);
-        string description = rdr.GetString(2);
-        bool availability = rdr.GetBoolean(3);
-        float price = rdr.GetFloat(4);
-        string type= rdr.GetString(5);
-        string url = rdr.GetString(6);
-        Product newProduct = new Product(name, type, description, url, availability, price, id);
-        allProducts.Add(newProduct);
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT * FROM products;";
+        var rdr = cmd.ExecuteReader() as MySqlDataReader;
+        while(rdr.Read())
+        {
+          int id = rdr.GetInt32(0);
+          string name = rdr.GetString(1);
+          string description = rdr.GetString(2);
+          bool availability = rdr.GetBoolean(3);
+          float price = rdr.GetFloat(4);
+          string type= rdr.GetString(5);
+          string url = rdr.GetString(6);
+          Product newProduct = new Product(name, type, description, url, availability, price, id);
+          allProducts.Add(newProduct);
+        }
+        conn.Close();
+        if (conn != null)
+        {
+          conn.Dispose();
+        }
+        return allProducts;
       }
-      conn.Close();
-      if (conn != null)
+
+      public void Save()
       {
-        conn.Dispose();
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"INSERT INTO products (Name, description, url, availability, price, producttype) VALUES (@name, @description, @url,  @availability, @price,
+          @type);";
+
+          cmd.Parameters.AddWithValue("@name", this._name);
+
+          cmd.Parameters.AddWithValue("@description", this._description);
+
+          cmd.Parameters.AddWithValue("@availability", this._availability);
+
+          cmd.Parameters.AddWithValue("@price", this._price);
+
+          cmd.Parameters.AddWithValue("@type", this._type);
+
+          cmd.Parameters.AddWithValue("@url", this._url);
+
+          cmd.ExecuteNonQuery();
+          _id = (int) cmd.LastInsertedId;
+          conn.Close();
+          if (conn != null)
+          {
+            conn.Dispose();
+          }
+        }
+
+
+        public static Product Find(int id)
+        {
+
+          MySqlConnection conn = DB.Connection();
+          conn.Open();
+          var cmd = conn.CreateCommand() as MySqlCommand;
+          cmd.CommandText = @"SELECT * FROM products WHERE id = (@searchId);";
+
+          cmd.Parameters.AddWithValue("@searchId", id);
+
+          var rdr = cmd.ExecuteReader() as MySqlDataReader;
+          int Id = 0;
+          string productName = "";
+          string type = "";
+          string description = "";
+          bool availability = true;
+          float price = 0;
+          string url = "";
+
+          while(rdr.Read())
+          {
+            Id = rdr.GetInt32(0);
+            productName = rdr.GetString(1);
+            type = rdr.GetString(5);
+            description = rdr.GetString(2);
+            availability = rdr.GetBoolean(3);
+            price = rdr.GetFloat(4);
+            url = rdr.GetString(6);
+          }
+          Product newProduct = new Product(productName, type, description, url, availability, price, id);
+          conn.Close();
+          if (conn != null)
+          {
+            conn.Dispose();
+          }
+          return newProduct;
+        }
+
+
+
+        public void Edit(string name, string producttype, string description, string url, bool availability, float price)
+        {
+          MySqlConnection conn = DB.Connection();
+          conn.Open();
+          var cmd = conn.CreateCommand() as MySqlCommand;
+          cmd.CommandText = @"UPDATE products SET Name = @Name, description = @description, producttype = @producttype, url = @url, availability = @available, price = @price WHERE id = @searchId;";
+
+          cmd.Parameters.AddWithValue("@searchId", _id);
+          cmd.Parameters.AddWithValue("@Name",name);
+          cmd.Parameters.AddWithValue("@description",description);
+          cmd.Parameters.AddWithValue("@producttype", producttype);
+          cmd.Parameters.AddWithValue("@url",url);
+          cmd.Parameters.AddWithValue("@available", availability);
+          cmd.Parameters.AddWithValue("@price", price);
+
+
+
+
+
+
+
+
+          cmd.ExecuteNonQuery();
+          _description = description;
+          _name = name;
+          _type = producttype;
+          _url = url;
+          _availability = availability;
+          _price = price;
+
+          conn.Close();
+          if (conn != null)
+          {
+            conn.Dispose();
+          }
+        }
+
+
+
+        public static void ClearAll()
+        {
+          MySqlConnection conn = DB.Connection();
+          conn.Open();
+          var cmd = conn.CreateCommand() as MySqlCommand;
+          cmd.CommandText = @"DELETE FROM products;";
+          cmd.ExecuteNonQuery();
+          conn.Close();
+          if (conn != null)
+          {
+            conn.Dispose();
+          }
+        }
+
+
+        public override bool Equals(System.Object otherProduct)
+        {
+          if (!(otherProduct is Product))
+          {
+            return false;
+          }
+          else
+          {
+            Product newProduct = (Product) otherProduct;
+            bool idEquality = this.GetId() == newProduct.GetId();
+            bool nameEquality = this.GetProductName() == newProduct.GetProductName();
+            bool typeEquality = this.GetProductType() == newProduct.GetProductType();
+            bool descriptionEquality = this.GetDescription() == newProduct.GetDescription();
+            bool priceEquality = this.GetPrice() == newProduct.GetPrice();
+            bool urlEquality = this.GetUrl() == newProduct.GetUrl();
+
+            return (idEquality && nameEquality && typeEquality && descriptionEquality && priceEquality && urlEquality);
+          }
+        }
+
+
       }
-      return allProducts;
     }
-
-    public void Save()
-    {
-      MySqlConnection conn = DB.Connection();
-      conn.Open();
-      var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO products (Name, description, url, availability, price, producttype) VALUES (@name, @description, @url,  @availability, @price,
-      @type);";
-
-      cmd.Parameters.AddWithValue("@name", this._name);
-
-      cmd.Parameters.AddWithValue("@description", this._description);
-
-      cmd.Parameters.AddWithValue("@availability", this._availability);
-
-      cmd.Parameters.AddWithValue("@price", this._price);
-
-      cmd.Parameters.AddWithValue("@type", this._type);
-
-      cmd.Parameters.AddWithValue("@url", this._url);
-
-      cmd.ExecuteNonQuery();
-      _id = (int) cmd.LastInsertedId;
-      conn.Close();
-      if (conn != null)
-      {
-        conn.Dispose();
-      }
-    }
-
-
-    public static Product Find(int id)
-    {
-
-      MySqlConnection conn = DB.Connection();
-      conn.Open();
-      var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM products WHERE id = (@searchId);";
-
-      cmd.Parameters.AddWithValue("@searchId", id);
-
-      var rdr = cmd.ExecuteReader() as MySqlDataReader;
-      int Id = 0;
-      string productName = "";
-      string type = "";
-      string description = "";
-      bool availability = true;
-      float price = 0;
-      string url = "";
-
-      while(rdr.Read())
-      {
-        Id = rdr.GetInt32(0);
-        productName = rdr.GetString(1);
-        type = rdr.GetString(5);
-        description = rdr.GetString(2);
-        availability = rdr.GetBoolean(3);
-        price = rdr.GetFloat(4);
-        url = rdr.GetString(6);
-      }
-      Product newProduct = new Product(productName, type, description, url, availability, price, id);
-      conn.Close();
-      if (conn != null)
-      {
-        conn.Dispose();
-      }
-      return newProduct;
-    }
-
-
-
-    public void Edit(string name, string type, string description, string url)
-    {
-      MySqlConnection conn = DB.Connection();
-      conn.Open();
-      var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"UPDATE products SET Name = @Name, description = @description, producttype = @type, url = @url WHERE id = @searchId;";
-
-      cmd.Parameters.AddWithValue("@searchId", _id);
-
-      cmd.Parameters.AddWithValue("@description",description);
-
-      cmd.Parameters.AddWithValue("@Name",name);
-
-      cmd.Parameters.AddWithValue("@type",type);
-
-      cmd.Parameters.AddWithValue("@url",url);
-
-      cmd.ExecuteNonQuery();
-      _description = description;
-      _name = name;
-      _type = type;
-
-      conn.Close();
-      if (conn != null)
-      {
-        conn.Dispose();
-      }
-    }
-
-
-
-    public static void ClearAll()
-    {
-      MySqlConnection conn = DB.Connection();
-      conn.Open();
-      var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM products;";
-      cmd.ExecuteNonQuery();
-      conn.Close();
-      if (conn != null)
-      {
-        conn.Dispose();
-      }
-    }
-
-
-    public override bool Equals(System.Object otherProduct)
-    {
-      if (!(otherProduct is Product))
-      {
-        return false;
-      }
-      else
-      {
-        Product newProduct = (Product) otherProduct;
-        bool idEquality = this.GetId() == newProduct.GetId();
-        bool nameEquality = this.GetProductName() == newProduct.GetProductName();
-        bool typeEquality = this.GetProductType() == newProduct.GetProductType();
-        bool descriptionEquality = this.GetDescription() == newProduct.GetDescription();
-        bool priceEquality = this.GetPrice() == newProduct.GetPrice();
-        bool urlEquality = this.GetUrl() == newProduct.GetUrl();
-
-        return (idEquality && nameEquality && typeEquality && descriptionEquality && priceEquality && urlEquality);
-      }
-    }
-
-
-  }
-}
