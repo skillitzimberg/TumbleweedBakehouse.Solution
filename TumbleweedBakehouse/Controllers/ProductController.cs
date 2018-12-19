@@ -13,6 +13,7 @@ namespace TumbleweedBakehouse.Controllers
         {
           List<Product> newList = new List<Product>{};
           newList = Product.GetAll();
+
           return View(newList);
         }
 
@@ -33,6 +34,7 @@ namespace TumbleweedBakehouse.Controllers
         [HttpPost("/product")]
         public ActionResult Create(string name, string type, string description, IFormFile img, bool available, float price,int id)
         {
+
           byte[] newImg = new byte[0];
             if (img != null)
             {
@@ -43,7 +45,10 @@ namespace TumbleweedBakehouse.Controllers
                     newImg = ms.ToArray();
                 }
             }
-          Product newProduct = new Product (name,type,description,newImg,available,price,id);
+
+          string stringImg = System.Text.Encoding.UTF8.GetString(newImg);
+
+          Product newProduct = new Product (name,type,description,new byte[0],available,price,id);
           newProduct.Save();
           return RedirectToAction("Index");
 
@@ -57,7 +62,7 @@ namespace TumbleweedBakehouse.Controllers
       }
 
         [HttpPost("/product/{productId}")]
-        public ActionResult Update(int productId, string name, string type, string description, byte[] img, bool availablity, float price)
+        public ActionResult Update(int productId, string name, string type, string description, string img, bool availablity, float price)
         {
           Product product = Product.Find(productId);
         product.Edit(name, type, description, img, availablity, price);

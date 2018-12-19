@@ -16,6 +16,7 @@ namespace TumbleweedBakehouse.Models
     private float _price;
     private byte[] _img;
     private int _id;
+    private string _imageString;
 
     public Product (string name,
     string type,
@@ -85,6 +86,10 @@ namespace TumbleweedBakehouse.Models
     {
       _img =  img;
     }
+    public void SetImageString(string imageString)
+    {
+      _imageString = imageString;
+    }
 
     public float GetPrice()
     {
@@ -103,8 +108,9 @@ namespace TumbleweedBakehouse.Models
 
     public static List<Product> GetAll()
     {
-      Console.WriteLine("=------------------------------------=");
+
       List<Product> allProducts = new List<Product> {};
+      // byte [] buffer = null;
         MySqlConnection conn = DB.Connection();
         conn.Open();
         var cmd = conn.CreateCommand() as MySqlCommand;
@@ -114,15 +120,28 @@ namespace TumbleweedBakehouse.Models
 
         while(rdr.Read())
         {
+          var length = rdr.GetBytes(6, 0L, null, 0, 0);
+          Console.WriteLine(length);
+          Byte[] buffer = new Byte[length];
+          rdr.GetBytes(6, 0L, buffer, 0, 0);
+          Console.WriteLine(buffer);
+          Console.WriteLine(buffer.GetType());
+
+
+          // Console.WriteLine(rdr.GetByte(6));
+          // rdr.GetBytes(6, 0L, buffer, 0, length);
           int id = rdr.GetInt32(0);
           string name = rdr.GetString(1);
           string description = rdr.GetString(2);
           bool availability = rdr.GetBoolean(3);
           float price = rdr.GetFloat(4);
           string type= rdr.GetString(5);
-          byte[] img = rdr.GetByte(6);
-          Console.WriteLine(img.GetType());
-          Product newProduct = new Product(name, type, description, img, availability, price, id);
+          // string picture = System.Text.Encoding.ETF8.GetString(buffer);
+          // Console.WriteLine(img.GetType());
+          Product newProduct = new Product(name, type, description, new byte[0], availability, price, id);
+          var base64File = Convert.ToBase64String(buffer);
+          string photo = String.Format("data:image/gif;base64,{0}", base64File);
+          newProduct.SetImageString(photo);
           allProducts.Add(newProduct);
         }
         conn.Close();
@@ -180,7 +199,7 @@ namespace TumbleweedBakehouse.Models
           string description = "";
           bool availability = true;
           float price = 0;
-          byte[] img = {};
+          byte[] myByte = new byte[0];
 
           while(rdr.Read())
           {
@@ -190,9 +209,9 @@ namespace TumbleweedBakehouse.Models
             description = rdr.GetString(2);
             availability = rdr.GetBoolean(3);
             price = rdr.GetFloat(4);
-            img = rdr.GetByte(6);
+            // img = rdr.GetByte(6);
           }
-          Product newProduct = new Product(productName, type, description, img, availability, price, id);
+          Product newProduct = new Product(productName, type, description, new byte[0], availability, price, id);
           conn.Close();
           if (conn != null)
           {
@@ -203,7 +222,7 @@ namespace TumbleweedBakehouse.Models
 
 
 
-        public void Edit(string name, string producttype, string description, byte[] img, bool availability, float price)
+        public void Edit(string name, string producttype, string description, String img, bool availability, float price)
         {
           MySqlConnection conn = DB.Connection();
           conn.Open();
@@ -222,7 +241,7 @@ namespace TumbleweedBakehouse.Models
           _description = description;
           _name = name;
           _type = producttype;
-          _img = img;
+          _img = new byte[0];
           _availability = availability;
           _price = price;
 
