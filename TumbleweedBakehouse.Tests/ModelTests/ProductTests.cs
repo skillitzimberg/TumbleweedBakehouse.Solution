@@ -14,6 +14,7 @@ namespace TumbleweedBakehouse.Tests
    public void Dispose()
     {
       Product.ClearAll();
+      Order.ClearAll();
     }
 
     public ProductTest()
@@ -140,6 +141,7 @@ namespace TumbleweedBakehouse.Tests
       int price = 4;
 
       testProduct.Edit(breadname, type, description, url, availability, price);
+
 
       Product result = Product.Find(testProduct.GetId());
 
