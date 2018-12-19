@@ -34,6 +34,7 @@ namespace TumbleweedBakehouse.Models
       _id = id;
     }
 
+
     public bool GetProductAvailability()
     {
       return _availability;
@@ -102,12 +103,15 @@ namespace TumbleweedBakehouse.Models
 
     public static List<Product> GetAll()
     {
+      Console.WriteLine("=------------------------------------=");
       List<Product> allProducts = new List<Product> {};
         MySqlConnection conn = DB.Connection();
         conn.Open();
         var cmd = conn.CreateCommand() as MySqlCommand;
         cmd.CommandText = @"SELECT * FROM products;";
         var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+
         while(rdr.Read())
         {
           int id = rdr.GetInt32(0);
@@ -116,9 +120,10 @@ namespace TumbleweedBakehouse.Models
           bool availability = rdr.GetBoolean(3);
           float price = rdr.GetFloat(4);
           string type= rdr.GetString(5);
-          byte[] img = rdr.GetBytes(6);
-          Product newProduct = new Product(name, type, description, img, availability, price, id);
-          allProducts.Add(newProduct);
+          var img = rdr.GetByte(6);
+          Console.WriteLine(img.GetType());
+          // Product newProduct = new Product(name, type, description, img, availability, price, id);
+          // allProducts.Add(newProduct);
         }
         conn.Close();
         if (conn != null)
@@ -185,7 +190,7 @@ namespace TumbleweedBakehouse.Models
             description = rdr.GetString(2);
             availability = rdr.GetBoolean(3);
             price = rdr.GetFloat(4);
-            img = rdr.GetBytes(6);
+            // img = rdr.GetBytes(6);
           }
           Product newProduct = new Product(productName, type, description, img, availability, price, id);
           conn.Close();

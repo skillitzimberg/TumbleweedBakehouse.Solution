@@ -25,7 +25,8 @@ namespace TumbleweedBakehouse.Tests
     [TestMethod]
     public void ProductConstructor_CreatesInstanceofProduct_Product()
     {
-      Product testProduct = new Product("sourdough","raye","light and fluffy","hello.com",true,3,1);
+      byte[] byteValue = new Byte [1000 * 1000 * 3];
+      Product testProduct = new Product("sourdough","raye","light and fluffy", byteValue, true,3,1);
 
       Assert.AreEqual(typeof(Product),testProduct.GetType());
     }
@@ -44,8 +45,8 @@ namespace TumbleweedBakehouse.Tests
     public void GetAll_ReturnsItems_ProductList()
     {
       //Arrange
-
-     Product firstProduct = new Product("sourdough","raye","light and fluffy","hello.com",true,3,1);
+      byte[] byteValue = new Byte [1000 * 1000 * 3];
+     Product firstProduct = new Product("sourdough","raye","light and fluffy", byteValue, true,3,1);
       firstProduct.Save();
 
       List<Product> newList = new List<Product> { firstProduct};
@@ -61,7 +62,8 @@ namespace TumbleweedBakehouse.Tests
     public void Save_SavesToDatabase_ProductList()
     {
       //Arrange
-     Product testProduct = new Product("sourdough","raye","light and fluffy","https://github.com/skillitzimberg/TumbleweedBakehouse.Solution.git",true,3,1);
+        byte[] byteValue = new Byte [1000 * 1000 * 3];
+        Product testProduct = new Product("sourdough","raye","light and fluffy", byteValue, true,3,1);
 
       //Act
       testProduct.Save();
