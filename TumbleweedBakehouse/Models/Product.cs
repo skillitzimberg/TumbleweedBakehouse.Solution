@@ -199,6 +199,7 @@ namespace TumbleweedBakehouse.Models
 
         public void Edit(string name, string producttype, string description, string url, bool availability, float price)
         {
+          // availability = true;
           MySqlConnection conn = DB.Connection();
           conn.Open();
           var cmd = conn.CreateCommand() as MySqlCommand;
