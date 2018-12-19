@@ -23,7 +23,7 @@
                 @foreach (var product in Model["orderInventory"])
                 {
                     <tr>
-                        <td><a href="/products/@product.GetId()">@product.GetProductName()</a></td>
+                        <td><a href="/product/@product.GetId()">@product.GetProductName()</a></td>
                         <td>  @Model["thisOrder"].GetProductsQTYInOrder(@product.GetId())</td>
                         <td> $@product.GetPrice().ToString("0.00")</td>
                         <td> $@((product.GetPrice() * @Model["thisOrder"].GetProductsQTYInOrder(@product.GetId())).ToString("0.00"))</td>
