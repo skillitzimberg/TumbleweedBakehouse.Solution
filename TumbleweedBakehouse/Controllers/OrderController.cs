@@ -43,11 +43,11 @@ namespace TumbleweedBakehouse.Controllers
                 {
                 newOrder.AddProductToOrder(Product.Find(productId[i]), qty[i]);
                 }
-            }   
+            }
             return RedirectToAction("Index");
         }
 
-        [HttpGet("order/{orderId}/thisOrder")]
+        [HttpGet("order/{orderId}")]
         public ActionResult Show(int orderId)
         {
             Dictionary<string, object> model = new Dictionary<string, object> { };
@@ -62,7 +62,7 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/order/{orderId}/edit")]
         public ActionResult Edit(int orderId)
         {
-            Dictionary<string, object> model = new Dictionary<string, object> { }; 
+            Dictionary<string, object> model = new Dictionary<string, object> { };
             Order newOrder = Order.Find(orderId);
             List<Product> thisOrdersProducts = newOrder.GetProductsInOrder();
             List<Product> allProducts = Product.GetAll();

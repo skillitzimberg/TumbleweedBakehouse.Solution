@@ -74,6 +74,11 @@ img.splash {
   margin: auto;
 }
 
+#horror {
+  width: 50%;
+  margin: auto;
+}
+
 .markets {
   width: 50%;
   float: left;
@@ -126,7 +131,7 @@ iframe {
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%;    
+    width: 100%;
     margin: 5px;
     border: 1px solid black;
 }
