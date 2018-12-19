@@ -7,90 +7,63 @@
 
     <div class='col-md-12'>
 
-        <form class="" action="/edit" method="post">
+        <form class="" action="/order/@Model["order"].Id" method="post">
+            <input id="customerId" type="hidden" name="customerId" value='@Model["order"].Customer_id'>
+            <input id="orderNumber" type="hidden" name="orderNumber" value='@Model["order"].OrderNumber'>
 
             <h3>Edit Order #@Model["order"].OrderNumber for @Customer.Find(Model["order"].Customer_id).GetFirstLast()</h3>
 
-
-
-
-
-            @*<div class='products'>
-            @if (Model.Count != 0)
-            {
-            @foreach (var product in Model["products"])
-                {
-
-            <input id="productId" type="hidden" name="productId" value="@product.GetId()">
-            <div class="productGridItem col-md-3" class="clickable" data-toggle="modal" data-target="#addToOrder">
-                <a href='/product/@product.GetId()'>
-                    <img src="@product.GetUrl()" alt="photo of @product.GetProductName()">
-                    <p class=" clickable">@product.GetProductName()</p>
-                    <p>$@product.GetPrice()</p>
-                </a>
-                <label class="col-md-6 control-label" for="qty">Quantity:</label>
-                <div class="col-md-6">
-                    <input id="qty" name="qty" type="number" placeholder="#" class="form-control input-sm" value="0">
-                </div>
-            </div>
-
-                }
-            }
-        </div>*@
-
             <div class="col-md-12">
-                <table style="width:100%" class="table-striped">
+                <table class="table-striped">
                     <tr>
                         <th>Customer Name</th>
                         <th>Order Received</th>
-                        <th>Requested Pickup Date</th>
-                        <th>Requested Pickup Location</th>
                         <th>Delivered Date</th>
                     </tr>
                     <tr>
                         <td> @Customer.Find(Model["order"].Customer_id).GetFirstLast()</td>
                         <td> @Model["order"].ReceivedDate.ToString("yyyy-MM-dd")</td>
                         <td>
-                                    <input type="date" name="requestedPickupDate" id="requestedPickupDate" value="@Model["order"].RequestedPickupDate.ToString("yyyy-MM-dd")">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                                <select id='pickupLocation' name='pickupLocation' type='text'>
-                                    <option value='Alamosa'>ALAMOSA (Available Tuesdays)</option>
-                                    <option value='La Jara'>LA JARA (Available Saturdays)</option>
-                                </select>
-                            </div>
-                        </td>
-                        <td>
-                                <input type="date" name="DeliveredDate" id="DeliveredDate" value='@Model["order"].DeliveredDate.ToString("yyyy-MM-dd")'>
-                            </div>
+                            <input type="date" name="deliveredDate" id="deliveredDate" value='@Model["order"].DeliveredDate.ToString("yyyy-MM-dd")'>
                         </td>
                     </tr>
                 </table>
             </div>
 
-            <div class="col-md-12">
-                <table style="width:100%" class="table-striped">
-                    <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Total Price</th>
-                    </tr>
-                    @foreach (Product product in @Model["orderInventory"])
-                    {
+            <table class="table-striped">
+                <tr>
+                    <th>Requested Pickup Date</th>
+                    <th>Requested Pickup Location</th>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="date" name="requestedPickupDate" id="requestedPickupDate" value="@Model["order"].RequestedPickupDate.ToString("yyyy-MM-dd")">
+                    </td>
+                    <td>
+                        <select id='pickupLocation' name='pickupLocation' type='text' value="@Model["order"].PickupLocation">
+                            <option value='Alamosa'>ALAMOSA</option>
+                            <option value='La Jara'>LA JARA</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+
+            <table style="width:100%" class="table-striped">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total Price</th>
+                </tr>
+                @foreach (Product product in @Model["orderInventory"])
+                {
                     <tr>
                         <td>
                             @product.GetProductName()
                         </td>
                         <td>
-                            <div class='form-group'>
-                                <div class='form-group'>
-                                    <input type="number" name="qty" id="qty" value='@Model["order"].GetProductsQTYInOrder(@product.GetId())'>
-                                </div>
-                            </div>
-
+                            <input id="productId" type="hidden" name="productId" value='@product.GetId()'>
+                            <input style="max-width:200px; width:100%" type="number" name="qty" id="qty" value='@Model["order"].GetProductsQTYInOrder(@product.GetId())'>
                         </td>
                         <td>
                             $@product.GetPrice().ToString("0.00")
@@ -99,9 +72,8 @@
                             $@((product.GetPrice() * @Model["order"].GetProductsQTYInOrder(@product.GetId())).ToString("0.00"))
                         </td>
                     </tr>
-                    }
-                </table>
-            </div>
+                }
+            </table>
 
             <button type="submit" name="button">Update Order</button>
         </form>

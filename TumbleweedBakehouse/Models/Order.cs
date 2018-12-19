@@ -425,6 +425,34 @@ namespace TumbleweedBakehouse.Models
 			}
 		}
 
+		//UPDATE: this will update individual product QUANTITY in an order
+		public void UpdateProductQTYinOrder(int productId, int newQty)
+
+		{
+			MySqlConnection conn = DB.Connection();
+			conn.Open();
+			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+
+			cmd.CommandText = @"UPDATE products_orders 
+									SET productQTY = @ProductQTY 
+									WHERE order_id = @OrderId 
+									AND product_id = @ProductId;";
+
+			cmd.Parameters.AddWithValue("@OrderId", this.Id);
+			cmd.Parameters.AddWithValue("@ProductId", productId);
+			cmd.Parameters.AddWithValue("@ProductQTY", newQty);
+
+			cmd.ExecuteNonQuery();
+
+			conn.Close();
+			if (conn != null)
+			{
+				conn.Dispose();
+			}
+		}
+
+
+
 		//DELETE: Deletes ALL orders ((CAUTION!!!))
 		public static void ClearAll()
 		{
