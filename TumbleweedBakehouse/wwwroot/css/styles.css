@@ -94,11 +94,18 @@ label {
 }
 
 form {
-  width: 30%;
   margin: 1em auto;
   border: 1px solid #333;
   border-radius: .5em;
   padding: 1.5em;
+}
+
+#orderForm {
+  width: 70%;
+}
+
+#productForm {
+  width: 50%;
 }
 
 .products {
