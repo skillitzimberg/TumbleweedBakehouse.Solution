@@ -85,13 +85,23 @@ namespace TumbleweedBakehouse.Controllers
                 if (qty[i] != 0)
                 {
                     updatedOrder.UpdateProductQTYinOrder(productId[i], qty[i]);
+                } 
+                else if (qty[i] == 0)
+                {
+                    updatedOrder.RemoveProductFromOrder(productId[i]);
                 }
             }
-            for (int i = 0; i < newProductId.Length; i++)
+            for (int j = 0; j < newProductId.Length; j++)
             {
-                if (newQty[i] != 0)
+                int currentProductQty = updatedOrder.GetProductsQTYInOrder(newProductId[j]);
+
+                if (newQty[j] != 0 && currentProductQty == 0 )
                 {
-                    updatedOrder.AddProductToOrder(Product.Find(newProductId[i]), newQty[i]);
+                    updatedOrder.AddProductToOrder(Product.Find(newProductId[j]), newQty[j]);
+                }
+                else if (newQty[j] != 0 && currentProductQty > 0)
+                {
+                    updatedOrder.UpdateProductQTYinOrder(newProductId[j], currentProductQty + newQty[j]);
                 }
             }
 
