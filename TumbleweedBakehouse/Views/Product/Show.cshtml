@@ -5,7 +5,7 @@
 <div class='row'>
   <div class='col-md-12'>
     <form id='showProduct' action='/order' method='post'>
-      <img src='@Model.GetImg()' alt='photo of @Model.GetProductName()'>
+      <img src='@Model.GetImageString()' alt='photo of @Model.GetProductName()'>
       <h3>@Model.GetProductName()</h3>
       <h4>@Model.GetDescription()</h4>
       <h4>@Model.GetPrice()</h4>

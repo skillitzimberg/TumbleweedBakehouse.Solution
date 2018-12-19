@@ -18,7 +18,8 @@ namespace TumbleweedBakehouse.Models
     private int _id;
     private string _imageString;
 
-    public Product (string name,
+    public Product (
+    string name,
     string type,
     string description,
     byte[] img,
@@ -85,6 +86,9 @@ namespace TumbleweedBakehouse.Models
     public void SetImg(byte[] img)
     {
       _img =  img;
+    }
+    public string GetImageString(){
+      return _imageString;
     }
     public void SetImageString(string imageString)
     {

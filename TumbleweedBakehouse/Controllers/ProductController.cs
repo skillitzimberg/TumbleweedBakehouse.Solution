@@ -17,7 +17,7 @@ namespace TumbleweedBakehouse.Controllers
           return View(newList);
         }
 
-        [HttpPost("/product/new")]
+        [HttpGet("/product/new")]
         public ActionResult New()
         {
           return View();
