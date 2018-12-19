@@ -44,10 +44,10 @@ namespace TumbleweedBakehouse.Controllers
       }
 
         [HttpPost("/product/{productId}")]
-        public ActionResult Update(int productId, string name, string producttype, string description, string url, bool availablity, float price)
+        public ActionResult Update(int productId, string name, string producttype, string description, string url, bool availability, float price)
         {
           Product product = Product.Find(productId);
-          product.Edit(name, producttype, description, url, availablity, price);
+          product.Edit(name, producttype, description, url, availability, price);
           return RedirectToAction("index", new{id = productId});
         }
 
