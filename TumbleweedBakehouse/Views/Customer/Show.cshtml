@@ -1,7 +1,7 @@
 @{
   Layout = "_Layout";
 }
-
+<div id="customers">
 <div id='row'>
   <div class='col-md-6'>
     <h3>Customer: @Model["customer"].GetFirstLast()</h3>
@@ -13,21 +13,19 @@
     <h4>State: @Model["customer"].GetState()</h4>
     <h4>Zipcode: @Model["customer"].GetZip()</h4>
 
-    <form action="/customer/@Model["customer"].GetId()/edit">
-      <button type="submit">Edit your information</button>
-    </form>
+    <button type="button" onClick="javascript:location.href ='/customer/@Model["customer"].GetId()/edit'">Edit your information</button>
   </div>
 
   <div class='col-md-6'>
     <h3>Order History:</h3>
     @if( @Model.Count != 0)
     {
-      <ol>@foreach (var order in @Model["orders"])
+      @foreach (var order in @Model["orders"])
         {
-          <li>Order number: @order.OrderNumber <br> Order Date: @order.ReceivedDate.ToString("MM/dd/yyyy")</li>
+          <p><a href='/order/@order.Id'>Order number: @order.OrderNumber</a> <br> Order Date: @order.ReceivedDate.ToString("MM/dd/yyyy")</p>
         }
-      </ol>
     }
     </div>
+  </div>
   </div>
 </div>

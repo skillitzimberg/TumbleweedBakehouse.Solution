@@ -75,11 +75,11 @@ namespace TumbleweedBakehouse.Controllers
         }
 
         [HttpPost("/order/{orderId}")]
-        public ActionResult Update(int orderId, int orderNumber, int customerId, DateTime requestedPickupDate, DateTime deliveredDate, string pickupLocation, int[] productId, int[] qty)
+        public ActionResult Update(int orderId, int orderNumber, int customerId, DateTime requestedPickupDate, DateTime deliveredDate, string pickupLocation, int[] productId, int[] qty, int[] newProductId, int[] newQty)
         {
             Order updatedOrder = Order.Find(orderId);
             updatedOrder.Edit(requestedPickupDate, deliveredDate, pickupLocation);
-            
+
             for (int i = 0; i < productId.Length; i++)
             {
                 if (qty[i] != 0)
@@ -87,7 +87,13 @@ namespace TumbleweedBakehouse.Controllers
                     updatedOrder.UpdateProductQTYinOrder(productId[i], qty[i]);
                 }
             }
-
+            for (int i = 0; i < newProductId.Length; i++)
+            {
+                if (newQty[i] != 0)
+                {
+                    updatedOrder.AddProductToOrder(Product.Find(newProductId[i]), newQty[i]);
+                }
+            }
 
             return RedirectToAction("Show", new { orderId = orderId});
         }

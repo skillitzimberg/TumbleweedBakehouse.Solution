@@ -3,16 +3,15 @@
 @{
     Layout = "_Layout";
 }
-<div class='row'>
-    <div class='col-md-4'>
+<div id='orders'>
+<div class="col-md-12">
         <h3>Orders</h3>
-        <h5><a href="/order/new">Place a new order</a></h5>
+        <button type="button" onClick="javascript:location.href ='/order/new'">Place a new order</button>
         @if (Model["orders"].Count != 0)
         {
-        <div class="col-md-12">
             <table style="width:100%" class="table-striped">
                 <tr>
-                    <th>OrderId</th>
+                    @* <th>OrderId</th> *@
                     <th>Customer Name</th>
                     <th>Pickup Location</th>
                     <th>Order Received</th>
@@ -24,19 +23,17 @@
                 @foreach (var order in Model["orders"])
                 {
                     <tr>
-                        <td><a href='/order/@order.Id'> @order.Id</a></td>
-                        <td> @Customer.Find(order.Customer_id).GetFirstLast()</td>
+                        @* <td><a href='/order/@order.Id'> @order.Id</a></td> *@
+                        <td> <a href="/customer/@Customer.Find(order.Customer_id).GetId()">@Customer.Find(order.Customer_id).GetFirstLast()</a></td>
                         <td> @order.PickupLocation</td>
                         <td> @order.ReceivedDate.ToString("dd/MM/yyyy")</td>
                         <td> @order.RequestedPickupDate.ToString("dd/MM/yyyy")</td>
                         <td> @order.DeliveredDate.ToString("dd/MM/yyyy")</td>
                         <td> @order.Customer_id</td>
-                        <td> @order.OrderNumber </td>
-
+                        <td> <a href='/order/@order.Id'> @order.OrderNumber</a> </td>
                     </tr>
                 }
             </table>
-        </div>
         }
     </div>
 </div>

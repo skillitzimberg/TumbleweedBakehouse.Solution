@@ -90,6 +90,30 @@
                     </tr>
                 }
             </table>
+            <div>
+            Add new products:
+            </div>
+            <div class='products'>
+                @if (Model.Count != 0)
+                {
+                    @foreach (var product in Model["products"])
+                    {
+
+                        <input id="newProductId" type="hidden" name="newProductId" value="@product.GetId()">
+                        <div class="productGridItem col-md-3" class="clickable" data-toggle="modal" data-target="#addToOrder">
+                            <a href='/product/@product.GetId()'>
+                                <img src="@product.GetUrl()" alt="photo of @product.GetProductName()">
+                                <p class=" clickable">@product.GetProductName()</p>
+                                <p>$@product.GetPrice()</p>
+                            </a>
+                            <label class="col-md-6 control-label" for="newQty">Quantity:</label>
+                            <div class="col-md-6">
+                                <input id="newQty" name="newQty" type="number" placeholder="#" class="form-control input-sm" value="0">
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
 
             <button type="submit" name="button">Update Order</button>
         </form>

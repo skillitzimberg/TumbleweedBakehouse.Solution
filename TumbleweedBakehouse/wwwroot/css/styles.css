@@ -69,11 +69,34 @@ img.splash {
   border-radius: 8px;
 }
 
-#show {
+button {
+  display: block;
+  margin: 1em auto;
+  border-radius: 8px;
+  background-color: #ccc;
+}
+
+#show{
   width: 50%;
   margin: auto;
   border: 1px solid #333;
   border-radius: 5px;
+}
+
+#admin {
+  width: 60%;
+  margin: auto;
+  /* border: 1px solid #333;
+  border-radius: 5px;
+  padding: 1em; */
+}
+
+#admin h3 {
+  text-align: center;
+}
+
+#orders button {
+  margin: 0;
 }
 
 #showText {
@@ -104,8 +127,14 @@ form {
   width: 70%;
 }
 
-#productForm {
+#productForm, #customerForm {
   width: 50%;
+  margin: auto;
+}
+
+#orders, #customers {
+  width: 90%;
+  margin: auto;
 }
 
 .products {
@@ -126,6 +155,12 @@ form {
   margin: 5px;
   padding: 5px;
   text-align: center;
+}
+
+.fakeButton {
+  border: 1px solid #333;
+  border-radius: 5px;
+  width:
 }
 
 article {
