@@ -4,11 +4,8 @@
 <div class='row'>
 
   <div class='col-md-12'>
-    <form class="" action="/product" method="post">
-
-      <h3>Add New Product</h3>
-
-      <h3>Product</h3>
+    <form id="productForm"  action="/product" method="post">
+      <h3>Add A New Product</h3>
 
       <div class='form-group'>
         <label for="name">Name</label>
@@ -16,8 +13,8 @@
       </div>
 
       <div class='form-group'>
-        <label for="type">Type</label>
-        <input type="text" name="type" id="type">
+        <label for="producttype">Type</label>
+        <input type="text" name="producttype" id="type">
       </div>
 
       <div class='form-group'>
@@ -26,8 +23,8 @@
       </div>
 
       <div class='form-group'>
-        <label for="available">Available To Order</label>
-        <input type="checkbox" name="available" id="available">
+        <label for="availability">Available To Order</label>
+        <input type="checkbox" name="availability" id="availability">
       </div>
 
       <div class='form-group'>
@@ -44,6 +41,6 @@
 
       <button type="submit" name="button">Add Product</button>
     </form>
-  </div>
 
+  </div>
 </div>

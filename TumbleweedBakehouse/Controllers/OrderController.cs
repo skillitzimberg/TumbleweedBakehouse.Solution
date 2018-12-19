@@ -43,11 +43,11 @@ namespace TumbleweedBakehouse.Controllers
                 {
                 newOrder.AddProductToOrder(Product.Find(productId[i]), qty[i]);
                 }
-            }   
+            }
             return RedirectToAction("Index");
         }
 
-        [HttpGet("order/{orderId}/thisOrder")]
+        [HttpGet("order/{orderId}")]
         public ActionResult Show(int orderId)
         {
             Dictionary<string, object> model = new Dictionary<string, object> { };
@@ -64,7 +64,7 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/order/{orderId}/edit")]
         public ActionResult Edit(int orderId)
         {
-            Dictionary<string, object> model = new Dictionary<string, object> { }; 
+            Dictionary<string, object> model = new Dictionary<string, object> { };
             Order newOrder = Order.Find(orderId);
             List<Product> orderInventory = newOrder.GetProductsInOrder();
             List<Product> allProducts = Product.GetAll();
@@ -75,11 +75,11 @@ namespace TumbleweedBakehouse.Controllers
         }
 
         [HttpPost("/order/{orderId}")]
-        public ActionResult Update(int orderId, int orderNumber, int customerId, DateTime requestedPickupDate, DateTime deliveredDate, string pickupLocation, int[] productId, int[] qty)
+        public ActionResult Update(int orderId, int orderNumber, int customerId, DateTime requestedPickupDate, DateTime deliveredDate, string pickupLocation, int[] productId, int[] qty, int[] newProductId, int[] newQty)
         {
             Order updatedOrder = Order.Find(orderId);
             updatedOrder.Edit(requestedPickupDate, deliveredDate, pickupLocation);
-            
+
             for (int i = 0; i < productId.Length; i++)
             {
                 if (qty[i] != 0)
@@ -87,7 +87,13 @@ namespace TumbleweedBakehouse.Controllers
                     updatedOrder.UpdateProductQTYinOrder(productId[i], qty[i]);
                 }
             }
-
+            for (int i = 0; i < newProductId.Length; i++)
+            {
+                if (newQty[i] != 0)
+                {
+                    updatedOrder.AddProductToOrder(Product.Find(newProductId[i]), newQty[i]);
+                }
+            }
 
             return RedirectToAction("Show", new { orderId = orderId});
         }

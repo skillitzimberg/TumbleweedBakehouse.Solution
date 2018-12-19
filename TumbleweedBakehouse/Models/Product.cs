@@ -43,7 +43,6 @@ namespace TumbleweedBakehouse.Models
       _availability = availability;
     }
 
-
     public string GetProductName()
     {
       return _name;
@@ -119,7 +118,7 @@ namespace TumbleweedBakehouse.Models
           string description = rdr.GetString(2);
           bool availability = rdr.GetBoolean(3);
           float price = rdr.GetFloat(4);
-          string type= rdr.GetString(5);
+          string type = rdr.GetString(5);
           string url = rdr.GetString(6);
           Product newProduct = new Product(name, type, description, url, availability, price, id);
           allProducts.Add(newProduct);
@@ -161,10 +160,8 @@ namespace TumbleweedBakehouse.Models
           }
         }
 
-
         public static Product Find(int id)
         {
-
           MySqlConnection conn = DB.Connection();
           conn.Open();
           var cmd = conn.CreateCommand() as MySqlCommand;
@@ -200,8 +197,6 @@ namespace TumbleweedBakehouse.Models
           return newProduct;
         }
 
-
-
         public void Edit(string name, string producttype, string description, string url, bool availability, float price)
         {
           MySqlConnection conn = DB.Connection();
@@ -211,19 +206,11 @@ namespace TumbleweedBakehouse.Models
 
           cmd.Parameters.AddWithValue("@searchId", _id);
           cmd.Parameters.AddWithValue("@Name",name);
-          cmd.Parameters.AddWithValue("@description",description);
+          cmd.Parameters.AddWithValue("@description", description);
           cmd.Parameters.AddWithValue("@producttype", producttype);
           cmd.Parameters.AddWithValue("@url",url);
           cmd.Parameters.AddWithValue("@available", availability);
           cmd.Parameters.AddWithValue("@price", price);
-
-
-
-
-
-
-
-
           cmd.ExecuteNonQuery();
           _description = description;
           _name = name;
@@ -238,8 +225,6 @@ namespace TumbleweedBakehouse.Models
             conn.Dispose();
           }
         }
-
-
 
         public static void ClearAll()
         {

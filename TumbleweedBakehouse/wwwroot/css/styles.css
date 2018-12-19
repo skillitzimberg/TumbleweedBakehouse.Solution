@@ -69,8 +69,38 @@ img.splash {
   border-radius: 8px;
 }
 
-#showProduct {
+button {
+  display: block;
+  margin: 1em auto;
+  border-radius: 8px;
+  background-color: #ccc;
+}
+
+#show{
   width: 50%;
+  margin: auto;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+#admin {
+  width: 60%;
+  margin: auto;
+  /* border: 1px solid #333;
+  border-radius: 5px;
+  padding: 1em; */
+}
+
+#admin h3 {
+  text-align: center;
+}
+
+#orders button {
+  margin: 0;
+}
+
+#showText {
+  width: 60%;
   margin: auto;
 }
 
@@ -87,10 +117,24 @@ label {
 }
 
 form {
-  margin: 1em;
+  margin: 1em auto;
   border: 1px solid #333;
   border-radius: .5em;
-  padding: .75em;
+  padding: 1.5em;
+}
+
+#orderForm {
+  width: 70%;
+}
+
+#productForm, #customerForm {
+  width: 50%;
+  margin: auto;
+}
+
+#orders, #customers {
+  width: 90%;
+  margin: auto;
 }
 
 .products {
@@ -113,6 +157,12 @@ form {
   text-align: center;
 }
 
+.fakeButton {
+  border: 1px solid #333;
+  border-radius: 5px;
+  width:
+}
+
 article {
     width: 95%;
     margin: auto;
@@ -126,7 +176,7 @@ iframe {
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%;    
+    width: 100%;
     margin: 5px;
     border: 1px solid black;
 }

@@ -6,11 +6,7 @@
 <div class='row'>
 
     <div class='col-md-12'>
-
-        <h4>This is the total number of customers: @Model["customers"].Count</h4>
-
-        <form class="" action="/order" method="post">
-
+        <form id="orderForm" action="/order" method="post">
             <h3>New Order</h3>
 
             @if (Model["customers"].Count != 0)
