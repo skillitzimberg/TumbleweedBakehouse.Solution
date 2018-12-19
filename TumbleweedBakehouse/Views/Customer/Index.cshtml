@@ -1,18 +1,16 @@
 @{
   Layout = "_Layout";
 }
-<div class='row'>
-  <div class='col-md-12'>
+<div id='show'>
+  <div id="showText">
       <h3>Pre order customers:</h3>
 
       @if (Model.Count != 0)
       {
-        <ul>
           @foreach (var customer in Model)
           {
-            <li><a href='/customer/@customer.GetId()'>@customer.GetFirstLast()</a></li>
+            <p><a href='/customer/@customer.GetId()'>@customer.GetFirstLast()</a></p>
           }
-        </ul>
       }
   </div>
 </div>

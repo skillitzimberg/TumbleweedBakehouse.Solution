@@ -294,21 +294,62 @@ namespace TumbleweedBakehouse.Models
 		}
 
         //READ: this will get all products in the order
-        public List<int> GetProductsQTYInOrder()
+        public List<Product> GetProductsInOrder()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT products.*
+                                    , products_orders.productQty
+                                FROM orders
+                                JOIN products_orders
+                                ON orders.id = products_orders.order_id
+                                JOIN products
+                                ON products_orders.product_id = products.id
+                                WHERE orders.id = @OrderId;";
+
+            cmd.Parameters.AddWithValue("@OrderId", this.Id);
+
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            List<Product> products = new List<Product> { };
+
+            while (rdr.Read())
+            {
+                int id = rdr.GetInt32(0);
+                string name = rdr.GetString(1);
+                string description = rdr.GetString(2);
+                bool availability = rdr.GetBoolean(3);
+                float price = rdr.GetFloat(4);
+                string type = rdr.GetString(5);
+                string url = rdr.GetString(6);
+                Product foundProduct = new Product(name, type, description, url, availability, price, id);
+                products.Add(foundProduct);
+            }
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return products;
+        }
+
+        //READ: this will get all products QUANTITY in the order
+        public List<int> GetAllProductsQTYInOrder()
 
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"SELECT products.id
-            , products.Name
-            , products_orders.productQty
-          FROM orders
-          JOIN products_orders
-          ON orders.id = products_orders.order_id
-          JOIN products
-          ON products_orders.product_id = products.id
-          WHERE orders.id = @OrderId;";
+                                    , products.Name
+                                    , products_orders.productQty
+                                FROM orders
+                                JOIN products_orders
+                                ON orders.id = products_orders.order_id
+                                JOIN products
+                                ON products_orders.product_id = products.id
+                                WHERE orders.id = @OrderId;";
 
             cmd.Parameters.AddWithValue("@OrderId", this.Id);
 
@@ -331,77 +372,176 @@ namespace TumbleweedBakehouse.Models
             return productQty;
         }
 
+        //READ: this will get individual product QUANTITY in an order
+        public int GetProductsQTYInOrder(int productId)
+
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT products.id
+                                    , products.Name
+                                    , products_orders.productQty
+                                FROM orders
+                                JOIN products_orders
+                                ON orders.id = products_orders.order_id
+                                JOIN products
+                                ON products_orders.product_id = products.id
+                                WHERE orders.id = @OrderId AND products.id = @ProductId;";
+
+            cmd.Parameters.AddWithValue("@OrderId", this.Id);
+            cmd.Parameters.AddWithValue("@ProductId", productId);
+
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            int qty = 0;
+
+            while (rdr.Read())
+            {
+                qty = rdr.GetInt32(2);
+            }
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return qty;
+        }
+
+        //READ: This will give a grand total
+        public float GrandTotal()
+        {
+            List<Product> allProducts = this.GetProductsInOrder();
+            float total = 0;
+            foreach(var product in allProducts)
+            {
+                total += (product.GetPrice() * this.GetProductsQTYInOrder(product.GetId()));
+            }
+            return total;
+
+        }
+
         //UPDATE: This will edit an existing order
         public void Edit(int newOrderNumber, DateTime newReceivedDate, DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation)
         {
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			var cmd = conn.CreateCommand() as MySqlCommand;
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
 
-			cmd.CommandText = @"UPDATE orders SET receivedDate = @newReceivedDate, requestedPickupDate = @newRequestedPickupDate, deliveredDate = @newDeliveredDate, pickupLocation = @newPickupLocation WHERE id = @searchId;";
+            cmd.CommandText = @"UPDATE orders SET receivedDate = @newReceivedDate, requestedPickupDate = @newRequestedPickupDate, deliveredDate = @newDeliveredDate, pickupLocation = @newPickupLocation WHERE id = @searchId;";
 
-			cmd.Parameters.AddWithValue("@searchId", this.Id);
-			cmd.Parameters.AddWithValue("@newOrderNumber", newOrderNumber);
-			cmd.Parameters.AddWithValue("@newReceivedDate", newReceivedDate);
-			cmd.Parameters.AddWithValue("@newRequestedPickupDate", newRequestedPickupDate);
-			cmd.Parameters.AddWithValue("@newDeliveredDate", newDeliveredDate);
-			cmd.Parameters.AddWithValue("@newPickupLocation", newPickupLocation);
-			cmd.ExecuteNonQuery();
+            cmd.Parameters.AddWithValue("@searchId", this.Id);
+            cmd.Parameters.AddWithValue("@newOrderNumber", newOrderNumber);
+            cmd.Parameters.AddWithValue("@newReceivedDate", newReceivedDate);
+            cmd.Parameters.AddWithValue("@newRequestedPickupDate", newRequestedPickupDate);
+            cmd.Parameters.AddWithValue("@newDeliveredDate", newDeliveredDate);
+            cmd.Parameters.AddWithValue("@newPickupLocation", newPickupLocation);
+            cmd.ExecuteNonQuery();
 
-			this.OrderNumber = newOrderNumber;
-			this.ReceivedDate = newReceivedDate;
-			this.RequestedPickupDate = newRequestedPickupDate;
-			this.DeliveredDate = newDeliveredDate;
-			this.PickupLocation = newPickupLocation;
-			this.Id = this.Id;
+            this.OrderNumber = newOrderNumber;
+            this.ReceivedDate = newReceivedDate;
+            this.RequestedPickupDate = newRequestedPickupDate;
+            this.DeliveredDate = newDeliveredDate;
+            this.PickupLocation = newPickupLocation;
+            this.Id = this.Id;
 
-			conn.Close();
-			if (conn != null)
-			{
-				conn.Dispose();
-			}
-		}
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
 
-		//UPDATE: This will edit an existing order with less inputs
-		public void Edit(DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation)
-		{
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			var cmd = conn.CreateCommand() as MySqlCommand;
+        //UPDATE: This will edit an existing order with less inputs
+        public void Edit(DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
 
-			cmd.CommandText = @"UPDATE orders SET requestedPickupDate = @newRequestedPickupDate, deliveredDate = @newDeliveredDate, pickupLocation = @newPickupLocation WHERE id = @searchId;";
+            cmd.CommandText = @"UPDATE orders SET requestedPickupDate = @newRequestedPickupDate, deliveredDate = @newDeliveredDate, pickupLocation = @newPickupLocation WHERE id = @searchId;";
 
-			cmd.Parameters.AddWithValue("@searchId", this.Id);
-			cmd.Parameters.AddWithValue("@newRequestedPickupDate", newRequestedPickupDate);
-			cmd.Parameters.AddWithValue("@newDeliveredDate", newDeliveredDate);
-			cmd.Parameters.AddWithValue("@newPickupLocation", newPickupLocation);
-			cmd.ExecuteNonQuery();
+            cmd.Parameters.AddWithValue("@searchId", this.Id);
+            cmd.Parameters.AddWithValue("@newRequestedPickupDate", newRequestedPickupDate);
+            cmd.Parameters.AddWithValue("@newDeliveredDate", newDeliveredDate);
+            cmd.Parameters.AddWithValue("@newPickupLocation", newPickupLocation);
+            cmd.ExecuteNonQuery();
 
-			this.RequestedPickupDate = newRequestedPickupDate;
-			this.DeliveredDate = newDeliveredDate;
-			this.PickupLocation = newPickupLocation;
-			this.Id = this.Id;
+            this.RequestedPickupDate = newRequestedPickupDate;
+            this.DeliveredDate = newDeliveredDate;
+            this.PickupLocation = newPickupLocation;
+            this.Id = this.Id;
 
-			conn.Close();
-			if (conn != null)
-			{
-				conn.Dispose();
-			}
-		}
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
 
-		//DELETE: Deletes ALL orders ((CAUTION!!!))
-		public static void ClearAll()
-		{
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"DELETE FROM orders";
-			cmd.ExecuteNonQuery();
-			conn.Close();
-			if (conn != null)
-			{
-				conn.Dispose();
-			}
-		}
-	}
+        //UPDATE: this will update individual product QUANTITY in an order
+        public void UpdateProductQTYinOrder(int productId, int newQty)
+
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+
+            cmd.CommandText = @"UPDATE products_orders
+                                    SET productQTY = @ProductQTY
+                                    WHERE order_id = @OrderId
+                                    AND product_id = @ProductId;";
+
+            cmd.Parameters.AddWithValue("@OrderId", this.Id);
+            cmd.Parameters.AddWithValue("@ProductId", productId);
+            cmd.Parameters.AddWithValue("@ProductQTY", newQty);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
+        //DELETE: this will remove an individual product from an order
+        public void RemoveProductFromOrder(int productId)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+
+            cmd.CommandText = @"DELETE FROM products_orders
+                                    WHERE order_id = @OrderId
+                                    AND product_id = @ProductId;";
+
+            cmd.Parameters.AddWithValue("@OrderId", this.Id);
+            cmd.Parameters.AddWithValue("@ProductId", productId);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
+
+        //DELETE: Deletes ALL orders ((CAUTION!!!))
+        public static void ClearAll()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"DELETE FROM orders";
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+    }
 }

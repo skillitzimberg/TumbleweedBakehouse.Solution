@@ -32,6 +32,7 @@ namespace TumbleweedBakehouse.Controllers
         }
 
         [HttpPost("/product")]
+
         public ActionResult Create(string name, string type, string description, IFormFile img, bool available, float price,int id)
         {
 
@@ -49,9 +50,9 @@ namespace TumbleweedBakehouse.Controllers
           string stringImg = System.Text.Encoding.UTF8.GetString(newImg);
 
           Product newProduct = new Product (name,type,description,new byte[0],available,price,id);
+
           newProduct.Save();
           return RedirectToAction("Index");
-
         }
 
         [HttpGet("/product/{id}/edit")]
@@ -62,11 +63,13 @@ namespace TumbleweedBakehouse.Controllers
       }
 
         [HttpPost("/product/{productId}")]
+<<<<<<< HEAD
         public ActionResult Update(int productId, string name, string type, string description, string img, bool availablity, float price)
         {
           Product product = Product.Find(productId);
         product.Edit(name, type, description, img, availablity, price);
         return RedirectToAction("index", new{id = productId});
+
         }
 
     }

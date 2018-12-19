@@ -47,7 +47,6 @@ namespace TumbleweedBakehouse.Models
       _availability = availability;
     }
 
-
     public string GetProductName()
     {
       return _name;
@@ -139,6 +138,7 @@ namespace TumbleweedBakehouse.Models
           string description = rdr.GetString(2);
           bool availability = rdr.GetBoolean(3);
           float price = rdr.GetFloat(4);
+
           string type= rdr.GetString(5);
           // string picture = System.Text.Encoding.ETF8.GetString(buffer);
           // Console.WriteLine(img.GetType());
@@ -185,10 +185,8 @@ namespace TumbleweedBakehouse.Models
           }
         }
 
-
         public static Product Find(int id)
         {
-
           MySqlConnection conn = DB.Connection();
           conn.Open();
           var cmd = conn.CreateCommand() as MySqlCommand;
@@ -226,7 +224,8 @@ namespace TumbleweedBakehouse.Models
 
 
 
-        public void Edit(string name, string producttype, string description, String img, bool availability, float price)
+        public void Edit(string name, string producttype, string description, byte[] img, bool availability, float price)
+
         {
           MySqlConnection conn = DB.Connection();
           conn.Open();
@@ -235,7 +234,7 @@ namespace TumbleweedBakehouse.Models
 
           cmd.Parameters.AddWithValue("@searchId", _id);
           cmd.Parameters.AddWithValue("@Name",name);
-          cmd.Parameters.AddWithValue("@description",description);
+          cmd.Parameters.AddWithValue("@description", description);
           cmd.Parameters.AddWithValue("@producttype", producttype);
           cmd.Parameters.AddWithValue("@img",img);
           cmd.Parameters.AddWithValue("@available", availability);
@@ -255,8 +254,6 @@ namespace TumbleweedBakehouse.Models
             conn.Dispose();
           }
         }
-
-
 
         public static void ClearAll()
         {

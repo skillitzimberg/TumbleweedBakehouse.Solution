@@ -26,9 +26,9 @@ namespace TumbleweedBakehouse.Controllers
         {
           Customer customer = Customer.Find(customerId);
           customer.Edit(firstName, lastName, phoneNumber, email, homeAddress, city, state, zipCode);
-          return RedirectToAction("index", new {id = customerId});
+          return RedirectToAction("show");
         }
-
+// "index", new {id = customerId}
         [HttpGet("/customer/new")]
         public ActionResult New()
         {

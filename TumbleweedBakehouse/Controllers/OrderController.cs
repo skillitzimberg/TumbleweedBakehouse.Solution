@@ -43,17 +43,19 @@ namespace TumbleweedBakehouse.Controllers
                 {
                 newOrder.AddProductToOrder(Product.Find(productId[i]), qty[i]);
                 }
-            }   
+            }
             return RedirectToAction("Index");
         }
 
-        [HttpGet("order/{orderId}/thisOrder")]
+        [HttpGet("order/{orderId}")]
         public ActionResult Show(int orderId)
         {
             Dictionary<string, object> model = new Dictionary<string, object> { };
             List<Order> orderList = Order.GetAll();
+            List<Product> orderInventory = Order.Find(orderId).GetProductsInOrder();
             List<Product> productList = Product.GetAll();
             model.Add("thisOrder", Order.Find(orderId));
+            model.Add("orderInventory", orderInventory);
             model.Add("orders", orderList);
             model.Add("products", productList);
             return View(model);
@@ -62,40 +64,48 @@ namespace TumbleweedBakehouse.Controllers
         [HttpGet("/order/{orderId}/edit")]
         public ActionResult Edit(int orderId)
         {
-            Dictionary<string, object> model = new Dictionary<string, object> { }; 
+            Dictionary<string, object> model = new Dictionary<string, object> { };
             Order newOrder = Order.Find(orderId);
-            List<Product> thisOrdersProducts = newOrder.GetProductsInOrder();
+            List<Product> orderInventory = newOrder.GetProductsInOrder();
             List<Product> allProducts = Product.GetAll();
             model.Add("order", newOrder);
-            model.Add("thisOrdersProducts", thisOrdersProducts);
+            model.Add("orderInventory", orderInventory);
             model.Add("products", allProducts);
             return View(model);
         }
 
-        //[HttpGet("/order/allCustomers")]
-        //public ActionResult CustomerIndex(int customerId)
-        //{
-        //    Dictionary<string, object> model = new Dictionary<string, object> { };
-        //    //Customer currentCustomer = Customer.Find(customerId);
-        //    List<Order> orderList = Order.GetAll();
-        //    model.Add("orders",orderList);
-        //    return View(model);
-        //}
+        [HttpPost("/order/{orderId}")]
+        public ActionResult Update(int orderId, int orderNumber, int customerId, DateTime requestedPickupDate, DateTime deliveredDate, string pickupLocation, int[] productId, int[] qty, int[] newProductId, int[] newQty)
+        {
+            Order updatedOrder = Order.Find(orderId);
+            updatedOrder.Edit(requestedPickupDate, deliveredDate, pickupLocation);
 
-        //[HttpGet("/order/{customerId}/show/{orderId}")]
-        //public ActionResult ShowCustomerOrder(int customerId, int orderId)
-        //{
-        //    Dictionary<string, object> model = new Dictionary<string, object> { };
+            for (int i = 0; i < productId.Length; i++)
+            {
+                if (qty[i] != 0)
+                {
+                    updatedOrder.UpdateProductQTYinOrder(productId[i], qty[i]);
+                } 
+                else if (qty[i] == 0)
+                {
+                    updatedOrder.RemoveProductFromOrder(productId[i]);
+                }
+            }
+            for (int j = 0; j < newProductId.Length; j++)
+            {
+                int currentProductQty = updatedOrder.GetProductsQTYInOrder(newProductId[j]);
 
-        //    return View(model);
-        //}
+                if (newQty[j] != 0 && currentProductQty == 0 )
+                {
+                    updatedOrder.AddProductToOrder(Product.Find(newProductId[j]), newQty[j]);
+                }
+                else if (newQty[j] != 0 && currentProductQty > 0)
+                {
+                    updatedOrder.UpdateProductQTYinOrder(newProductId[j], currentProductQty + newQty[j]);
+                }
+            }
 
-        //[HttpGet("/order/{customerId}/new")]
-        //public ActionResult NewCustomerOrder(int customerId)
-        //{
-        //    Dictionary<string, object> model = new Dictionary<string, object> { };
-
-        //    return View();
-        //}
+            return RedirectToAction("Show", new { orderId = orderId});
+        }
     }
 }
