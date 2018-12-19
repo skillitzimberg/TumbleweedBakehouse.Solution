@@ -120,10 +120,10 @@ namespace TumbleweedBakehouse.Models
           bool availability = rdr.GetBoolean(3);
           float price = rdr.GetFloat(4);
           string type= rdr.GetString(5);
-          var img = rdr.GetByte(6);
+          byte[] img = rdr.GetByte(6);
           Console.WriteLine(img.GetType());
-          // Product newProduct = new Product(name, type, description, img, availability, price, id);
-          // allProducts.Add(newProduct);
+          Product newProduct = new Product(name, type, description, img, availability, price, id);
+          allProducts.Add(newProduct);
         }
         conn.Close();
         if (conn != null)
@@ -190,7 +190,7 @@ namespace TumbleweedBakehouse.Models
             description = rdr.GetString(2);
             availability = rdr.GetBoolean(3);
             price = rdr.GetFloat(4);
-            // img = rdr.GetBytes(6);
+            img = rdr.GetByte(6);
           }
           Product newProduct = new Product(productName, type, description, img, availability, price, id);
           conn.Close();

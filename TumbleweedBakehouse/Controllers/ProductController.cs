@@ -31,7 +31,7 @@ namespace TumbleweedBakehouse.Controllers
         }
 
         [HttpPost("/product")]
-        public ActionResult Create(string name, string type, string description,IFormFile  img, bool available, float price,int id)
+        public ActionResult Create(string name, string type, string description, IFormFile img, bool available, float price,int id)
         {
           byte[] newImg = new byte[0];
             if (img != null)
