@@ -26,7 +26,6 @@
         <label for="availability">Available</label>
         @{bool availability = @Model.GetProductAvailability();}
         @Html.CheckBox("availability", availability)
-        @* <input type="checkbox" name="availability" id="availability"> *@
       </div>
 
       <div class='form-group'>
