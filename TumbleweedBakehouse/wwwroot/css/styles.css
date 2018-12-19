@@ -69,13 +69,15 @@ img.splash {
   border-radius: 8px;
 }
 
-#showProduct {
+#show {
   width: 50%;
   margin: auto;
+  border: 1px solid #333;
+  border-radius: 5px;
 }
 
-#horror {
-  width: 50%;
+#showText {
+  width: 60%;
   margin: auto;
 }
 

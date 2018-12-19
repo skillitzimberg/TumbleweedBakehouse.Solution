@@ -2,15 +2,14 @@
 @{
   Layout = "_Layout";
 }
-<div class='row'>
-  <div class='col-md-12'>
+<div id='show'>
     <img src='@Model.GetUrl()' alt='photo of @Model.GetProductName()'>
+    <div id="showText">
+      <h3>@Model.GetProductName()</h3>
+      <p>@Model.GetProductType()</p>
+      <p>@Model.GetDescription()</p>
+      <p>$@Model.GetPrice()</p>
 
-    <h3>@Model.GetProductName()</h3>
-    <h3>@Model.GetProductType()</h3>
-    <h4>@Model.GetDescription()</h4>
-    <h4>@Model.GetPrice()</h4>
-
-    <a href='/product/@Model.GetId()/edit'>EDIT</a>
-  </div>
+      <h4><a href='/product/@Model.GetId()/edit'>EDIT</a></h4>
+    </div>
 </div>
