@@ -367,6 +367,19 @@ namespace TumbleweedBakehouse.Models
 			return qty;
 		}
 
+		//READ: This will give a grand total
+		public float GrandTotal()
+		{
+			List<Product> allProducts = this.GetProductsInOrder();
+			float total = 0;
+			foreach(var product in allProducts)
+			{
+				total += (product.GetPrice() * this.GetProductsQTYInOrder(product.GetId()));
+			}
+			return total;
+
+		}
+
 		//UPDATE: This will edit an existing order
 		public void Edit(int newOrderNumber, DateTime newReceivedDate, DateTime newRequestedPickupDate, DateTime newDeliveredDate, string newPickupLocation)
 		{

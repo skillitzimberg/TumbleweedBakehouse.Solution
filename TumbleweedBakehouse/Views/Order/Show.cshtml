@@ -12,21 +12,14 @@
         <h5>Pickup Location: @Model["thisOrder"].PickupLocation</h5>
         <h5>Date Delivered: @Model["thisOrder"].DeliveredDate</h5>
 
-        @*@foreach (var product in Model["orderInventory"])
-        {
-            <p>
-                <a href="/products/product.GetProductId()">@product.GetProductName()</a>
-            </p>
-            <p>
-                Quantity: @Model["thisOrder"].GetProductsQTYInOrder(@product.GetId())
-            </p>
-        }*@
-
         <div class="col-md-12">
-            <table style="width:50%" class="table-striped">
+            <table class="table-striped">
                 <tr>
                     <th>Product Name</th>
                     <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+
 
                 </tr>
                 @foreach (var product in Model["orderInventory"])
@@ -34,10 +27,17 @@
                     <tr>
                         <td><a href="/products/@product.GetId()">@product.GetProductName()</a></td>
                         <td>  @Model["thisOrder"].GetProductsQTYInOrder(@product.GetId())</td>
-
-
+                        <td> $@product.GetPrice().ToString("0.00")</td>
+                        <td> $@((product.GetPrice() * @Model["thisOrder"].GetProductsQTYInOrder(@product.GetId())).ToString("0.00"))</td>
                     </tr>
+
                 }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Grand Total:</td>
+                    <td>$@Model["thisOrder"].GrandTotal().ToString("0.00")</td>
+                </tr>
             </table>
         </div>
         <p><a href="/order/@Model["thisOrder"].Id/edit">Edit this order</a></p>

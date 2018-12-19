@@ -41,8 +41,24 @@
                     </td>
                     <td>
                         <select id='pickupLocation' name='pickupLocation' type='text' value="@Model["order"].PickupLocation">
-                            <option value='Alamosa'>ALAMOSA</option>
-                            <option value='La Jara'>LA JARA</option>
+                            @if (@Model["order"].PickupLocation == "Alamosa")
+                            {
+                                <option value='Alamosa' selected>Alamosa</option>
+                            }
+                            else
+                            {
+                                <option value='Alamosa'>Alamosa</option>
+                            }
+                            @if (@Model["order"].PickupLocation == "La Jara")
+                            {
+                                <option value='La Jara' selected>La Jara</option>
+                            }
+                            else
+                            {
+                                <option value='La Jara'>La Jara</option>
+                            }=
+                                La Jara
+                            </option>
                         </select>
                     </td>
                 </tr>
