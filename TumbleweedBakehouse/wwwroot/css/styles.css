@@ -94,10 +94,11 @@ label {
 }
 
 form {
-  margin: 1em;
+  width: 30%;
+  margin: 1em auto;
   border: 1px solid #333;
   border-radius: .5em;
-  padding: .75em;
+  padding: 1.5em;
 }
 
 .products {
