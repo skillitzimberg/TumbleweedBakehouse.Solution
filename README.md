@@ -27,6 +27,7 @@ This website is meant to help Scott's sister manage her bakery business by allow
 * App emails admin when new orders are placed.
 * customer-facing views/functionality
 * image upload
+* database table(s) for ingredients/supplies/expenses
 ---
 ## Installation Instructions
 Clone the code from [GitHub](https://github.com/skillitzimberg/TumbleweedBakehouse.Solution).
