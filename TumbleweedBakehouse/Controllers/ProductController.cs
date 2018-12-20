@@ -11,6 +11,7 @@ namespace TumbleweedBakehouse.Controllers
         {
           List<Product> newList = new List<Product>{};
           newList = Product.GetAll();
+
           return View(newList);
         }
 

@@ -10,6 +10,7 @@ _Chris Rudnicky_
 
 **[Installation Instructions](#installation-instructions)**<br>
 **[Description](#description)**<br>
+**[Planned Additions](#planned-additions)**<br>
 **[Usage Instructions](#usage-instructions)**<br>
 **[Application Testing](#application-testing)**<br>
 **[Known Errors](#known-errors)**<br>
@@ -22,6 +23,11 @@ _Chris Rudnicky_
 ## Description
 This website is meant to help Scott's sister manage her bakery business by allowing her customer to place orders online, storing order information in a database, allowing specific products to be displayed as appropriate, and reducing manual (pen & paper) data handling.
 
+## Planned Additions
+* App emails admin when new orders are placed.
+* customer-facing views/functionality
+* image upload
+* database table(s) for ingredients/supplies/expenses
 ---
 ## Installation Instructions
 Clone the code from [GitHub](https://github.com/skillitzimberg/TumbleweedBakehouse.Solution).

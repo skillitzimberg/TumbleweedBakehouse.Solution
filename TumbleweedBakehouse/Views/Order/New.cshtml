@@ -22,8 +22,8 @@
                 </select>
             }
 
-            <p><a href="/customer/new">Click here to add a new Customer</a></p>
-            <p><a href="/order">Click here to see all orders</a></p>
+            <button type="button" onClick="javascript:location.href ='/customer/new'">Add New Customer</button>
+            <button type="button" onClick="javascript:location.href ='/order'">View Orders</button>
 
 
             <div class='form-group'>
@@ -34,7 +34,7 @@
             <div class='form-group'>
                 <label for="pickupLocation">Where would you like to pick up the order?</label>
                 <select id='pickupLocation' name='pickupLocation' type='text'>
-                    <option value='Alamosa'>ALAMOSA (Available Tuesdays)</option>
+                    <option value='Alamosa'>ALAMOSA (Available Tuesdays)</opt>
                     <option value='La Jara'>LA JARA (Available Saturdays)</option>
                 </select>
             </div>
@@ -44,19 +44,21 @@
                 {
                     @foreach (var product in Model["products"])
                     {
-
+                      @if (@product.GetProductAvailability() == true)
+                      {
                         <input id="productId" type="hidden" name="productId" value="@product.GetId()">
                         <div class="productGridItem col-md-3" class="clickable" data-toggle="modal" data-target="#addToOrder">
-                            <a href='/product/@product.GetId()'>
-                                <img src="@product.GetUrl()" alt="photo of @product.GetProductName()">
-                                <p class=" clickable">@product.GetProductName()</p>
-                                <p>$@product.GetPrice()</p>
-                            </a>
-                            <label class="col-md-6 control-label" for="qty">Quantity:</label>
-                            <div class="col-md-6">
-                                <input id="qty" name="qty" type="number" placeholder="#" class="form-control input-sm" value="0">
-                            </div>
+                        <a href='/product/@product.GetId()'>
+                        <img src="@product.GetUrl()" alt="photo of @product.GetProductName()">
+                        <p class=" clickable">@product.GetProductName()</p>
+                        <p>$@product.GetPrice()</p>
+                        </a>
+                        <label class="col-md-6 control-label" for="qty">Quantity:</label>
+                        <div class="col-md-6">
+                        <input id="qty" name="qty" type="number" placeholder="#" class="form-control input-sm" min="0" value="0">
                         </div>
+                        </div>
+                      }
                     }
                 }
             </div>

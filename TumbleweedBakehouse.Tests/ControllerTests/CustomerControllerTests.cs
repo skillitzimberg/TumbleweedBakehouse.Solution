@@ -16,7 +16,7 @@ namespace TumbleweedBakehouse.Tests
     }
    public CustomerControllerTests()
     {
-      DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=tumbleweedbakehouse_test;";
+      DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=tumbleweedbakehouse;";
     }
 
         [TestMethod]

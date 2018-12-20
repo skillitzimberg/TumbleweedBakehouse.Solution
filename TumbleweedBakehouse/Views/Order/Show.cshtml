@@ -28,7 +28,6 @@
                         <td> $@product.GetPrice().ToString("0.00")</td>
                         <td> $@((product.GetPrice() * @Model["thisOrder"].GetProductsQTYInOrder(@product.GetId())).ToString("0.00"))</td>
                     </tr>
-
                 }
                 <tr>
                     <td></td>
@@ -38,7 +37,7 @@
                 </tr>
             </table>
         </div>
-        <p><a href="/order/@Model["thisOrder"].Id/edit">Edit this order</a></p>
+        <button type="button" onClick="javascript:location.href ='/order/@Model["thisOrder"].Id/edit'">Edit Order</button>
 
     </div>
 </div>
