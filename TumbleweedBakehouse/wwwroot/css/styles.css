@@ -71,9 +71,12 @@ img.splash {
 
 button {
   display: block;
-  margin: 1em auto;
   border-radius: 8px;
   background-color: #ccc;
+}
+
+.buttonCenter {
+  margin: 1em auto;
 }
 
 #show{

@@ -28,7 +28,6 @@
                         <td> $@product.GetPrice().ToString("0.00")</td>
                         <td> $@((product.GetPrice() * @Model["thisOrder"].GetProductsQTYInOrder(@product.GetId())).ToString("0.00"))</td>
                     </tr>
-
                 }
                 <tr>
                     <td></td>
