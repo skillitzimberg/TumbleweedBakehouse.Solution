@@ -293,47 +293,7 @@ namespace TumbleweedBakehouse.Models
 			return products;
 		}
 
-        //READ: this will get all products in the order
-        public List<Product> GetProductsInOrder()
-        {
-            MySqlConnection conn = DB.Connection();
-            conn.Open();
-            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT products.*
-                                    , products_orders.productQty
-                                FROM orders
-                                JOIN products_orders
-                                ON orders.id = products_orders.order_id
-                                JOIN products
-                                ON products_orders.product_id = products.id
-                                WHERE orders.id = @OrderId;";
-
-            cmd.Parameters.AddWithValue("@OrderId", this.Id);
-
-            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-            List<Product> products = new List<Product> { };
-
-            while (rdr.Read())
-            {
-                int id = rdr.GetInt32(0);
-                string name = rdr.GetString(1);
-                string description = rdr.GetString(2);
-                bool availability = rdr.GetBoolean(3);
-                float price = rdr.GetFloat(4);
-                string type = rdr.GetString(5);
-                string url = rdr.GetString(6);
-                Product foundProduct = new Product(name, type, description, url, availability, price, id);
-                products.Add(foundProduct);
-            }
-
-            conn.Close();
-            if (conn != null)
-            {
-                conn.Dispose();
-            }
-            return products;
-        }
-
+      
         //READ: this will get all products QUANTITY in the order
         public List<int> GetAllProductsQTYInOrder()
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TumbleweedBakehouse.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace TumbleweedBakehouse.Controllers
 {
@@ -33,7 +34,7 @@ namespace TumbleweedBakehouse.Controllers
 
         [HttpPost("/product")]
 
-        public ActionResult Create(string name, string type, string description, IFormFile img, bool available, float price,int id)
+        public ActionResult Create(string name, string producttype, string description, IFormFile img, bool available, float price,int id)
         {
 
           byte[] newImg = new byte[0];
@@ -46,11 +47,10 @@ namespace TumbleweedBakehouse.Controllers
                     newImg = ms.ToArray();
                 }
             }
-
-          string stringImg = System.Text.Encoding.UTF8.GetString(newImg);
-
-          Product newProduct = new Product (name,type,description,new byte[0],available,price,id);
-
+            var base64File = Convert.ToBase64String(newImg);
+            string photo = String.Format("data:image/gif;base64,{0}", base64File);
+            System.Console.WriteLine("newImg: "+photo);
+          Product newProduct = new Product (name,producttype,description,newImg,available,price,id);
           newProduct.Save();
           return RedirectToAction("Index");
         }
@@ -63,8 +63,7 @@ namespace TumbleweedBakehouse.Controllers
       }
 
         [HttpPost("/product/{productId}")]
-<<<<<<< HEAD
-        public ActionResult Update(int productId, string name, string type, string description, string img, bool availablity, float price)
+        public ActionResult Update(int productId, string name, string type, string description, byte[] img, bool availablity, float price)
         {
           Product product = Product.Find(productId);
         product.Edit(name, type, description, img, availablity, price);

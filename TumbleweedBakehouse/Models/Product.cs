@@ -123,11 +123,12 @@ namespace TumbleweedBakehouse.Models
 
         while(rdr.Read())
         {
-          var length = rdr.GetBytes(6, 0L, null, 0, 0);
+          long length = rdr.GetBytes(6, 0L, null, 0, 0);
           Console.WriteLine(length);
           Byte[] buffer = new Byte[length];
-          rdr.GetBytes(6, 0L, buffer, 0, 0);
-          Console.WriteLine(buffer);
+          rdr.GetBytes(6, 0L, buffer, 0, (int)length);
+          Console.WriteLine("buffer"+buffer);
+
           Console.WriteLine(buffer.GetType());
 
 
@@ -142,9 +143,10 @@ namespace TumbleweedBakehouse.Models
           string type= rdr.GetString(5);
           // string picture = System.Text.Encoding.ETF8.GetString(buffer);
           // Console.WriteLine(img.GetType());
-          Product newProduct = new Product(name, type, description, new byte[0], availability, price, id);
+          Product newProduct = new Product(name, type, description, buffer, availability, price, id);
           var base64File = Convert.ToBase64String(buffer);
           string photo = String.Format("data:image/gif;base64,{0}", base64File);
+          System.Console.WriteLine("base64"+base64File);
           newProduct.SetImageString(photo);
           allProducts.Add(newProduct);
         }
@@ -162,7 +164,7 @@ namespace TumbleweedBakehouse.Models
         conn.Open();
         var cmd = conn.CreateCommand() as MySqlCommand;
         cmd.CommandText = @"INSERT INTO products (Name, description, img, availability, price, producttype) VALUES (@name, @description, @img,  @availability, @price,
-          @type);";
+          @producttype);";
 
           cmd.Parameters.AddWithValue("@name", this._name);
 
@@ -172,7 +174,7 @@ namespace TumbleweedBakehouse.Models
 
           cmd.Parameters.AddWithValue("@price", this._price);
 
-          cmd.Parameters.AddWithValue("@type", this._type);
+          cmd.Parameters.AddWithValue("@producttype", this._type);
 
           cmd.Parameters.AddWithValue("@img", this._img);
 
