@@ -39,11 +39,6 @@ Cart.prototype.setPickupDate = function(pickupDate) {
 
 var cart = new Cart();
 
-// This should evaluate to a boolean true or false: depending on if the input:checkbox is checked or not:
-var availability = $("input:checkbox").prop("checked");
-
 $(document).ready(function() {
-  $()
 
-    });
 });
