@@ -71,6 +71,7 @@ img.splash {
 
 button {
   display: block;
+  margin: 1em 0 1em;
   border-radius: 8px;
   background-color: #ccc;
 }
