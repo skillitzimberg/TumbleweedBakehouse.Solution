@@ -116,6 +116,19 @@ INSERT INTO `products` (`id`, `Name`, `description`, `availability`, `price`, `p
 (9, 'sourdough', 'light and fluffy', 1, 3, 'raye', '/img/Challah.jpg'),
 (10, 'Honeybread', 'hearty and sweet', 1, 5, 'Wheat', '/img/Challah.jpg')
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products_orders`
+--
+
+CREATE TABLE `products_orders` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `productQty` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Indexes for dumped tables
 --
@@ -145,6 +158,12 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `products`
+--
+ALTER TABLE `products_orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -170,6 +189,12 @@ ALTER TABLE `orders_customers`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products_orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

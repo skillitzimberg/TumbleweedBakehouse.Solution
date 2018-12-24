@@ -85,7 +85,7 @@ namespace TumbleweedBakehouse.Controllers
                 if (qty[i] != 0)
                 {
                     updatedOrder.UpdateProductQTYinOrder(productId[i], qty[i]);
-                } 
+                }
                 else if (qty[i] == 0)
                 {
                     updatedOrder.RemoveProductFromOrder(productId[i]);

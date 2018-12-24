@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 17, 2018 at 01:57 PM
+-- Generation Time: Dec 17, 2018 at 01:56 PM
 -- Server version: 5.6.38
 -- PHP Version: 7.2.1
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `tumbleweedbakehouse_test`
+-- Database: `tumbleweedbakehouse`
 --
 CREATE DATABASE IF NOT EXISTS `tumbleweedbakehouse_test` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `tumbleweedbakehouse_test`;
@@ -40,6 +40,10 @@ CREATE TABLE `customers` (
   `zipcode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `customers`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -52,9 +56,13 @@ CREATE TABLE `orders` (
   `receivedDate` datetime NOT NULL,
   `requestedPickupDate` datetime NOT NULL,
   `deliveredDate` datetime NOT NULL,
-  `pickupLocation` varchar(255) DEFAULT NULL,
+  `pickupLocation` varchar(255) NOT NULL,
   `customer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `orders`
+--
 
 -- --------------------------------------------------------
 
@@ -82,6 +90,23 @@ CREATE TABLE `products` (
   `price` float NOT NULL,
   `producttype` varchar(255) NOT NULL,
   `url` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `products`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products_orders`
+--
+
+CREATE TABLE `products_orders` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `productQty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -113,6 +138,12 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `products`
+--
+ALTER TABLE `products_orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -120,13 +151,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orders_customers`
@@ -138,7 +169,13 @@ ALTER TABLE `orders_customers`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products_orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
